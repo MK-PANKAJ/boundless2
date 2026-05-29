@@ -27,8 +27,20 @@ export default function App() {
   });
 
   // Load chronological data structures
-  const allEvents = getTimelineEvents();
+  const [eventsList, setEventsList] = useState(() => getTimelineEvents());
   const eventsByMonth = getEventsByMonth();
+
+  const handleAddMemory = (eventId, imageUrl) => {
+    setEventsList(prev => prev.map(evt => {
+      if (evt.id === eventId) {
+        return {
+          ...evt,
+          glimpses: [...(evt.glimpses || []), imageUrl]
+        };
+      }
+      return evt;
+    }));
+  };
 
   // Scroll to top on view changes
   useEffect(() => {
@@ -60,7 +72,7 @@ export default function App() {
           return;
         }
       } else if (view === 'detail' && parts[1]) {
-        const eventExists = allEvents.find(e => e.id === parts[1]);
+        const eventExists = eventsList.find(e => e.id === parts[1]);
         if (eventExists) {
           setActiveEventId(parts[1]);
           setActiveMonthId(eventExists.monthId);
@@ -193,7 +205,7 @@ export default function App() {
   // Map City marker click handler (direct routing to event detail page)
   const handleMapCityClick = (city) => {
     // Check if the city has a corresponding subEvent
-    const match = allEvents.find(e => e.id === city.subEventId);
+    const match = eventsList.find(e => e.id === city.subEventId);
     if (match) {
       navigateTo('detail', match.monthId, match.id);
     } else {
@@ -478,8 +490,30 @@ export default function App() {
 
   // Page 3: Event Detail View
   const DetailView = () => {
-    const event = allEvents.find(e => e.id === activeEventId);
+    const event = eventsList.find(e => e.id === activeEventId);
     if (!event) return null;
+
+    const [memoryUrl, setMemoryUrl] = useState('');
+    const fileInputRef = useRef(null);
+
+    const handleFileChange = (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          handleAddMemory(event.id, reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    const handleUrlSubmit = (e) => {
+      e.preventDefault();
+      if (memoryUrl.trim()) {
+        handleAddMemory(event.id, memoryUrl.trim());
+        setMemoryUrl('');
+      }
+    };
     
     return (
       <div className="animate-in slide-in-from-bottom duration-450 pb-24 relative">
@@ -587,7 +621,7 @@ export default function App() {
 
               {/* Visual Memories Glimpses Gird */}
               {event.glimpses && event.glimpses.length > 0 && (
-                <div className="space-y-4 pt-6 border-t border-burgundy/10">
+                <div className="space-y-4 pt-6 border-t border-burgundy/10 animate-in fade-in duration-300">
                   <h3 className="font-heading text-lg font-bold text-burgundy flex items-center gap-2">
                     <ImageIcon size={18} /> Visual Glimpses & Memories
                   </h3>
@@ -595,7 +629,7 @@ export default function App() {
                     {event.glimpses.map((src, i) => (
                       <div 
                         key={i} 
-                        className="relative aspect-video rounded-xl overflow-hidden border border-burgundy/20 cursor-pointer group shadow-sm"
+                        className="relative aspect-video rounded-xl overflow-hidden border border-burgundy/20 cursor-pointer group shadow-sm animate-in zoom-in-95"
                         onClick={() => openLightbox(event.glimpses, i, `${event.title} - Glimpse ${i + 1}`)}
                       >
                         <img 
@@ -609,6 +643,56 @@ export default function App() {
                   </div>
                 </div>
               )}
+
+              {/* Share Your Memory Portal (Option to add memories dynamically) */}
+              <div className="space-y-4 pt-6 border-t border-burgundy/10">
+                <h3 className="font-heading text-lg font-bold text-burgundy flex items-center gap-2">
+                  <BookOpen size={18} /> Share Your Expedition Memory
+                </h3>
+                <p className="text-xs text-gray-500 font-light leading-relaxed">
+                  Contribute to this chapter! Upload a local photo or paste an image link to append it instantly to our visual memory wall.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* File Upload Box */}
+                  <div 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="border-2 border-dashed border-burgundy/20 hover:border-burgundy/40 bg-[#fffaf0]/30 hover:bg-[#fffaf0]/60 p-6 rounded-2xl text-center cursor-pointer transition-all space-y-2 flex flex-col justify-center items-center"
+                  >
+                    <span className="text-2xl">📸</span>
+                    <span className="block text-[11px] font-mono font-bold text-burgundy uppercase">Upload Photo File</span>
+                    <span className="block text-[9px] text-gray-400">Click to choose image from device</span>
+                    <input 
+                      type="file" 
+                      ref={fileInputRef} 
+                      onChange={handleFileChange} 
+                      accept="image/*" 
+                      className="hidden" 
+                    />
+                  </div>
+
+                  {/* URL Input Box */}
+                  <form onSubmit={handleUrlSubmit} className="border border-burgundy/10 bg-white p-6 rounded-2xl flex flex-col justify-between gap-4">
+                    <div className="space-y-1">
+                      <span className="block text-[11px] font-mono font-bold text-burgundy uppercase">Link Photo URL</span>
+                      <input 
+                        type="url" 
+                        value={memoryUrl}
+                        onChange={(e) => setMemoryUrl(e.target.value)}
+                        placeholder="https://images.unsplash.com/your-photo..."
+                        className="w-full text-xs p-2.5 bg-[#fffaf0]/50 border border-burgundy/10 rounded-lg focus:outline-none focus:border-gold/50 text-burgundy"
+                      />
+                    </div>
+                    <button 
+                      type="submit" 
+                      disabled={!memoryUrl.trim()}
+                      className="btn-primary text-[10px] py-2 w-full flex items-center justify-center gap-2 disabled:opacity-40 disabled:pointer-events-none"
+                    >
+                      <span>LINK MEMORY IMAGE</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
 
               {/* Event Navigation Footer controls */}
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-burgundy/10 mt-10">

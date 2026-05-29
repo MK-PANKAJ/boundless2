@@ -18,7 +18,7 @@ export default function Timeline({ activeMonthId, onMonthSelect }) {
               return (
                 <div 
                   key={m.id}
-                  className={`timeline-item ${isActive ? 'selected' : ''}`}
+                  className={`bar-timeline-item ${isActive ? 'selected' : ''}`}
                   onMouseEnter={() => setHoveredMonth({ ...m, index })}
                   onMouseLeave={() => setHoveredMonth(null)}
                   onClick={() => onMonthSelect(m.id)}
