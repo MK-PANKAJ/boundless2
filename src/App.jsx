@@ -7,6 +7,7 @@ import {
 import IndiaMap from './components/IndiaMap';
 import Timeline from './components/Timeline';
 import { timelineMonths, getTimelineEvents, getEventsByMonth } from './data/timelineEvents';
+import heroImg from './assets/hero_mountains.png';
 
 export default function App() {
   // Navigation View State: 'overview' | 'monthly' | 'detail'
@@ -257,157 +258,163 @@ export default function App() {
 
   // Page 1: Journey Overview (Home)
   const OverviewView = () => (
-    <div className="animate-in fade-in duration-500 relative">
-      <div className="warm-ambient-glow" style={{ top: '15%', left: '5%' }} />
-      <div className="warm-ambient-glow" style={{ top: '65%', right: '5%' }} />
+    <div className="animate-in fade-in duration-500 relative bg-[#fcf7e7]">
       
-      {/* Immersive Edge-to-Edge Hero Header */}
-      <div className="immersive-hero-header">
-        <div className="hero-dark-overlay" />
-        <div className="hero-text-wrap text-center space-y-4">
-          <div className="flex justify-center items-center gap-2 text-gold font-mono text-xs uppercase tracking-widest animate-pulse">
-            <Compass size={14} /> IIT MADRAS BS TRAVEL SOCIETY
+      {/* Top Navigation */}
+      <nav style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'20px 40px', position:'absolute', top:0, left:0, right:0, zIndex:50}}>
+        {/* Logo */}
+        <div style={{display:'flex', alignItems:'center', gap:'12px'}}>
+          <div style={{width:'50px', height:'50px', borderRadius:'50%', background:'var(--color-burgundy)', border:'2px solid white', display:'flex', alignItems:'center', justifyContent:'center'}}>
+            <Compass size={24} color="#d97706" />
           </div>
-          <h1 className="hero-title">BOUNDLESS</h1>
-          <p className="hero-subtitle">
-            A Chronicle of Student Hikes, Nationwide Meetups, and Flagship Expeditions
-          </p>
-          <div className="h-0.5 w-16 bg-gold/50 mx-auto rounded-full" />
+          <span style={{fontFamily:'var(--font-heading)', fontWeight:800, fontSize:'20px', color:'#111', textShadow:'0 2px 10px rgba(255,255,255,0.8)'}}>Boundless Travel Society</span>
         </div>
-      </div>
+        {/* Links */}
+        <div className="hidden lg:flex" style={{gap:'30px', fontWeight:600, fontSize:'14px', textShadow:'0 2px 10px rgba(255,255,255,0.8)'}}>
+          <span style={{color:'#d97706', borderBottom:'2px solid #d97706'}}>Home</span>
+          <span>Events</span>
+          <span>Cities</span>
+          <span>Trips</span>
+          <span>Gallery</span>
+          <span>About Us</span>
+        </div>
+        {/* CTA */}
+        <button onClick={handleExploreJourney} style={{background:'#111', color:'white', padding:'10px 24px', borderRadius:'99px', fontSize:'13px', fontWeight:600, display:'flex', alignItems:'center', gap:'8px', boxShadow:'0 4px 12px rgba(0,0,0,0.2)'}}>
+          Explore Journey <Compass size={14}/>
+        </button>
+      </nav>
 
-      {/* Editorial Journey Summary */}
-      <div className="layout-container py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* Hero Section */}
+      <div style={{
+        position:'relative', 
+        minHeight:'90vh', 
+        background: `url("${heroImg}") center/cover no-repeat`,
+        paddingTop:'120px',
+        overflow:'hidden'
+      }}>
+        <div className="layout-container" style={{display:'flex', flexDirection:'column', lg:{flexDirection:'row'}, position:'relative', height:'100%', zIndex:20}}>
           
-          {/* Summary Text — redesigned */}
-          <div className="lg:col-span-5" style={{display:'flex', flexDirection:'column', gap:'28px'}}>
+          {/* Top Main Content (Text + Map) */}
+          <div style={{display:'flex', flex:1, gap:'40px', flexWrap:'wrap'}}>
+            
+            {/* Left Column - Text & Stats */}
+            <div style={{flex:'1 1 500px', paddingTop:'40px'}}>
+              <h1 style={{fontFamily:'var(--font-heading)', fontSize:'clamp(48px, 6vw, 72px)', fontWeight:800, color:'#0a0a0a', lineHeight:1, textShadow:'0 4px 20px rgba(255,255,255,0.8)'}}>Boundless 2025</h1>
+              <p className="font-script" style={{fontSize:'clamp(28px, 4vw, 36px)', color:'#c2410c', marginTop:'10px', transform:'rotate(-2deg)', textShadow:'0 2px 10px rgba(255,255,255,0.8)'}}>A year of journeys,<br/>friendships & endless memories ✦</p>
+              
+              <div style={{borderLeft:'3px solid #d97706', paddingLeft:'16px', margin:'30px 0', fontSize:'15px', fontWeight:500, color:'#111', textShadow:'0 2px 10px rgba(255,255,255,0.9)'}}>
+                5200+ members. 40+ cities.<br/>One community. Countless stories.
+              </div>
 
-            <span className="badge-orange uppercase tracking-wider text-[10px] font-bold">
-              Tenure Chronicles
-            </span>
+              <div style={{display:'flex', gap:'16px', alignItems:'center'}}>
+                <button onClick={handleExploreJourney} style={{background:'#0f1016', color:'white', padding:'12px 24px', borderRadius:'99px', fontSize:'14px', fontWeight:600, boxShadow:'0 8px 20px rgba(0,0,0,0.3)'}}>
+                  Start Exploring ↗
+                </button>
+                <button style={{display:'flex', alignItems:'center', gap:'8px', color:'#111', fontWeight:600, fontSize:'14px', background:'rgba(255,255,255,0.8)', padding:'8px 16px', borderRadius:'99px'}}>
+                  <span style={{background:'#ef4444', color:'white', borderRadius:'50%', width:'24px', height:'24px', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'10px'}}>▶</span>
+                  Watch Our Journey
+                </button>
+              </div>
 
-            <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-burgundy leading-tight">
-              Connecting Explorers<br/>In Person
-            </h2>
-
-            {/* Pull-quote callout */}
-            <div style={{
-              borderLeft: '3px solid var(--color-gold)',
-              paddingLeft: '16px',
-              marginTop: '-4px'
-            }}>
-              <p style={{
-                fontSize: '14px', color: 'rgba(74,18,37,0.7)', fontWeight: 300,
-                lineHeight: '1.75', margin: 0
+              {/* Stats Bar */}
+              <div className="hidden md:flex" style={{
+                background:'rgba(255,255,255,0.85)', backdropFilter:'blur(10px)',
+                padding:'20px 30px', borderRadius:'20px', justifyContent:'space-between',
+                marginTop:'60px', boxShadow:'0 10px 30px rgba(0,0,0,0.1)', border:'1px solid rgba(255,255,255,0.4)'
               }}>
-                Over the past year the Boundless Travel Society has turned digital friendships into real ones — from misty Himalayan passes to golden coastal cliffs, from Independence Day flag hoistings to 4-day cultural road-trips across Rajasthan.
-              </p>
+                {[
+                  {icon:'👥', val:'5200+', lbl:'Members Connected'},
+                  {icon:'👩', val:'1200+', lbl:'Female Members'},
+                  {icon:'📍', val:'40+', lbl:'Cities Reached'},
+                  {icon:'🎒', val:'110+', lbl:'Core Members'},
+                  {icon:'🤝', val:'Collabs', lbl:'Across Societies'}
+                ].map(s=>(
+                  <div key={s.lbl} style={{textAlign:'center', position:'relative', padding:'0 10px'}}>
+                    <div style={{fontSize:'24px', marginBottom:'4px'}}>{s.icon}</div>
+                    <div style={{fontFamily:'var(--font-heading)', fontWeight:800, fontSize:'20px', color:'#4a1225', lineHeight:1}}>{s.val}</div>
+                    <div style={{fontSize:'10px', fontWeight:700, color:'#666', marginTop:'4px', textTransform:'uppercase'}}>{s.lbl}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <p style={{fontSize:'13px', color:'rgba(74,18,37,0.5)', lineHeight:'1.65', fontWeight:300, margin:0}}>
-              Every city meetup is more than a pin on a map. It is a chapter of student leadership, peer bonding, and shared adventure — funded and trusted by the IIT Madras BS programme.
-            </p>
+            {/* Right Column - Map & Polaroids */}
+            <div className="hidden lg:block" style={{flex:'1 1 400px', position:'relative', minHeight:'400px'}}>
+              <div style={{position:'absolute', top:0, left:'-20px', width:'120%', height:'450px', opacity:0.95}}>
+                <IndiaMap onCityClick={handleMapCityClick} />
+              </div>
 
-            {/* Stat cards row */}
-            <div style={{
-              display:'grid', gridTemplateColumns:'repeat(3,1fr)',
-              gap:'12px', paddingTop:'20px',
-              borderTop:'1px solid rgba(74,18,37,0.1)'
-            }}>
-              {[
-                { emoji:'👥', value:'5200+', label:'Members' },
-                { emoji:'🗺️', value:'40+',   label:'Cities' },
-                { emoji:'🏕️', value:'15+',   label:'Trips' },
-              ].map(({emoji, value, label}) => (
-                <div key={label} style={{
-                  background:'rgba(74,18,37,0.04)',
-                  border:'1px solid rgba(74,18,37,0.08)',
-                  borderRadius:'14px',
-                  padding:'14px 12px',
-                  textAlign:'center'
-                }}>
-                  <div style={{fontSize:'22px', marginBottom:'4px'}}>{emoji}</div>
-                  <div style={{
-                    fontFamily:'var(--font-heading)', fontSize:'22px',
-                    fontWeight:800, color:'var(--color-burgundy)', lineHeight:1
-                  }}>{value}</div>
-                  <div style={{
-                    fontFamily:'var(--font-mono)', fontSize:'9px',
-                    fontWeight:700, color:'rgba(74,18,37,0.45)',
-                    textTransform:'uppercase', letterSpacing:'0.08em', marginTop:'4px'
-                  }}>{label}</div>
+              <div className="polaroid-stack" style={{position:'absolute', right:'0', top:'20px', width:'160px'}}>
+                <div className="polaroid-card">
+                  <div className="tape"></div>
+                  <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=300" style={{width:'100%', height:'100px', objectFit:'cover'}}/>
+                  <p className="font-script" style={{textAlign:'center', marginTop:'10px', fontSize:'14px', color:'#111', lineHeight:1.2}}>40+ Cities<br/>12 States<br/>Countless Memories ♡</p>
                 </div>
-              ))}
+                <div className="polaroid-card" style={{marginTop:'-30px'}}>
+                  <div className="tape"></div>
+                  <img src="https://images.unsplash.com/photo-1533692328991-08159ff19fca?w=300" style={{width:'100%', height:'100px', objectFit:'cover'}}/>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Interactive Leaflet India Map on the Right */}
-          <div className="lg:col-span-7 w-full">
-            <div className="text-center mb-4 lg:text-left">
-              <span className="badge-orange bg-burgundy/5 text-burgundy border-burgundy/20 uppercase tracking-widest text-[9px] font-mono font-bold">
-                Geographical Database of Milestone Chapters
-              </span>
+        {/* Bottom overlapping cards */}
+        <div className="layout-container hidden md:flex" style={{position:'absolute', bottom:'70px', left:0, right:0, zIndex:30, gap:'20px', justifyContent:'flex-end'}}>
+          {[
+            {img:'https://images.unsplash.com/photo-1546708973-23118ef86b96?w=400', title:'Tricolor Trails 2.0', sub:'12 Cities • Independence Week'},
+            {img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400', title:'Trips & Expeditions', sub:'Mountains • Lakes • More'},
+            {img:'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400', title:'City Meetups', sub:'Connections • Fun • Friends'},
+            {img:'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400', title:'Events & Celebrations', sub:'Moments that matter'}
+          ].map((c,i)=>(
+            <div key={i} className="polaroid-card" style={{width:'200px', padding:'8px 8px 16px 8px', transform:`rotate(${i%2===0?-2:3}deg) translateY(${i*10}px)`}}>
+              <div className="tape"></div>
+              <img src={c.img} style={{width:'100%', height:'90px', objectFit:'cover', borderRadius:'4px'}}/>
+              <h4 style={{fontFamily:'var(--font-heading)', fontWeight:800, fontSize:'13px', marginTop:'12px', color:'#111'}}>{c.title}</h4>
+              <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginTop:'4px'}}>
+                <span style={{fontSize:'9px', color:'#666', fontWeight:600}}>{c.sub}</span>
+                <span style={{background:'#e0e7ff', color:'#4f46e5', width:'14px', height:'14px', borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'9px', fontWeight:'bold'}}>→</span>
+              </div>
             </div>
-            <IndiaMap onCityClick={handleMapCityClick} />
+          ))}
+        </div>
+
+        {/* Ripped paper overlay */}
+        <div className="ripped-paper-bottom"></div>
+      </div>
+
+      {/* Our Journey Timeline */}
+      <div style={{background:'#fcf7e7', padding:'60px 0 100px 0', position:'relative', zIndex:40}}>
+        <div className="layout-container">
+          <div style={{display:'flex', alignItems:'center', gap:'16px', marginBottom:'40px'}}>
+            <div style={{background:'linear-gradient(135deg, #fcd34d, #d97706)', padding:'12px', borderRadius:'50%', boxShadow:'0 4px 12px rgba(217,119,6,0.3)'}}>
+              <Compass size={32} color="#fff" />
+            </div>
+            <div>
+              <h3 style={{fontFamily:'var(--font-heading)', fontSize:'28px', fontWeight:800, color:'#111', lineHeight:1}}>Our Journey</h3>
+              <p className="font-script" style={{fontSize:'24px', color:'#666', marginTop:'4px'}}>A timeline of memories</p>
+            </div>
+          </div>
+          
+          <div style={{position:'relative', overflow:'visible'}}>
+            <Timeline activeMonthId={activeMonthId} onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} />
           </div>
         </div>
       </div>
 
-      {/* Footer/Bottom: Unified Horizontal Month-by-Month Timeline */}
-      <div style={{background:'rgba(252,247,231,0.6)', borderTop:'1px solid rgba(74,18,37,0.08)', padding:'32px 0 28px'}}>
-        <div className="layout-container" style={{display:'flex', flexDirection:'column', gap:'8px'}}>
-
-          {/* Header row: label + CTA pill */}
-          <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'8px'}}>
-            <span style={{
-              fontFamily:'var(--font-mono)', fontSize:'10px', fontWeight:700,
-              color:'rgba(74,18,37,0.45)', textTransform:'uppercase', letterSpacing:'0.1em'
-            }}>✦ Journey Timeline — Hover to Preview ✦</span>
-
-            <button
-              onClick={handleExploreJourney}
-              style={{
-                display:'inline-flex', alignItems:'center', gap:'10px',
-                padding:'10px 20px',
-                background:'var(--color-burgundy)',
-                border:'none',
-                borderRadius:'99px',
-                color:'white',
-                fontFamily:'var(--font-mono)',
-                fontSize:'11px', fontWeight:700,
-                letterSpacing:'0.06em', textTransform:'uppercase',
-                cursor:'pointer',
-                boxShadow:'0 4px 16px -4px rgba(74,18,37,0.3)',
-                transition:'all 0.25s ease',
-                whiteSpace:'nowrap',
-                flexShrink: 0
-              }}
-              onMouseEnter={e=>{
-                e.currentTarget.style.background='var(--color-burgundy-glow)';
-                e.currentTarget.style.transform='translateY(-2px)';
-                e.currentTarget.style.boxShadow='0 8px 22px -4px rgba(74,18,37,0.38)';
-              }}
-              onMouseLeave={e=>{
-                e.currentTarget.style.background='var(--color-burgundy)';
-                e.currentTarget.style.transform='translateY(0)';
-                e.currentTarget.style.boxShadow='0 4px 16px -4px rgba(74,18,37,0.3)';
-              }}
-            >
-              <span style={{fontSize:'14px'}}>🧭</span>
-              Explore Full Journey
-              <span style={{fontSize:'13px'}}>→</span>
-            </button>
+      {/* Footer */}
+      <div style={{background:'#1c1917', color:'white', padding:'40px 0'}}>
+        <div className="layout-container" style={{display:'flex', flexDirection:'column', md:{flexDirection:'row'}, justifyContent:'space-between', alignItems:'center', gap:'20px'}}>
+          <div className="font-script" style={{fontSize:'26px', color:'#fbbf24', textAlign:'center', md:{textAlign:'left'}}}>
+            Every trip tells a story,<br/>Every person adds to it. ♡
           </div>
-
-          {/* Timeline bar */}
-          <div style={{overflow:'visible', position:'relative'}}>
-            <Timeline
-              activeMonthId={activeMonthId}
-              onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)}
-            />
+          <div style={{textAlign:'center'}}>
+            <h4 style={{fontFamily:'var(--font-heading)', fontSize:'20px', fontWeight:600, color:'white'}}>The Journey Continues...</h4>
+            <p style={{fontSize:'14px', color:'#a8a29e'}}>Let's keep exploring the world, together!</p>
           </div>
-
+          <button onClick={handleExploreJourney} style={{background:'#d97706', color:'white', padding:'12px 24px', borderRadius:'99px', fontSize:'14px', fontWeight:600, display:'flex', gap:'8px', alignItems:'center', boxShadow:'0 4px 12px rgba(217,119,6,0.3)'}}>
+            Explore Full Tenure Report →
+          </button>
         </div>
       </div>
     </div>
