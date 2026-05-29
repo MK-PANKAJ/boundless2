@@ -592,12 +592,12 @@ export default function App() {
             </div>
 
             {/* Expanded Content Details Grid */}
-            <div className="p-8 md:p-12 space-y-8 bg-transparent">
+            <div className="detail-content-pad bg-transparent">
               
               {/* Event Metadata Ribbon */}
               <div className="flex flex-col sm:flex-row gap-6 pb-6 border-b border-burgundy/10">
                 <div className="flex-1 flex items-start gap-4">
-                  <div className="p-3 bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
+                  <div style={{padding: '12px'}} className="bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
                     <Clock size={20} />
                   </div>
                   <div>
@@ -609,7 +609,7 @@ export default function App() {
                 <div className="hidden sm:block w-px bg-burgundy/10"></div>
                 
                 <div className="flex-1 flex items-start gap-4">
-                  <div className="p-3 bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
+                  <div style={{padding: '12px'}} className="bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
                     <MapPin size={20} />
                   </div>
                   <div>
@@ -621,7 +621,7 @@ export default function App() {
                 <div className="hidden sm:block w-px bg-burgundy/10"></div>
                 
                 <div className="flex-1 flex items-start gap-4">
-                  <div className="p-3 bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
+                  <div style={{padding: '12px'}} className="bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
                     <Users size={20} />
                   </div>
                   <div>

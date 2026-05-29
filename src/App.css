@@ -867,6 +867,18 @@
   box-shadow: 0 20px 50px -15px rgba(74, 18, 37, 0.1);
 }
 
+.detail-content-pad {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+@media (min-width: 768px) {
+  .detail-content-pad {
+    padding: 48px;
+  }
+}
+
 /* Timeline section heading label */
 .timeline-section-label {
   display: flex;
