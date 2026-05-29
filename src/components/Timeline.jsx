@@ -6,8 +6,8 @@ export default function Timeline({ activeMonthId, onMonthSelect }) {
   const eventsByMonth = getEventsByMonth();
 
   return (
-    <div className="timeline-scroll-wrapper overflow-x-auto pb-4 scrollbar-thin overflow-visible">
-      <div className="timeline-wrapper animate-in fade-in" style={{ minWidth: '980px' }}>
+    <div className="timeline-scroll-wrapper">
+      <div className="timeline-wrapper animate-in fade-in">
         <div className="timeline">
           <div className="flex-container justify-between" style={{ display: 'flex', width: '100%', position: 'relative', zIndex: 5 }}>
             {timelineMonths.map((m, index) => {

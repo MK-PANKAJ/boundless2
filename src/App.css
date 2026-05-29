@@ -603,13 +603,10 @@
 
 /* Timeline scroll wrap & layout */
 .timeline-scroll-wrapper {
-  overflow-x: auto;
   width: 100%;
   position: relative;
-  overflow-y: visible;
+  overflow: visible;
   padding: 20px 0;
-  scroll-behavior: smooth;
-  scrollbar-width: thin;
 }
 
 .timeline-scroll-wrapper::-webkit-scrollbar {

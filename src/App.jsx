@@ -276,42 +276,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* Timeline Navigation - Brought to the top below the header */}
-      <div className="bg-sand-light/50 border-b border-burgundy/10 py-12 relative overflow-visible">
-        <div className="layout-container flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-visible">
-          
-          {/* Unified bar Timeline */}
-          <div className="flex-1 w-full relative overflow-visible">
-            <h3 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest mb-6 text-center lg:text-left">
-              ✦ CHRONOLOGICAL JOURNEY TIMELINE (HOVER TO PREVIEW) ✦
-            </h3>
-            
-            <Timeline 
-              activeMonthId={activeMonthId} 
-              onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
-            />
-          </div>
-          
-          {/* CTA Explore Journey button */}
-          <div className="flex flex-col items-center lg:items-end justify-center w-full lg:w-[220px] pt-4 lg:pt-8">
-            <button 
-              onClick={handleExploreJourney} 
-              className="explore-journey-cta-btn flex items-center justify-between gap-4 w-full sm:w-auto lg:w-full"
-            >
-              <div className="text-left">
-                <span className="block text-[10px] font-mono tracking-widest text-gold font-bold uppercase">Begin Exploration</span>
-                <span className="font-heading text-sm font-extrabold uppercase text-white tracking-wide">EXPLORE JOURNEY</span>
-              </div>
-              <ArrowRight size={18} className="text-gold transition-transform group-hover:translate-x-1.5" />
-            </button>
-            <span className="text-[9px] font-mono text-gray-400 font-bold tracking-widest mt-2 uppercase text-center lg:text-right">
-              ★ Start from AUG 2025
-            </span>
-          </div>
-
-        </div>
-      </div>
-
       {/* Editorial Journey Summary */}
       <div className="layout-container py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -357,6 +321,42 @@ export default function App() {
             </div>
             <IndiaMap onCityClick={handleMapCityClick} />
           </div>
+        </div>
+      </div>
+
+      {/* Footer/Bottom: Unified Horizontal Month-by-Month Timeline */}
+      <div className="bg-sand-light/50 border-t border-burgundy/10 py-12 relative overflow-visible">
+        <div className="layout-container flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-visible">
+          
+          {/* Unified bar Timeline */}
+          <div className="flex-1 w-full relative overflow-visible">
+            <h3 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest mb-6 text-center lg:text-left">
+              ✦ CHRONOLOGICAL JOURNEY TIMELINE (HOVER TO PREVIEW) ✦
+            </h3>
+            
+            <Timeline 
+              activeMonthId={activeMonthId} 
+              onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
+            />
+          </div>
+          
+          {/* CTA Explore Journey button */}
+          <div className="flex flex-col items-center lg:items-end justify-center w-full lg:w-[220px] pt-4 lg:pt-8">
+            <button 
+              onClick={handleExploreJourney} 
+              className="explore-journey-cta-btn flex items-center justify-between gap-4 w-full sm:w-auto lg:w-full"
+            >
+              <div className="text-left">
+                <span className="block text-[10px] font-mono tracking-widest text-gold font-bold uppercase">Begin Exploration</span>
+                <span className="font-heading text-sm font-extrabold uppercase text-white tracking-wide">EXPLORE JOURNEY</span>
+              </div>
+              <ArrowRight size={18} className="text-gold transition-transform group-hover:translate-x-1.5" />
+            </button>
+            <span className="text-[9px] font-mono text-gray-400 font-bold tracking-widest mt-2 uppercase text-center lg:text-right">
+              ★ Start from AUG 2025
+            </span>
+          </div>
+
         </div>
       </div>
     </div>
