@@ -280,35 +280,65 @@ export default function App() {
       <div className="layout-container py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Summary Text on the Left */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Summary Text — redesigned */}
+          <div className="lg:col-span-5" style={{display:'flex', flexDirection:'column', gap:'28px'}}>
+
             <span className="badge-orange uppercase tracking-wider text-[10px] font-bold">
               Tenure Chronicles
             </span>
+
             <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-burgundy leading-tight">
-              Connecting Explorers In Person
+              Connecting Explorers<br/>In Person
             </h2>
-            <p className="text-sm md:text-base text-gray-600 leading-relaxed font-light">
-              Over the past year, the Boundless Travel Society has transformed digital student interactions into in-person communities. Supported by the IIT Madras BS Student Activity Fee, we organized milestone chapters traversing deep forests, misty peaks, and golden shorelines.
+
+            {/* Pull-quote callout */}
+            <div style={{
+              borderLeft: '3px solid var(--color-gold)',
+              paddingLeft: '16px',
+              marginTop: '-4px'
+            }}>
+              <p style={{
+                fontSize: '14px', color: 'rgba(74,18,37,0.7)', fontWeight: 300,
+                lineHeight: '1.75', margin: 0
+              }}>
+                Over the past year the Boundless Travel Society has turned digital friendships into real ones — from misty Himalayan passes to golden coastal cliffs, from Independence Day flag hoistings to 4-day cultural road-trips across Rajasthan.
+              </p>
+            </div>
+
+            <p style={{fontSize:'13px', color:'rgba(74,18,37,0.5)', lineHeight:'1.65', fontWeight:300, margin:0}}>
+              Every city meetup is more than a pin on a map. It is a chapter of student leadership, peer bonding, and shared adventure — funded and trusted by the IIT Madras BS programme.
             </p>
-            <p className="text-sm text-gray-500 font-light leading-relaxed">
-              Every city meetup and flag hoisting is more than a dot on a map — it represents deep student integration, leadership, and joint exploration outside virtual classrooms.
-            </p>
-            
-            {/* Minimalist Stats Grid */}
-            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-burgundy/10">
-              <div>
-                <div className="font-heading text-2xl font-bold text-burgundy">5200+</div>
-                <div className="text-[10px] uppercase font-bold text-gray-400 font-mono tracking-wider">Members</div>
-              </div>
-              <div>
-                <div className="font-heading text-2xl font-bold text-burgundy">40+</div>
-                <div className="text-[10px] uppercase font-bold text-gray-400 font-mono tracking-wider">Cities</div>
-              </div>
-              <div>
-                <div className="font-heading text-2xl font-bold text-burgundy">15+</div>
-                <div className="text-[10px] uppercase font-bold text-gray-400 font-mono tracking-wider">Expeditions</div>
-              </div>
+
+            {/* Stat cards row */}
+            <div style={{
+              display:'grid', gridTemplateColumns:'repeat(3,1fr)',
+              gap:'12px', paddingTop:'20px',
+              borderTop:'1px solid rgba(74,18,37,0.1)'
+            }}>
+              {[
+                { emoji:'👥', value:'5200+', label:'Members' },
+                { emoji:'🗺️', value:'40+',   label:'Cities' },
+                { emoji:'🏕️', value:'15+',   label:'Trips' },
+              ].map(({emoji, value, label}) => (
+                <div key={label} style={{
+                  background:'rgba(74,18,37,0.04)',
+                  border:'1px solid rgba(74,18,37,0.08)',
+                  borderRadius:'14px',
+                  padding:'14px 12px',
+                  textAlign:'center'
+                }}>
+                  <div style={{fontSize:'22px', marginBottom:'4px'}}>{emoji}</div>
+                  <div style={{
+                    fontFamily:'var(--font-heading)', fontSize:'22px',
+                    fontWeight:800, color:'var(--color-burgundy)', lineHeight:1
+                  }}>{value}</div>
+                  <div style={{
+                    fontFamily:'var(--font-mono)', fontSize:'9px',
+                    fontWeight:700, color:'rgba(74,18,37,0.45)',
+                    textTransform:'uppercase', letterSpacing:'0.08em', marginTop:'4px'
+                  }}>{label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -325,36 +355,57 @@ export default function App() {
       </div>
 
       {/* Footer/Bottom: Unified Horizontal Month-by-Month Timeline */}
-      <div className="bg-sand-light/50 border-t border-burgundy/10 py-12 relative overflow-visible">
-        <div className="layout-container flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-visible">
-          
-          {/* Unified bar Timeline */}
-          <div className="flex-1 w-full relative overflow-visible">
-            <h3 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest mb-6 text-center lg:text-left">
-              ✦ CHRONOLOGICAL JOURNEY TIMELINE (HOVER TO PREVIEW) ✦
-            </h3>
-            
-            <Timeline 
-              activeMonthId={activeMonthId} 
-              onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
-            />
-          </div>
-          
-          {/* CTA Explore Journey button */}
-          <div className="flex flex-col items-center lg:items-end justify-center w-full lg:w-[220px] pt-4 lg:pt-8">
-            <button 
-              onClick={handleExploreJourney} 
-              className="explore-journey-cta-btn flex items-center justify-between gap-4 w-full sm:w-auto lg:w-full"
+      <div style={{background:'rgba(252,247,231,0.6)', borderTop:'1px solid rgba(74,18,37,0.08)', padding:'32px 0 28px'}}>
+        <div className="layout-container" style={{display:'flex', flexDirection:'column', gap:'8px'}}>
+
+          {/* Header row: label + CTA pill */}
+          <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'8px'}}>
+            <span style={{
+              fontFamily:'var(--font-mono)', fontSize:'10px', fontWeight:700,
+              color:'rgba(74,18,37,0.45)', textTransform:'uppercase', letterSpacing:'0.1em'
+            }}>✦ Journey Timeline — Hover to Preview ✦</span>
+
+            <button
+              onClick={handleExploreJourney}
+              style={{
+                display:'inline-flex', alignItems:'center', gap:'10px',
+                padding:'10px 20px',
+                background:'var(--color-burgundy)',
+                border:'none',
+                borderRadius:'99px',
+                color:'white',
+                fontFamily:'var(--font-mono)',
+                fontSize:'11px', fontWeight:700,
+                letterSpacing:'0.06em', textTransform:'uppercase',
+                cursor:'pointer',
+                boxShadow:'0 4px 16px -4px rgba(74,18,37,0.3)',
+                transition:'all 0.25s ease',
+                whiteSpace:'nowrap',
+                flexShrink: 0
+              }}
+              onMouseEnter={e=>{
+                e.currentTarget.style.background='var(--color-burgundy-glow)';
+                e.currentTarget.style.transform='translateY(-2px)';
+                e.currentTarget.style.boxShadow='0 8px 22px -4px rgba(74,18,37,0.38)';
+              }}
+              onMouseLeave={e=>{
+                e.currentTarget.style.background='var(--color-burgundy)';
+                e.currentTarget.style.transform='translateY(0)';
+                e.currentTarget.style.boxShadow='0 4px 16px -4px rgba(74,18,37,0.3)';
+              }}
             >
-              <div className="text-left">
-                <span className="block text-[10px] font-mono tracking-widest text-gold font-bold uppercase">Begin Exploration</span>
-                <span className="font-heading text-sm font-extrabold uppercase text-white tracking-wide">EXPLORE JOURNEY</span>
-              </div>
-              <ArrowRight size={18} className="text-gold transition-transform group-hover:translate-x-1.5" />
+              <span style={{fontSize:'14px'}}>🧭</span>
+              Explore Full Journey
+              <span style={{fontSize:'13px'}}>→</span>
             </button>
-            <span className="text-[9px] font-mono text-gray-400 font-bold tracking-widest mt-2 uppercase text-center lg:text-right">
-              ★ Start from AUG 2025
-            </span>
+          </div>
+
+          {/* Timeline bar */}
+          <div style={{overflow:'visible', position:'relative'}}>
+            <Timeline
+              activeMonthId={activeMonthId}
+              onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)}
+            />
           </div>
 
         </div>
@@ -591,18 +642,56 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Multi-Day Detailed Timeline Itinerary (if available) */}
+              {/* Multi-Day Detailed Itinerary — numbered steps */}
               {event.itinerary && event.itinerary.length > 0 && (
-                <div className="space-y-6 pt-6 border-t border-burgundy/10">
-                  <h3 className="font-heading text-xl font-bold text-burgundy">Day-by-Day Expedition Itinerary</h3>
-                  <div className="timeline-container">
+                <div style={{paddingTop:'28px', borderTop:'1px solid rgba(74,18,37,0.1)'}}>
+                  <h3 style={{
+                    fontFamily:'var(--font-heading)', fontSize:'20px',
+                    fontWeight:800, color:'var(--color-burgundy)',
+                    marginBottom:'24px'
+                  }}>Day-by-Day Expedition Itinerary</h3>
+
+                  <div style={{display:'flex', flexDirection:'column', gap:'16px'}}>
                     {event.itinerary.map((item, index) => (
-                      <div key={index} className="timeline-item">
-                        <div className="timeline-dot timeline-dot-orange" />
-                        <div className="p-5 bg-white border border-burgundy/10 rounded-xl space-y-2 shadow-sm">
-                          <span className="badge-orange text-[9px] font-mono">{item.day}</span>
-                          <h4 className="font-heading text-sm font-bold text-burgundy">{item.title}</h4>
-                          <p className="text-xs text-gray-500 font-light leading-relaxed">{item.description}</p>
+                      <div key={index} style={{
+                        display:'flex', gap:'20px', alignItems:'flex-start'
+                      }}>
+                        {/* Day number bubble */}
+                        <div style={{
+                          flexShrink:0,
+                          width:'44px', height:'44px',
+                          borderRadius:'50%',
+                          background:'var(--color-burgundy)',
+                          color:'white',
+                          display:'flex', alignItems:'center', justifyContent:'center',
+                          fontFamily:'var(--font-heading)', fontSize:'14px', fontWeight:800
+                        }}>
+                          {index + 1}
+                        </div>
+
+                        {/* Card */}
+                        <div style={{
+                          flex:1,
+                          background:'rgba(74,18,37,0.03)',
+                          border:'1px solid rgba(74,18,37,0.09)',
+                          borderRadius:'14px',
+                          padding:'16px 20px'
+                        }}>
+                          <div style={{
+                            fontFamily:'var(--font-mono)', fontSize:'9px',
+                            fontWeight:700, color:'var(--color-gold)',
+                            textTransform:'uppercase', letterSpacing:'0.08em',
+                            marginBottom:'6px'
+                          }}>{item.day}</div>
+                          <h4 style={{
+                            fontFamily:'var(--font-heading)', fontSize:'14px',
+                            fontWeight:800, color:'var(--color-burgundy)',
+                            margin:'0 0 8px 0'
+                          }}>{item.title}</h4>
+                          <p style={{
+                            fontSize:'12px', color:'rgba(74,18,37,0.55)',
+                            fontWeight:300, lineHeight:'1.65', margin:0
+                          }}>{item.description}</p>
                         </div>
                       </div>
                     ))}
