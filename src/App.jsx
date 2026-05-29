@@ -405,10 +405,11 @@ export default function App() {
           {monthEvents.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {monthEvents.map((event) => (
-                <div 
+                <div
                   key={event.id}
                   onClick={() => navigateTo('detail', activeMonthId, event.id)}
                   className="monthly-event-card"
+                  style={{display:'flex', flexDirection:'column'}}
                 >
                   <div className="monthly-card-img-frame">
                     <img src={event.image} alt={event.title} />
@@ -416,22 +417,42 @@ export default function App() {
                       {event.category.toUpperCase()}
                     </div>
                   </div>
-                  
-                  <div className="p-6 space-y-4">
-                    <div>
-                      <span className="block text-[9px] font-mono font-bold text-gold uppercase tracking-wider mb-1">
-                        📍 {event.tagline || event.mainEventTitle}
-                      </span>
-                      <h3 className="font-heading text-lg font-bold text-burgundy hover:text-gold transition-colors line-clamp-1">
-                        {event.title}
-                      </h3>
-                    </div>
-                    
-                    <p className="text-xs text-gray-500 font-light leading-relaxed line-clamp-3">
+
+                  {/* Card body — flex column so footer always pins to bottom */}
+                  <div style={{display:'flex', flexDirection:'column', flex:1, padding:'20px 20px 16px 20px', gap:'10px'}}>
+
+                    {/* Tagline — strict 1 line */}
+                    <span style={{
+                      display:'block', fontSize:'9px', fontFamily:'var(--font-mono)',
+                      fontWeight:700, color:'var(--color-gold)', textTransform:'uppercase',
+                      letterSpacing:'0.07em', lineHeight:'1.3',
+                      overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'
+                    }}>
+                      📍 {event.tagline || event.mainEventTitle}
+                    </span>
+
+                    {/* Title — strict 1 line */}
+                    <h3 style={{
+                      fontFamily:'var(--font-heading)', fontSize:'17px', fontWeight:800,
+                      color:'var(--color-burgundy)', lineHeight:'1.25', margin:0,
+                      overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'
+                    }}>
+                      {event.title}
+                    </h3>
+
+                    {/* Description — always exactly 3 lines */}
+                    <p style={{
+                      flex:1,
+                      fontSize:'12px', color:'rgba(74,18,37,0.55)', fontWeight:300,
+                      lineHeight:'1.6', margin:0,
+                      display:'-webkit-box', WebkitLineClamp:3,
+                      WebkitBoxOrient:'vertical', overflow:'hidden'
+                    }}>
                       {event.summary}
                     </p>
-                    
-                    <div className="flex justify-between items-center pt-4 border-t border-burgundy/8" style={{borderTopColor:'rgba(74,18,37,0.07)'}}>
+
+                    {/* Footer badges — always at bottom */}
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', paddingTop:'12px', borderTop:'1px solid rgba(74,18,37,0.07)', marginTop:'4px'}}>
                       <span style={{display:'inline-flex',alignItems:'center',gap:'5px',background:'rgba(74,18,37,0.05)',borderRadius:'99px',padding:'4px 10px',fontSize:'10px',fontFamily:'var(--font-mono)',fontWeight:700,color:'var(--color-burgundy)',letterSpacing:'0.04em'}}>
                         📅 {event.date}
                       </span>
@@ -613,31 +634,8 @@ export default function App() {
               )}
 
 
-              {/* Event Navigation Footer controls */}
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-10 border-t border-burgundy/10 mt-12">
-                <button 
-                  onClick={goBack}
-                  style={{
-                    display:'inline-flex', alignItems:'center', gap:'10px',
-                    padding:'14px 28px',
-                    border:'1.5px solid rgba(74,18,37,0.2)',
-                    borderRadius:'14px',
-                    background:'transparent',
-                    color:'var(--color-burgundy)',
-                    fontFamily:'var(--font-mono)',
-                    fontSize:'11px', fontWeight:700,
-                    letterSpacing:'0.06em', textTransform:'uppercase',
-                    cursor:'pointer',
-                    transition:'all 0.25s ease',
-                    width:'100%', justifyContent:'center'
-                  }}
-                  onMouseEnter={e=>{ e.currentTarget.style.background='rgba(74,18,37,0.05)'; e.currentTarget.style.borderColor='rgba(74,18,37,0.35)'; }}
-                  onMouseLeave={e=>{ e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(74,18,37,0.2)'; }}
-                >
-                  <span style={{fontSize:'14px'}}>←</span>
-                  Return to {timelineMonths.find(m => m.id === activeMonthId)?.label} Feed
-                </button>
-                
+              {/* Event Navigation Footer — Next Event CTA only */}
+              <div style={{display:'flex', justifyContent:'center', paddingTop:'40px', borderTop:'1px solid rgba(74,18,37,0.1)', marginTop:'48px'}}>
                 {nextNav && (
                   <button
                     onClick={() => {
@@ -648,25 +646,24 @@ export default function App() {
                       }
                     }}
                     style={{
-                      display:'inline-flex', alignItems:'center', gap:'10px',
-                      padding:'14px 28px',
+                      display:'inline-flex', alignItems:'center', gap:'12px',
+                      padding:'16px 40px',
                       border:'none',
                       borderRadius:'14px',
                       background:'var(--color-burgundy)',
                       color:'white',
                       fontFamily:'var(--font-mono)',
                       fontSize:'11px', fontWeight:700,
-                      letterSpacing:'0.06em', textTransform:'uppercase',
+                      letterSpacing:'0.07em', textTransform:'uppercase',
                       cursor:'pointer',
                       transition:'all 0.25s ease',
                       boxShadow:'0 6px 20px -4px rgba(74,18,37,0.28)',
-                      width:'100%', justifyContent:'center'
                     }}
                     onMouseEnter={e=>{ e.currentTarget.style.background='var(--color-burgundy-glow)'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 10px 28px -6px rgba(74,18,37,0.38)'; }}
                     onMouseLeave={e=>{ e.currentTarget.style.background='var(--color-burgundy)'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 6px 20px -4px rgba(74,18,37,0.28)'; }}
                   >
                     <span>{nextNav.label.toUpperCase()} : {nextNav.title ? nextNav.title.toUpperCase() : 'OVERVIEW'}</span>
-                    <span style={{fontSize:'15px'}}>→</span>
+                    <span style={{fontSize:'16px'}}>→</span>
                   </button>
                 )}
               </div>
