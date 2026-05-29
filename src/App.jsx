@@ -5,6 +5,7 @@ import {
   Image as ImageIcon, BookOpen, Menu
 } from 'lucide-react';
 import IndiaMap from './components/IndiaMap';
+import Timeline from './components/Timeline';
 import { timelineMonths, getTimelineEvents, getEventsByMonth } from './data/timelineEvents';
 
 export default function App() {
@@ -15,9 +16,7 @@ export default function App() {
   
   // Interactive UI States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [hoveredMonth, setHoveredMonth] = useState(null);
   const [viewHistory, setViewHistory] = useState([]); // Call stack for custom go back buttons
-  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
   // Lightbox State
   const [lightboxState, setLightboxState] = useState({
@@ -252,18 +251,7 @@ export default function App() {
 
   const nextNav = getNextEventNavigation();
 
-  // Handle timeline hover positioning
-  const handleTimelineHover = (e, m, index) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const timelineContainer = e.currentTarget.closest('.timeline-scroll-wrapper');
-    const scrollLeft = timelineContainer ? timelineContainer.scrollLeft : 0;
-    
-    setTooltipPos({
-      x: rect.left + rect.width / 2 + scrollLeft,
-      y: rect.top - 12
-    });
-    setHoveredMonth({ ...m, index });
-  };
+  // Chronological navigation helpers are handled within subcomponents or layout handlers
 
   // --- RENDERING SUB-VIEWS ---
 
@@ -336,117 +324,20 @@ export default function App() {
         </div>
       </div>
 
-      {/* Footer/Bottom: Horizontal Month-by-Month Timeline */}
+      {/* Footer/Bottom: Unified Horizontal Month-by-Month Timeline */}
       <div className="bg-sand-light/50 border-t border-burgundy/10 py-12 relative overflow-visible">
         <div className="layout-container flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-visible">
           
-          {/* SVG Wavy Timeline */}
+          {/* Unified bar Timeline */}
           <div className="flex-1 w-full relative overflow-visible">
             <h3 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest mb-6 text-center lg:text-left">
               ✦ CHRONOLOGICAL JOURNEY TIMELINE (HOVER TO PREVIEW) ✦
             </h3>
             
-            <div className="timeline-scroll-wrapper overflow-x-auto pb-4 scrollbar-thin overflow-visible">
-              <div className="relative overflow-visible" style={{ width: `${svgWidth}px`, height: `${svgHeight}px` }}>
-                <svg width={svgWidth} height={svgHeight} className="overflow-visible select-none">
-                  {/* Wavy stroke path */}
-                  <path 
-                    d={compileWavyPath()} 
-                    fill="none" 
-                    stroke="var(--color-burgundy)" 
-                    strokeWidth="2.5" 
-                    strokeDasharray="4 4" 
-                    className="timeline-wavy-path" 
-                  />
-                  
-                  {/* Timeline interactive nodes */}
-                  {timelineMonths.map((m, index) => {
-                    const { x, y } = getTimelineNodeCoords(index);
-                    const monthEventsCount = (eventsByMonth[m.id] || []).length;
-                    const isActive = activeMonthId === m.id;
-                    
-                    return (
-                      <g 
-                        key={m.id} 
-                        className="cursor-pointer group"
-                        onMouseEnter={(e) => handleTimelineHover(e, m, index)}
-                        onMouseLeave={() => setHoveredMonth(null)}
-                        onClick={() => navigateTo('monthly', m.id, null)}
-                      >
-                        {/* Glow halo on hover/active */}
-                        <circle 
-                          cx={x} 
-                          cy={y} 
-                          r="16" 
-                          fill="var(--color-gold)" 
-                          opacity={hoveredMonth?.id === m.id || isActive ? 0.25 : 0} 
-                          className="transition-all duration-300 transform scale-100 group-hover:scale-125"
-                        />
-                        {/* Pulsing Base Ring */}
-                        <circle 
-                          cx={x} 
-                          cy={y} 
-                          r="8" 
-                          fill="var(--color-burgundy)" 
-                          className={`transition-all duration-300 ${isActive ? 'fill-gold scale-125' : 'group-hover:fill-gold'}`} 
-                        />
-                        {/* Outer thin ring */}
-                        <circle 
-                          cx={x} 
-                          cy={y} 
-                          r="12" 
-                          fill="none" 
-                          stroke="var(--color-burgundy)" 
-                          strokeWidth="1" 
-                          className="opacity-40 group-hover:opacity-100 transition-opacity" 
-                        />
-                        {/* Text Month Label */}
-                        <text 
-                          x={x} 
-                          y={y > 80 ? y - 20 : y + 25} 
-                          textAnchor="middle" 
-                          className="text-timeline-label font-bold uppercase tracking-wider"
-                          fill="var(--color-burgundy)"
-                        >
-                          {m.label}
-                        </text>
-                        {/* Tiny badge showing events count */}
-                        {monthEventsCount > 0 && (
-                          <circle 
-                            cx={x + 7} 
-                            cy={y - 7} 
-                            r="5" 
-                            fill="var(--color-gold)" 
-                          />
-                        )}
-                      </g>
-                    );
-                  })}
-                </svg>
-
-                {/* Glassmorphic hover tooltip popover */}
-                {hoveredMonth && (
-                  <div 
-                    className="timeline-hover-popover"
-                    style={{
-                      left: hoveredMonth.index * ((svgWidth - 120) / (timelineMonths.length - 1)) + 60,
-                      top: getTimelineNodeCoords(hoveredMonth.index).y > 80 ? getTimelineNodeCoords(hoveredMonth.index).y - 125 : getTimelineNodeCoords(hoveredMonth.index).y + 35
-                    }}
-                  >
-                    <div className="font-heading text-xs font-bold text-burgundy text-center uppercase tracking-wide border-b border-burgundy/10 pb-1 mb-1">
-                      {hoveredMonth.title}
-                    </div>
-                    <div className="text-[10px] text-gray-500 font-light leading-relaxed mb-1.5 text-center">
-                      {hoveredMonth.summary}
-                    </div>
-                    <div className="flex justify-between items-center text-[9px] font-mono font-bold text-burgundy pt-1 border-t border-burgundy/5">
-                      <span>🎒 {eventsByMonth[hoveredMonth.id]?.length || 0} EVENTS</span>
-                      <span className="text-gold">VIEW FEED &rarr;</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+            <Timeline 
+              activeMonthId={activeMonthId} 
+              onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
+            />
           </div>
           
           {/* CTA Explore Journey button */}
@@ -565,37 +456,21 @@ export default function App() {
           )}
         </div>
 
-        {/* Navigation (Bottom): Mini-timeline pagination */}
-        <div className="layout-container border-t border-burgundy/10 pt-10 mt-10">
+        {/* Navigation (Bottom): Unified persistent horizontal bar timeline */}
+        <div className="layout-container border-t border-burgundy/10 pt-10 mt-10 overflow-visible">
           <div className="flex justify-between items-center mb-6">
             <h4 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest">
-              ★ SWITCH MONTHS ★
+              ✦ CHRONOLOGICAL JOURNEY TIMELINE (PERSISTENT NAVIGATION) ✦
             </h4>
             <span className="text-[10px] font-mono text-gray-400 font-bold uppercase tracking-wider">
-              {activeMonthId}
+              Selected: {month ? month.title : ''}
             </span>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-3">
-            {timelineMonths.map((m) => {
-              const isActive = activeMonthId === m.id;
-              const hasEvents = (eventsByMonth[m.id] || []).length > 0;
-              
-              return (
-                <button
-                  key={m.id}
-                  onClick={() => navigateTo('monthly', m.id, null)}
-                  className={`px-3 py-1.5 rounded-full font-bold font-mono text-[10px] uppercase transition-all duration-200 border cursor-pointer ${
-                    isActive 
-                      ? 'bg-burgundy text-white border-burgundy shadow-sm' 
-                      : 'bg-white text-burgundy border-burgundy/10 hover:border-burgundy/30'
-                  } ${!hasEvents && 'opacity-50'}`}
-                >
-                  {m.label} {hasEvents && '•'}
-                </button>
-              );
-            })}
-          </div>
+          <Timeline 
+            activeMonthId={activeMonthId} 
+            onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
+          />
         </div>
       </div>
     );

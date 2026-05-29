@@ -601,13 +601,13 @@
   text-transform: uppercase;
 }
 
-/* Timeline scroll wrap & SVG */
+/* Timeline scroll wrap & layout */
 .timeline-scroll-wrapper {
   overflow-x: auto;
   width: 100%;
   position: relative;
   overflow-y: visible;
-  padding: 10px 0;
+  padding: 20px 0;
   scroll-behavior: smooth;
   scrollbar-width: thin;
 }
@@ -630,43 +630,152 @@
   background: rgba(74, 18, 37, 0.2);
 }
 
-.timeline-wavy-path {
-  stroke-dasharray: 6 6;
-  animation: flowTimeline 40s linear infinite;
+/* Persistent Horizontal Bar Timeline */
+.timeline-wrapper {
+  width: 100%;
+  padding: 150px 0 12px 0;
+  position: relative;
+  overflow: visible;
 }
 
-@keyframes flowTimeline {
-  0% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 200; }
+.timeline {
+  width: 100%;
+  position: relative;
+  height: 120px;
+  overflow: visible;
+  perspective: 5000px;
 }
 
-.text-timeline-label {
-  font-family: var(--font-sans) !important;
-  font-size: 10px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.08em !important;
+.timeline .flex-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
-/* Glassmorphic hover tooltip popover */
-.timeline-hover-popover {
+/* Horizontal Thick Timeline Bar */
+.timeline::before {
   position: absolute;
-  width: 220px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(74, 18, 37, 0.12);
-  border-radius: 14px;
-  padding: 14px;
-  box-shadow: 0 15px 30px -10px rgba(74, 18, 37, 0.15);
-  z-index: 999;
+  content: "";
+  width: 100%;
+  height: 15px;
+  background-color: rgba(74, 18, 37, 0.18); /* $gray equivalent */
+  border-radius: 15px;
+  top: 76px;
+  left: 0;
+  z-index: 1;
+}
+
+.timeline-item {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 90px;
+}
+
+.timeline-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-burgundy);
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+  margin-top: 16px;
+}
+
+.timeline-item:hover .timeline-label {
+  color: var(--color-gold);
+}
+
+.timeline-item.selected .timeline-label {
+  color: var(--color-gold);
+  font-weight: 950;
+}
+
+/* Month Circle Dot Node via pseudo-element */
+.timeline-item::after {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 69px;
+  left: 50%;
+  margin-left: -15px;
+  background-color: #fffaf0; /* $lightGray equivalent */
+  border: 5px solid rgba(74, 18, 37, 0.18); /* $gray equivalent */
+  content: "";
+  border-radius: 50%;
+  transition: transform .5s ease;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(74, 18, 37, 0.1);
+}
+
+.timeline-item:hover::after {
+  transform: scale(1.5, 1.5);
+  border-color: var(--color-burgundy);
+}
+
+.timeline-item.selected::after {
+  background-color: var(--color-burgundy); /* $blue equivalent */
+  border: 5px solid var(--color-gold); /* $lightBlue equivalent */
+  transform: scale(1.5, 1.5);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+}
+
+/* Dropdown popover */
+.timeline-dropdown-popover {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
   transform: translateX(-50%);
-  pointer-events: none;
+  width: 240px;
+  background: white;
+  box-shadow: 0 10px 30px -5px rgba(74, 18, 37, 0.18);
+  border-radius: 12px;
+  border: 1px solid rgba(74, 18, 37, 0.12);
+  padding: 14px;
+  z-index: 500;
   animation: popPopover 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes popPopover {
-  from { opacity: 0; transform: translateX(-50%) scale(0.9) translateY(6px); }
-  to { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); }
+.arrow-down-triangle {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+  filter: drop-shadow(0 2px 2px rgba(74, 18, 37, 0.05));
+}
+
+/* Tooltip dynamic boundary offsets */
+.timeline-dropdown-popover.align-left {
+  left: -10px;
+  transform: none;
+}
+
+.timeline-dropdown-popover.align-left .arrow-down-triangle {
+  left: 55px;
+  transform: translateX(-50%);
+}
+
+.timeline-dropdown-popover.align-right {
+  left: auto;
+  right: -10px;
+  transform: none;
+}
+
+.timeline-dropdown-popover.align-right .arrow-down-triangle {
+  left: auto;
+  right: 55px;
+  transform: translateX(50%);
 }
 
 /* CTA explore button */
@@ -690,6 +799,11 @@
   transform: translateY(-3px);
   box-shadow: 0 15px 30px -5px rgba(74, 18, 37, 0.35);
   border-color: rgba(255, 255, 255, 0.15);
+}
+
+.explore-journey-cta-btn span {
+  display: block;
+  line-height: 1.3;
 }
 
 /* Page 2: Monthly Event Grid Cards */
