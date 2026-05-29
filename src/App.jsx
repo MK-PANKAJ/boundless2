@@ -393,10 +393,11 @@ export default function App() {
               </p>
             </div>
             
-            <div className="bg-[#fffaf0] border border-burgundy/10 px-4 py-2 rounded-xl text-center shadow-sm">
-              <span className="block text-[9px] font-mono text-gray-400 font-bold uppercase tracking-widest">CHAPTER TALLY</span>
-              <span className="font-heading text-lg font-bold text-burgundy">{monthEvents.length} Milestone Events</span>
+            <div className="chapter-tally-chip">
+              <span className="label">Chapter Tally</span>
+              <span className="count">{monthEvents.length} Milestone Events</span>
             </div>
+
           </div>
         </div>
         {/* Content: Visually appealing Event Grid */}
@@ -496,8 +497,8 @@ export default function App() {
         </div>
 
         {/* Level 3 Content: Dedicated Full-Page View */}
-        <div className="layout-container py-12 max-w-4xl">
-          <div className="event-detail-card overflow-hidden bg-white border border-burgundy/15 rounded-3xl shadow-sm">
+        <div className="layout-container py-12">
+          <div className="event-detail-card overflow-hidden">
             
             {/* Visual Cover Header */}
             <div className="h-[280px] md:h-[420px] relative border-b border-burgundy/15 overflow-hidden">
@@ -590,19 +591,17 @@ export default function App() {
                   <h3 className="font-heading text-lg font-bold text-burgundy flex items-center gap-2">
                     <ImageIcon size={18} /> Visual Glimpses & Memories
                   </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {event.glimpses.map((src, i) => (
                       <div 
                         key={i} 
-                        className="relative aspect-video rounded-xl overflow-hidden border border-burgundy/20 cursor-pointer group shadow-sm animate-in zoom-in-95"
+                        className="glimpse-thumb animate-in zoom-in-95"
                         onClick={() => openLightbox(event.glimpses, i, `${event.title} - Glimpse ${i + 1}`)}
                       >
                         <img 
                           src={src} 
                           alt={`${event.title} glimpse`} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300" 
                         />
-                        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
                       </div>
                     ))}
                   </div>
