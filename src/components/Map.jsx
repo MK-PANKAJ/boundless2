@@ -1,86 +1,187 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
-const Map = () => {
-  const mapPins = [
-    { top: '28%', left: '42%', label: 'Delhi' },
-    { top: '40%', left: '32%', label: 'Jaipur' },
-    { top: '62%', left: '30%', label: 'Mumbai' },
-    { top: '80%', left: '45%', label: 'Chennai' },
-    { top: '55%', left: '68%', label: 'Kolkata' },
-    { top: '42%', left: '48%', label: 'Indore' },
-    { top: '48%', left: '55%', label: 'Nagpur' },
-    { top: '60%', left: '60%', label: 'Bhubaneshwar' },
-    { top: '35%', left: '55%', label: 'Gorakhpur' },
-    { top: '40%', left: '62%', label: 'Patna' },
-    { top: '55%', left: '60%', label: 'Jamshedpur' },
-  ];
+const Map = ({ className }) => {
+    const mapContainerRef = useRef(null);
+    const mapInstanceRef = useRef(null);
 
-  return (
-    <div className="relative w-full max-w-[500px] aspect-square animate-in fade-in duration-1000">
-      {/* Map Image */}
-      <div className="absolute inset-0 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] z-0">
-         <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/India_location_map.svg/1024px-India_location_map.svg.png" 
-            alt="India Map" 
-            className="w-full h-full object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.4)] saturate-150 sepia-[0.4] hue-rotate-[-15deg] brightness-[0.85] contrast-[1.2]"
-            style={{ filter: "drop-shadow(2px 0px 0px white) drop-shadow(-2px 0px 0px white) drop-shadow(0px 2px 0px white) drop-shadow(0px -2px 0px white) saturate(1.2) sepia(0.3) brightness(0.9) contrast(1.1)" }}
-         />
-      </div>
-      
-      {/* Route Lines SVG */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-         <path 
-            d="M 42 28 Q 25 30 32 40 Q 40 45 48 42 Q 52 40 55 48 Q 58 55 68 55 Q 65 48 62 40 Q 60 30 55 35 Q 50 35 42 28" 
-            fill="none" 
-            stroke="white" 
-            strokeWidth="0.6" 
-            strokeDasharray="1.5 1.5" 
-            className="opacity-90 drop-shadow-sm"
-         />
-         <path 
-            d="M 32 40 Q 25 50 30 62 Q 35 75 45 80 Q 60 85 70 80 Q 80 75 68 55 Q 65 65 60 60 Q 55 65 55 48" 
-            fill="none" 
-            stroke="white" 
-            strokeWidth="0.6" 
-            strokeDasharray="1.5 1.5" 
-            className="opacity-90 drop-shadow-sm"
-         />
-         {/* Flight path loop and airplane */}
-         <path 
-            d="M 30 62 C 20 75 5 80 15 85 C 25 90 40 85 45 80" 
-            fill="none" 
-            stroke="white" 
-            strokeWidth="0.6" 
-            strokeDasharray="1.5 1.5" 
-            className="opacity-90 drop-shadow-sm"
-         />
-         <g transform="translate(15, 85) rotate(-15) scale(0.25)">
-           <path d="M0,0 L16,-6 L4,10 Z" fill="none" stroke="white" strokeWidth="2.5" />
-           <path d="M0,0 L6,3 L4,10" fill="none" stroke="white" strokeWidth="2.5" />
-         </g>
+    useEffect(() => {
+        if (!mapContainerRef.current || mapInstanceRef.current) return;
+
+        const map = L.map(mapContainerRef.current, {
+            center: [22.5, 82.0],
+            zoom: 5,
+            minZoom: 4,
+            attributionControl: false,
+            zoomControl: false, 
+            scrollWheelZoom: false,
+            dragging: false, // Prevent dragging to keep it looking like a fixed graphic
+            touchZoom: false,
+            doubleClickZoom: false,
+        });
+
+        map.getContainer().style.background = 'transparent';
+        mapInstanceRef.current = map;
+
+        const styleId = 'india-map-styles';
+        if (!document.getElementById(styleId)) {
+            const styleSheet = document.createElement('style');
+            styleSheet.id = styleId;
+            styleSheet.innerText = `
+        .leaflet-container { background: transparent !important; outline: none; }
+        .leaflet-marker-icon.custom-video-icon { background: transparent; border: none; }
+        .state-label { background: transparent; border: none; box-shadow: none; font-weight: bold; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .city-label { background: transparent; border: none; box-shadow: none; font-weight: 800; font-family: serif; font-style: italic; color: #1e293b; text-shadow: 1.5px 1.5px 0 #fff, -1.5px 1.5px 0 #fff, 1.5px -1.5px 0 #fff, -1.5px -1.5px 0 #fff, 0px 2px 3px rgba(0,0,0,0.3); font-size: 14px; }
+      `;
+            document.head.appendChild(styleSheet);
+        }
+
+        map.createPane('statesPane');
+        map.getPane('statesPane').style.zIndex = '450';
+
+        const svgRenderer = L.svg({ padding: 0.5 });
+        const canvasRenderer = L.canvas({ padding: 0.5, pane: 'statesPane' });
+
+        const svgGradient = `
+      <svg style="height: 0; width: 0; position: absolute;" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="india-flag" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#FF671F;stop-opacity:1" />
+            <stop offset="33.33%" style="stop-color:#FF671F;stop-opacity:1" />
+            <stop offset="33.33%" style="stop-color:#FFFFFF;stop-opacity:1" />
+            <stop offset="66.66%" style="stop-color:#FFFFFF;stop-opacity:1" />
+            <stop offset="66.66%" style="stop-color:#046A38;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#046A38;stop-opacity:1" />
+          </linearGradient>
+          <filter id="drop-shadow">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.5"/>
+          </filter>
+        </defs>
       </svg>
+    `;
+        const defsContainer = document.createElement('div');
+        defsContainer.innerHTML = svgGradient;
+        mapContainerRef.current.appendChild(defsContainer);
 
-      {/* Map Pins */}
-      {mapPins.map((pin, i) => (
-        <div key={i} className="absolute flex items-center gap-1.5 -translate-x-1/2 -translate-y-1/2 z-20 group" style={{ top: pin.top, left: pin.left }}>
-          <div className="relative">
-            {/* Custom Teardrop Pin */}
-            <svg viewBox="0 0 24 24" className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-md group-hover:scale-125 transition-transform cursor-pointer">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#f97316" stroke="white" strokeWidth="1.5" />
-              <circle cx="12" cy="9" r="3" fill="white" />
-            </svg>
-            <div className="absolute inset-0 bg-orange-400 rounded-full animate-ping opacity-20 group-hover:opacity-0 pointer-events-none"></div>
-          </div>
-          <span 
-            className="text-[11px] sm:text-[13px] font-serif italic font-extrabold text-slate-800 whitespace-nowrap cursor-pointer transition-transform group-hover:scale-110"
-            style={{ textShadow: '1.5px 1.5px 0 #fff, -1.5px 1.5px 0 #fff, 1.5px -1.5px 0 #fff, -1.5px -1.5px 0 #fff, 0px 2px 3px rgba(0,0,0,0.3)' }}
-          >
-            {pin.label}
-          </span>
+        // Render India Base with Tricolor Gradient and Drop Shadow
+        fetch('https://raw.githubusercontent.com/datameet/maps/master/Country/india-soi.geojson')
+            .then(res => res.json())
+            .then(data => {
+                let multiPolygonCoordinates = [];
+                data.features.forEach((feature) => {
+                    if (feature.geometry.type === 'Polygon') {
+                        multiPolygonCoordinates.push(feature.geometry.coordinates);
+                    } else if (feature.geometry.type === 'MultiPolygon') {
+                        feature.geometry.coordinates.forEach((polyCoords) => {
+                            multiPolygonCoordinates.push(polyCoords);
+                        });
+                    }
+                });
+
+                const unifiedFeature = {
+                    "type": "Feature", "properties": {},
+                    "geometry": { "type": "MultiPolygon", "coordinates": multiPolygonCoordinates }
+                };
+
+                const indiaLayer = L.geoJSON(unifiedFeature, {
+                    renderer: svgRenderer,
+                    style: { 
+                        fillColor: 'url(#india-flag)', 
+                        fillOpacity: 0.7, 
+                        color: "white", 
+                        weight: 2.5,
+                        filter: "url(#drop-shadow)" // Apply nice drop shadow to the border
+                    }
+                });
+                
+                if (mapInstanceRef.current === map) {
+                    indiaLayer.addTo(map);
+                    const bounds = indiaLayer.getBounds();
+                    map.fitBounds(bounds, { padding: [30, 30] });
+                    map.options.minZoom = map.getZoom() - 1;
+                }
+            })
+            .catch(e => console.error(e));
+
+        // State outlines
+        fetch('https://raw.githubusercontent.com/datameet/maps/master/website/docs/data/geojson/states.geojson')
+            .then(res => res.json())
+            .then(data => {
+                const statesLayer = L.geoJSON(data, {
+                    renderer: canvasRenderer,
+                    style: { fillColor: 'transparent', fillOpacity: 0, color: "white", weight: 1, opacity: 0.6, dashArray: "3 4" },
+                });
+                if (mapInstanceRef.current === map) {
+                    statesLayer.addTo(map);
+                }
+            })
+            .catch(e => console.error(e));
+
+        function addCityMarker(lat, lng, locationName) {
+            const htmlStr = `
+              <div class="relative w-6 h-6 flex items-center justify-center group cursor-pointer transition-transform hover:scale-125 z-50">
+                <svg viewBox="0 0 24 24" class="w-6 h-6 drop-shadow-md z-10 relative">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#f97316" stroke="white" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="3" fill="white" />
+                </svg>
+                <div class="absolute inset-0 bg-orange-400 rounded-full animate-ping opacity-30 pointer-events-none -z-10"></div>
+              </div>
+            `;
+            const icon = L.divIcon({
+                className: 'custom-video-icon',
+                html: htmlStr,
+                iconSize: [24, 24],
+                iconAnchor: [12, 24],
+                tooltipAnchor: [12, -18]
+            });
+            const marker = L.marker([lat, lng], { icon: icon }).addTo(map);
+            marker.bindTooltip(locationName, { permanent: false, direction: "right", className: 'city-label', offset: [5, 0] });
+        }
+
+        const mapPins = [
+          { lat: 28.6139, lng: 77.2090, label: 'Delhi' },
+          { lat: 26.9124, lng: 75.7873, label: 'Jaipur' },
+          { lat: 22.7196, lng: 75.8577, label: 'Indore' },
+          { lat: 19.0760, lng: 72.8777, label: 'Mumbai' },
+          { lat: 13.0827, lng: 80.2707, label: 'Chennai' },
+          { lat: 21.1458, lng: 79.0882, label: 'Nagpur' },
+          { lat: 20.2961, lng: 85.8245, label: 'Bhubaneshwar' },
+          { lat: 22.5726, lng: 88.3639, label: 'Kolkata' },
+          { lat: 22.8046, lng: 86.2029, label: 'Jamshedpur' },
+          { lat: 25.5941, lng: 85.1376, label: 'Patna' },
+          { lat: 26.7606, lng: 83.3732, label: 'Gorakhpur' }
+        ];
+
+        // Draw curved dashed route line
+        const routeCoords = mapPins.map(pin => [pin.lat, pin.lng]);
+        routeCoords.push(routeCoords[0]); // Loop back to start
+        
+        L.polyline(routeCoords, {
+          color: '#1e293b',
+          weight: 1.5,
+          dashArray: '5, 8',
+          opacity: 0.9,
+          lineJoin: 'round'
+        }).addTo(map);
+
+        mapPins.forEach(pin => {
+          addCityMarker(pin.lat, pin.lng, pin.label);
+        });
+
+        return () => {
+            if (mapInstanceRef.current) {
+                mapInstanceRef.current.remove();
+                mapInstanceRef.current = null;
+            }
+        };
+    }, []);
+
+    return (
+        <div className={`relative w-full max-w-[650px] aspect-square animate-in fade-in duration-1000 drop-shadow-2xl z-10 ${className || ''}`}>
+            <div ref={mapContainerRef} className="absolute inset-0 w-full h-full z-10" />
         </div>
-      ))}
-    </div>
-  );
+    );
 };
 
 export default Map;
