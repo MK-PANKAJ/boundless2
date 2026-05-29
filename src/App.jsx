@@ -276,7 +276,43 @@ export default function App() {
         </div>
       </div>
 
-      {/* Middle: Editorial Journey Summary */}
+      {/* Timeline Navigation - Brought to the top below the header */}
+      <div className="bg-sand-light/50 border-b border-burgundy/10 py-12 relative overflow-visible">
+        <div className="layout-container flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-visible">
+          
+          {/* Unified bar Timeline */}
+          <div className="flex-1 w-full relative overflow-visible">
+            <h3 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest mb-6 text-center lg:text-left">
+              ✦ CHRONOLOGICAL JOURNEY TIMELINE (HOVER TO PREVIEW) ✦
+            </h3>
+            
+            <Timeline 
+              activeMonthId={activeMonthId} 
+              onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
+            />
+          </div>
+          
+          {/* CTA Explore Journey button */}
+          <div className="flex flex-col items-center lg:items-end justify-center w-full lg:w-[220px] pt-4 lg:pt-8">
+            <button 
+              onClick={handleExploreJourney} 
+              className="explore-journey-cta-btn flex items-center justify-between gap-4 w-full sm:w-auto lg:w-full"
+            >
+              <div className="text-left">
+                <span className="block text-[10px] font-mono tracking-widest text-gold font-bold uppercase">Begin Exploration</span>
+                <span className="font-heading text-sm font-extrabold uppercase text-white tracking-wide">EXPLORE JOURNEY</span>
+              </div>
+              <ArrowRight size={18} className="text-gold transition-transform group-hover:translate-x-1.5" />
+            </button>
+            <span className="text-[9px] font-mono text-gray-400 font-bold tracking-widest mt-2 uppercase text-center lg:text-right">
+              ★ Start from AUG 2025
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Editorial Journey Summary */}
       <div className="layout-container py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
@@ -323,42 +359,6 @@ export default function App() {
           </div>
         </div>
       </div>
-
-      {/* Footer/Bottom: Unified Horizontal Month-by-Month Timeline */}
-      <div className="bg-sand-light/50 border-t border-burgundy/10 py-12 relative overflow-visible">
-        <div className="layout-container flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-visible">
-          
-          {/* Unified bar Timeline */}
-          <div className="flex-1 w-full relative overflow-visible">
-            <h3 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest mb-6 text-center lg:text-left">
-              ✦ CHRONOLOGICAL JOURNEY TIMELINE (HOVER TO PREVIEW) ✦
-            </h3>
-            
-            <Timeline 
-              activeMonthId={activeMonthId} 
-              onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
-            />
-          </div>
-          
-          {/* CTA Explore Journey button */}
-          <div className="flex flex-col items-center lg:items-end justify-center w-full lg:w-[220px] pt-4 lg:pt-8">
-            <button 
-              onClick={handleExploreJourney} 
-              className="explore-journey-cta-btn flex items-center justify-between gap-4 w-full sm:w-auto lg:w-full"
-            >
-              <div className="text-left">
-                <span className="block text-[10px] font-mono tracking-widest text-gold font-bold uppercase">Begin Exploration</span>
-                <span className="font-heading text-sm font-extrabold uppercase text-white tracking-wide">EXPLORE JOURNEY</span>
-              </div>
-              <ArrowRight size={18} className="text-gold transition-transform group-hover:translate-x-1.5" />
-            </button>
-            <span className="text-[9px] font-mono text-gray-400 font-bold tracking-widest mt-2 uppercase text-center lg:text-right">
-              ★ Start from AUG 2025
-            </span>
-          </div>
-
-        </div>
-      </div>
     </div>
   );
 
@@ -372,7 +372,7 @@ export default function App() {
         <div className="warm-ambient-glow" style={{ top: '25%', left: '8%' }} />
         
         {/* Navigation & Header with "Go Back" */}
-        <div className="layout-container pt-28 pb-8 border-b border-burgundy/10">
+        <div className="layout-container pt-12 pb-8 border-b border-burgundy/10">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="space-y-1">
               <button 
@@ -398,6 +398,23 @@ export default function App() {
               <span className="font-heading text-lg font-bold text-burgundy">{monthEvents.length} Milestone Events</span>
             </div>
           </div>
+        </div>
+
+        {/* Persistent Timeline - Brought to the top above event cards */}
+        <div className="layout-container border-b border-burgundy/10 pb-10 mb-8 overflow-visible">
+          <div className="flex justify-between items-center mb-6 pt-8">
+            <h4 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest">
+              ✦ CHRONOLOGICAL JOURNEY TIMELINE (PERSISTENT NAVIGATION) ✦
+            </h4>
+            <span className="text-[10px] font-mono text-gray-400 font-bold uppercase tracking-wider">
+              Selected: {month ? month.title : ''}
+            </span>
+          </div>
+          
+          <Timeline 
+            activeMonthId={activeMonthId} 
+            onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
+          />
         </div>
 
         {/* Content: Visually appealing Event Grid */}
@@ -455,23 +472,6 @@ export default function App() {
             </div>
           )}
         </div>
-
-        {/* Navigation (Bottom): Unified persistent horizontal bar timeline */}
-        <div className="layout-container border-t border-burgundy/10 pt-10 mt-10 overflow-visible">
-          <div className="flex justify-between items-center mb-6">
-            <h4 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest">
-              ✦ CHRONOLOGICAL JOURNEY TIMELINE (PERSISTENT NAVIGATION) ✦
-            </h4>
-            <span className="text-[10px] font-mono text-gray-400 font-bold uppercase tracking-wider">
-              Selected: {month ? month.title : ''}
-            </span>
-          </div>
-          
-          <Timeline 
-            activeMonthId={activeMonthId} 
-            onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
-          />
-        </div>
       </div>
     );
   };
@@ -486,7 +486,7 @@ export default function App() {
         <div className="warm-ambient-glow" style={{ bottom: '10%', right: '8%' }} />
         
         {/* Immersive Header Navigation */}
-        <div className="layout-container pt-28 pb-6 border-b border-burgundy/10">
+        <div className="layout-container pt-12 pb-6 border-b border-burgundy/10">
           <button 
             onClick={goBack} 
             className="flex items-center space-x-2 text-burgundy hover:text-gold transition-colors font-bold text-[13px] uppercase tracking-wider font-mono"
@@ -648,83 +648,12 @@ export default function App() {
     <>
       <div className="min-h-screen flex flex-col relative" style={{ backgroundColor: '#fcf7e7' }}>
         
-        {/* Global Navbar */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-[#fcf7e7]/85 backdrop-blur-md border-b border-burgundy/10 h-[64px] flex items-center">
-          <div className="layout-container w-full flex items-center justify-between">
-            <div 
-              className="flex items-center gap-2 cursor-pointer transition-opacity hover:opacity-90 animate-in fade-in"
-              onClick={() => navigateTo('overview', null, null)}
-            >
-              <Compass size={22} className="text-burgundy" />
-              <span className="brand-stamp-font text-lg text-burgundy tracking-tight">
-                Boundless
-              </span>
-            </div>
-            
-            <div className="flex items-center gap-4 text-xs font-bold text-burgundy">
-              <button 
-                onClick={() => navigateTo('overview', null, null)} 
-                className={`hover:text-gold transition-colors ${currentView === 'overview' && 'text-gold'}`}
-              >
-                OVERVIEW
-              </button>
-              
-              <button 
-                onClick={() => navigateTo('monthly', '2025-08', null)} 
-                className={`hover:text-gold transition-colors ${currentView === 'monthly' && 'text-gold'}`}
-              >
-                MONTHLY
-              </button>
-              
-              {/* Menu Button */}
-              <button 
-                onClick={() => setIsMenuOpen(prev => !prev)}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 bg-burgundy text-white rounded-full hover:bg-burgundy-glow transition-all"
-              >
-                <span>MENU</span>
-                <Menu size={14} />
-              </button>
-            </div>
-          </div>
-        </nav>
-
-        {/* Drop-down menu */}
-        {isMenuOpen && (
-          <div className="capsule-menu fixed top-[70px] right-[24px]">
-            <ul>
-              <li onClick={() => { setIsMenuOpen(false); navigateTo('overview', null, null); }}>Journey Overview</li>
-              {timelineMonths.map(m => (
-                <li key={m.id} onClick={() => { setIsMenuOpen(false); navigateTo('monthly', m.id, null); }}>
-                  {m.title}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
         {/* Main Content Area */}
         <main className="flex-grow">
           {currentView === 'overview' && <OverviewView />}
           {currentView === 'monthly' && <MonthlyView />}
           {currentView === 'detail' && <DetailView />}
         </main>
-
-        {/* Editorial typography footer */}
-        <footer className="burgundy-footer border-t border-white/5 relative overflow-hidden">
-          <div className="layout-container space-y-6">
-            <div className="massive-shadow-text select-none">BOUNDLESS</div>
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-white/10 pt-6">
-              <div className="text-left space-y-1">
-                <span className="font-bold text-white block">Boundless Travel Society</span>
-                <span className="text-xs text-gray-400 font-mono">hello@boundlesssociety.com</span>
-              </div>
-              <div className="flex gap-4 text-xs font-bold text-gray-300">
-                <button onClick={() => navigateTo('overview', null, null)} className="hover:text-white transition-colors">Overview</button>
-                <button onClick={() => navigateTo('monthly', '2025-08', null)} className="hover:text-white transition-colors">Chronology</button>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
 
       {/* Full Screen Lightbox Modal */}
