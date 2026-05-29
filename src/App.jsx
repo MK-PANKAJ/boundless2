@@ -399,24 +399,6 @@ export default function App() {
             </div>
           </div>
         </div>
-
-        {/* Persistent Timeline - Brought to the top above event cards */}
-        <div className="layout-container border-b border-burgundy/10 pb-10 mb-8 overflow-visible">
-          <div className="flex justify-between items-center mb-6 pt-8">
-            <h4 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest">
-              ✦ CHRONOLOGICAL JOURNEY TIMELINE (PERSISTENT NAVIGATION) ✦
-            </h4>
-            <span className="text-[10px] font-mono text-gray-400 font-bold uppercase tracking-wider">
-              Selected: {month ? month.title : ''}
-            </span>
-          </div>
-          
-          <Timeline 
-            activeMonthId={activeMonthId} 
-            onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
-          />
-        </div>
-
         {/* Content: Visually appealing Event Grid */}
         <div className="layout-container py-12">
           {monthEvents.length > 0 ? (
@@ -471,6 +453,23 @@ export default function App() {
               </button>
             </div>
           )}
+        </div>
+
+        {/* Persistent Timeline - Moved to the bottom below event cards */}
+        <div className="layout-container border-t border-burgundy/10 pt-10 mt-8 pb-10 overflow-visible">
+          <div className="flex justify-between items-center mb-6">
+            <h4 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest">
+              ✦ CHRONOLOGICAL JOURNEY TIMELINE (PERSISTENT NAVIGATION) ✦
+            </h4>
+            <span className="text-[10px] font-mono text-gray-400 font-bold uppercase tracking-wider">
+              Selected: {month ? month.title : ''}
+            </span>
+          </div>
+          
+          <Timeline 
+            activeMonthId={activeMonthId} 
+            onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
+          />
         </div>
       </div>
     );
