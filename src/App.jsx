@@ -1,854 +1,611 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  MapPin, Calendar, Users, ArrowRight, ArrowLeft, Globe, Compass, 
-  Clock, X, ChevronLeft, ChevronRight, Sparkles, Heart, Award, 
-  Image as ImageIcon, BookOpen, Menu
+import React, { useState } from 'react';
+import {
+  MapPin,
+  ArrowRight,
+  Play,
+  ChevronDown,
+  CheckCircle2,
+  Navigation,
+  Users,
+  Menu,
+  X,
+  ArrowUpRight,
+  Compass,
+  Backpack,
+  Handshake
 } from 'lucide-react';
-import IndiaMap from './components/IndiaMap';
-import Timeline from './components/Timeline';
-import { timelineMonths, getTimelineEvents, getEventsByMonth } from './data/timelineEvents';
-import heroImg from './assets/hero_mountains.png';
+import StitchHero from './StitchHero';
+import ScrapbookHome from './ScrapbookHome';
+import Map from './components/Map';
+
+// Inline ImageWithFallback to fix the import error and ensure single-file
+const ImageWithFallback = ({ src, alt, className, ...props }) => {
+  const [error, setError] = useState(false);
+
+  return (
+    <img
+      src={error ? 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80' : src}
+      alt={alt}
+      className={className}
+      onError={() => setError(true)}
+      {...props}
+    />
+  );
+};
+
+const STATS = [
+  { icon: <Users className="w-8 h-8 lg:w-10 lg:h-10 text-blue-500 mb-0" />, label: 'Members\nConnected', value: '5200+' },
+  { icon: <Users className="w-8 h-8 lg:w-10 lg:h-10 text-pink-500 mb-0" />, label: 'Female\nMembers', value: '1200+' },
+  { icon: <MapPin className="w-8 h-8 lg:w-10 lg:h-10 text-green-500 mb-0" />, label: 'Cities\nReached', value: '40+' },
+  { icon: <Backpack className="w-8 h-8 lg:w-10 lg:h-10 text-orange-500 mb-0" />, label: 'Core\nMembers', value: '110+' },
+  { icon: <Handshake className="w-8 h-8 lg:w-10 lg:h-10 text-purple-500 mb-0" />, label: 'Across\nSocieties', value: 'Collabs' }
+];
+
+const CARDS = [
+  {
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80',
+    title: 'Tricolor Trails 2.0',
+    desc: '12 Cities - Independence Week',
+    color: 'text-orange-500',
+    flag: true
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80',
+    title: 'Trips & Expeditions',
+    desc: 'Mountains . Lakes - More',
+    color: 'text-green-500'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80',
+    title: 'City Meetups',
+    desc: 'Connections . Fun - Friends',
+    color: 'text-blue-500'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80',
+    title: 'Events & Celebrations',
+    desc: 'Moments that matter',
+    color: 'text-purple-500'
+  }
+];
+
+const TIMELINE = [
+  { month: 'August', title: 'Tricolor Trails\n2.0', color: 'bg-orange-500', iconColor: 'text-orange-500' },
+  { month: 'September', title: 'Teachers\' Day\n& Meetups', color: 'bg-blue-500', iconColor: 'text-blue-500' },
+  { month: 'October', title: 'Orientation\nSessions', color: 'bg-green-500', iconColor: 'text-green-500' },
+  { month: 'December', title: 'Shimoga\nExpedition', color: 'bg-purple-500', iconColor: 'text-purple-500' },
+  { month: 'January', title: 'Mewar\nDiaries', color: 'bg-pink-500', iconColor: 'text-pink-500' },
+  { month: 'Feb - May', title: 'City Meetups\n& More', color: 'bg-orange-500', iconColor: 'text-orange-500' },
+  { month: 'Upcoming', title: 'Goa Trip\n& Beyond', color: 'bg-blue-500', iconColor: 'text-blue-500' }
+];
 
 export default function App() {
-  // Navigation View State: 'overview' | 'monthly' | 'detail'
-  const [currentView, setCurrentView] = useState('overview');
-  const [activeMonthId, setActiveMonthId] = useState('2025-08');
-  const [activeEventId, setActiveEventId] = useState(null);
-  
-  // Interactive UI States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [viewHistory, setViewHistory] = useState([]); // Call stack for custom go back buttons
 
-  // Lightbox State
-  const [lightboxState, setLightboxState] = useState({
-    isOpen: false,
-    images: [],
-    currentIndex: 0,
-    caption: ''
-  });
-
-  // Load chronological data structures
-  const eventsList = getTimelineEvents();
-  const eventsByMonth = getEventsByMonth();
-
-  // Scroll to top on view changes
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentView, activeMonthId, activeEventId]);
-
-  // Handle  // Sync state with URL (deep linking)
-  useEffect(() => {
-    function resolvePath() {
-      let parts = window.location.pathname.split('/').filter(Boolean);
-      // Strip base path 'boundless2' if present
-      if (parts[0] === 'boundless2') {
-        parts = parts.slice(1);
-      }
+  return (
+    <div className="min-h-screen font-sans selection:bg-amber-100 overflow-x-hidden relative">
       
-      if (parts.length === 0) {
-        setCurrentView('overview');
-        setActiveEventId(null);
-        return;
-      }
-      
-      const view = parts[0]; // 'monthly' or 'detail'
-      if (view === 'monthly' && parts[1]) {
-        const monthExists = timelineMonths.some(m => m.id === parts[1]);
-        if (monthExists) {
-          setActiveMonthId(parts[1]);
-          setCurrentView('monthly');
-          setActiveEventId(null);
-          return;
-        }
-      } else if (view === 'detail' && parts[1]) {
-        const eventExists = eventsList.find(e => e.id === parts[1]);
-        if (eventExists) {
-          setActiveEventId(parts[1]);
-          setActiveMonthId(eventExists.monthId);
-          setCurrentView('detail');
-          return;
-        }
-      }
-      
-      // Fallback
-      setCurrentView('overview');
-      setActiveEventId(null);
-    }
+      {/* Global Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <ImageWithFallback 
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80"
+          alt="Background Mountains"
+          className="w-full h-full object-cover"
+        />
+        {/* Warm overlay gradient for the sunset feel */}
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-100/40 via-orange-200/30 to-amber-100/40 mix-blend-multiply"></div>
+      </div>
 
-    resolvePath();
-    window.addEventListener('popstate', resolvePath);
-    return () => window.removeEventListener('popstate', resolvePath);
-  }, []);
+      {/* Ripped paper edge overlay at the top (optional, for effect) */}
+      <div className="absolute top-0 left-0 w-full h-16 bg-white/20 backdrop-blur-sm z-40" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 80%, 95% 100%, 90% 85%, 85% 100%, 80% 80%, 75% 100%, 70% 85%, 65% 100%, 60% 80%, 55% 100%, 50% 85%, 45% 100%, 40% 80%, 35% 100%, 30% 85%, 25% 100%, 20% 80%, 15% 100%, 10% 85%, 5% 100%, 0 80%)' }}></div>
 
-  // Update Browser URL helper
-  const navigateTo = (view, monthId, eventId) => {
-    let url = '/boundless2/';
-    if (view === 'monthly') {
-      url = `/boundless2/monthly/${monthId}`;
-      setViewHistory(['overview']);
-    } else if (view === 'detail') {
-      url = `/boundless2/detail/${eventId}`;
-      // Setup smart history back stack
-      setViewHistory(prev => {
-        if (currentView === 'monthly') return ['overview', 'monthly'];
-        return ['overview'];
-      });
-    } else {
-      setViewHistory([]);
-    }
-    
-    window.history.pushState({}, '', url);
-    setCurrentView(view);
-    if (monthId) setActiveMonthId(monthId);
-    if (eventId) setActiveEventId(eventId);
-  };
+      <nav className="fixed w-full z-50 top-4 px-4 sm:px-6 lg:px-8 transition-all duration-300">
+        <div className="max-w-7xl mx-auto relative rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-[#e5d5b5]/50 overflow-hidden group">
+          {/* Paper Background with Texture */}
+          <div className="absolute inset-0 bg-[#F4EBD9]"></div>
+          <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
+          {/* Inner shadow for vintage paper feel */}
+          <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(100,60,20,0.1)] pointer-events-none rounded-full"></div>
+          
+          <div className="flex items-center justify-between h-16 sm:h-20 px-4 sm:px-6 relative z-10">
+            {/* Left side: Logo and Title */}
+            <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+              {/* Detailed Logo Badge */}
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-[#0f172a] rounded-full flex items-center justify-center border-2 border-amber-500 shadow-md shrink-0">
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80')] bg-cover opacity-50 mix-blend-overlay rounded-full"></div>
+                {/* Curved Text SVG */}
+                <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full text-amber-500 animate-[spin_20s_linear_infinite]">
+                  <path id="textPathNav" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+                  <text className="text-[10.5px] font-bold fill-current uppercase tracking-[0.2em]">
+                    <textPath href="#textPathNav" startOffset="0%">BOUNDLESS TRAVEL SOCIETY •</textPath>
+                  </text>
+                </svg>
+                {/* Inner Icon */}
+                <div className="relative z-10 text-white flex flex-col items-center justify-center pt-1">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 sm:w-6 sm:h-6 fill-current" stroke="currentColor" strokeWidth="1">
+                    <path d="M12 3L4 14h16L12 3z" />
+                    <path d="M12 10l-4 6h8l-4-6z" fill="#f59e0b" />
+                  </svg>
+                </div>
+              </div>
+              
+              {/* Title & Paper Plane Graphic */}
+              <div className="flex items-center gap-2">
+                <span className="font-serif font-bold text-lg sm:text-xl md:text-2xl text-slate-900 tracking-tight shrink-0">Boundless Travel Society</span>
+                
+                {/* Paper airplane with dotted trail */}
+                <div className="hidden xl:block relative w-24 h-12 -ml-1 overflow-visible">
+                  <svg viewBox="0 0 100 50" className="w-full h-full overflow-visible opacity-80">
+                    <path d="M 0,40 Q 15,45 25,35 Q 35,20 45,30 Q 55,40 65,25" fill="none" stroke="#334155" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <g transform="translate(68, 23) rotate(-20)">
+                      <path d="M0,0 L16,-6 L4,10 Z" fill="none" stroke="#0f172a" strokeWidth="1.5" />
+                      <path d="M0,0 L6,3 L4,10" fill="none" stroke="#0f172a" strokeWidth="1.5" />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
 
-  // Custom Go Back action honoring the global hierarchy rule
-  const goBack = () => {
-    if (currentView === 'detail') {
-      const last = viewHistory[viewHistory.length - 1];
-      if (last === 'monthly') {
-        navigateTo('monthly', activeMonthId, null);
-      } else {
-        navigateTo('overview', null, null);
-      }
-    } else if (currentView === 'monthly') {
-      navigateTo('overview', null, null);
-    }
-  };
+            {/* Desktop Menu */}
+            <div className="hidden lg:flex items-center space-x-5 xl:space-x-8">
+              {['Home', 'Events', 'Cities', 'Trips', 'Gallery', 'About Us'].map((item, i) => (
+                <a 
+                  key={item} 
+                  href={`#${item.toLowerCase()}`}
+                  className={`text-[15px] font-bold transition-all relative group ${
+                    i === 0 
+                      ? 'text-[#c2410c]' 
+                      : 'text-slate-700 hover:text-[#c2410c]'
+                  }`}
+                >
+                  {item}
+                  {/* Underline for active state */}
+                  {i === 0 && (
+                    <span className="absolute -bottom-1.5 left-0 w-full h-0.5 bg-[#c2410c] rounded-full"></span>
+                  )}
+                  {/* Hover underline for other items */}
+                  {i !== 0 && (
+                    <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[#c2410c] rounded-full transition-all group-hover:w-full"></span>
+                  )}
+                </a>
+              ))}
+            </div>
 
-  // Lightbox handlers
-  const openLightbox = (images, index = 0, caption = '') => {
-    if (!images || images.length === 0) return;
-    setLightboxState({
-      isOpen: true,
-      images,
-      currentIndex: index,
-      caption: caption || `Image ${index + 1} of ${images.length}`
-    });
-  };
+            {/* Explore Button */}
+            <button className="hidden md:flex items-center gap-2 bg-[#0a0f1c] text-white px-5 sm:px-6 py-2.5 rounded-full hover:bg-black transition-all transform hover:scale-105 active:scale-95 shadow-md border border-slate-800 shrink-0">
+              <span className="text-sm font-bold tracking-wide">Explore Journey</span>
+              <Compass className="w-4 h-4 text-[#ea580c]" />
+            </button>
 
-  const closeLightbox = () => {
-    setLightboxState(prev => ({ ...prev, isOpen: false }));
-  };
-
-  const navigateLightbox = (direction) => {
-    setLightboxState(prev => {
-      if (prev.images.length <= 1) return prev;
-      let nextIndex = prev.currentIndex + direction;
-      if (nextIndex < 0) nextIndex = prev.images.length - 1;
-      if (nextIndex >= prev.images.length) nextIndex = 0;
-      return {
-        ...prev,
-        currentIndex: nextIndex,
-        caption: `Image ${nextIndex + 1} of ${prev.images.length}`
-      };
-    });
-  };
-
-  // Keyboard navigation for Lightbox
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!lightboxState.isOpen) return;
-      if (e.key === 'Escape') closeLightbox();
-      else if (e.key === 'ArrowRight') navigateLightbox(1);
-      else if (e.key === 'ArrowLeft') navigateLightbox(-1);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxState]);
-
-  // Wavy SVG timeline configuration
-  const svgWidth = 1200;
-  const svgHeight = 160;
-  const getTimelineNodeCoords = (index) => {
-    const startX = 60;
-    const endX = svgWidth - 60;
-    const stepX = (endX - startX) / (timelineMonths.length - 1);
-    const x = startX + index * stepX;
-    
-    // Smooth ribbon wave coordinates: middle -> high -> middle -> low -> middle...
-    let y = 80;
-    if (index % 4 === 1) y = 30; // High peak
-    else if (index % 4 === 3) y = 130; // Low peak
-    return { x, y };
-  };
-
-  // Compile wavy curve path
-  const compileWavyPath = () => {
-    let path = `M ${getTimelineNodeCoords(0).x} ${getTimelineNodeCoords(0).y}`;
-    for (let i = 0; i < timelineMonths.length - 1; i++) {
-      const current = getTimelineNodeCoords(i);
-      const next = getTimelineNodeCoords(i + 1);
-      const midX = (current.x + next.x) / 2;
-      path += ` C ${midX} ${current.y}, ${midX} ${next.y}, ${next.x} ${next.y}`;
-    }
-    return path;
-  };
-
-  // Explore Journey CTA Click handler (opens first month)
-  const handleExploreJourney = () => {
-    navigateTo('monthly', '2025-08', null);
-  };
-
-  // Map City marker click handler (direct routing to event detail page)
-  const handleMapCityClick = (city) => {
-    // Check if the city has a corresponding subEvent
-    const match = eventsList.find(e => e.id === city.subEventId);
-    if (match) {
-      navigateTo('detail', match.monthId, match.id);
-    } else {
-      // Direct to month page if no specific subEvent is mapped
-      navigateTo('monthly', '2025-08', null);
-    }
-  };
-
-  // Find chronological next event state
-  const getNextEventNavigation = () => {
-    if (currentView !== 'detail' || !activeEventId) return null;
-    
-    const activeEvents = eventsByMonth[activeMonthId] || [];
-    const currentIndex = activeEvents.findIndex(e => e.id === activeEventId);
-    
-    // Case 1: Next event exists in the current month
-    if (currentIndex >= 0 && currentIndex < activeEvents.length - 1) {
-      const nextEvent = activeEvents[currentIndex + 1];
-      return {
-        label: 'Next Event',
-        eventId: nextEvent.id,
-        monthId: activeMonthId,
-        title: nextEvent.title
-      };
-    }
-    
-    // Case 2: Edge Case - Last event of the month, transform to Next Month's first event
-    const activeMonthIndex = timelineMonths.findIndex(m => m.id === activeMonthId);
-    if (activeMonthIndex >= 0 && activeMonthIndex < timelineMonths.length - 1) {
-      // Find next month containing events
-      for (let i = activeMonthIndex + 1; i < timelineMonths.length; i++) {
-        const nextMonthId = timelineMonths[i].id;
-        const nextMonthEvents = eventsByMonth[nextMonthId] || [];
-        if (nextMonthEvents.length > 0) {
-          const nextEvent = nextMonthEvents[0];
-          return {
-            label: `Explore ${timelineMonths[i].label} First Event`,
-            eventId: nextEvent.id,
-            monthId: nextMonthId,
-            title: nextEvent.title,
-            isNextMonth: true
-          };
-        }
-      }
-    }
-    
-    // Case 3: Absolute end of journey, loop back to overview
-    return {
-      label: 'Restart Journey',
-      eventId: null,
-      monthId: null,
-      isRestart: true
-    };
-  };
-
-  const nextNav = getNextEventNavigation();
-
-  // Chronological navigation helpers are handled within subcomponents or layout handlers
-
-  // --- RENDERING SUB-VIEWS ---
-
-  // Page 1: Journey Overview (Home)
-  const OverviewView = () => (
-    <div className="animate-in fade-in duration-500 relative bg-[#fcf7e7]">
-      
-      {/* Top Navigation */}
-      <nav style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'20px 40px', position:'absolute', top:0, left:0, right:0, zIndex:50}}>
-        {/* Logo */}
-        <div style={{display:'flex', alignItems:'center', gap:'12px'}}>
-          <div style={{width:'50px', height:'50px', borderRadius:'50%', background:'var(--color-burgundy)', border:'2px solid white', display:'flex', alignItems:'center', justifyContent:'center'}}>
-            <Compass size={24} color="#d97706" />
+            {/* Mobile menu button */}
+            <button 
+              className="lg:hidden p-2 text-slate-800 hover:bg-black/5 rounded-full transition-colors"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X /> : <Menu />}
+            </button>
           </div>
-          <span style={{fontFamily:'var(--font-heading)', fontWeight:800, fontSize:'20px', color:'#111', textShadow:'0 2px 10px rgba(255,255,255,0.8)'}}>Boundless Travel Society</span>
         </div>
-        {/* Links */}
-        <div className="hidden lg:flex" style={{gap:'30px', fontWeight:600, fontSize:'14px', textShadow:'0 2px 10px rgba(255,255,255,0.8)'}}>
-          <span style={{color:'#d97706', borderBottom:'2px solid #d97706'}}>Home</span>
-          <span>Events</span>
-          <span>Cities</span>
-          <span>Trips</span>
-          <span>Gallery</span>
-          <span>About Us</span>
-        </div>
-        {/* CTA */}
-        <button onClick={handleExploreJourney} style={{background:'#111', color:'white', padding:'10px 24px', borderRadius:'99px', fontSize:'13px', fontWeight:600, display:'flex', alignItems:'center', gap:'8px', boxShadow:'0 4px 12px rgba(0,0,0,0.2)'}}>
-          Explore Journey <Compass size={14}/>
-        </button>
+
+        {/* Mobile Menu Dropdown */}
+        {isMenuOpen && (
+          <div className="lg:hidden absolute top-24 left-4 right-4 bg-[#F4EBD9] rounded-2xl shadow-xl border border-[#e5d5b5]/80 p-4 flex flex-col gap-4 animate-in slide-in-from-top-4 z-50">
+            {/* Paper texture for dropdown */}
+            <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none rounded-2xl"></div>
+            
+            <div className="relative z-10 flex flex-col gap-2">
+              {['Home', 'Events', 'Cities', 'Trips', 'Gallery', 'About Us'].map((item, i) => (
+                <a 
+                  key={item} 
+                  href={`#${item.toLowerCase()}`}
+                  className={`font-bold p-3 rounded-lg transition-colors ${
+                    i === 0 ? 'text-[#c2410c] bg-orange-900/5' : 'text-slate-700 hover:bg-black/5'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item}
+                </a>
+              ))}
+              <button className="w-full bg-[#0a0f1c] text-white px-5 py-3.5 rounded-xl mt-2 font-bold flex items-center justify-center gap-2 shadow-md">
+                Explore Journey
+                <Compass className="w-4 h-4 text-[#ea580c]" />
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
-      {/* Hero Section */}
-      <div style={{
-        position:'relative', 
-        minHeight:'90vh', 
-        background: `url("${heroImg}") center/cover no-repeat`,
-        paddingTop:'120px',
-        overflow:'hidden'
-      }}>
-        <div className="layout-container" style={{display:'flex', flexDirection:'column', lg:{flexDirection:'row'}, position:'relative', height:'100%', zIndex:20}}>
+      <main className="relative z-10 pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           
-          {/* Top Main Content (Text + Map) */}
-          <div style={{display:'flex', flex:1, gap:'40px', flexWrap:'wrap'}}>
-            
-            {/* Left Column - Text & Stats */}
-            <div style={{flex:'1 1 500px', paddingTop:'40px'}}>
-              <h1 style={{fontFamily:'var(--font-heading)', fontSize:'clamp(48px, 6vw, 72px)', fontWeight:800, color:'#0a0a0a', lineHeight:1, textShadow:'0 4px 20px rgba(255,255,255,0.8)'}}>Boundless 2025</h1>
-              <p className="font-script" style={{fontSize:'clamp(28px, 4vw, 36px)', color:'#c2410c', marginTop:'10px', transform:'rotate(-2deg)', textShadow:'0 2px 10px rgba(255,255,255,0.8)'}}>A year of journeys,<br/>friendships & endless memories ✦</p>
-              
-              <div style={{borderLeft:'3px solid #d97706', paddingLeft:'16px', margin:'30px 0', fontSize:'15px', fontWeight:500, color:'#111', textShadow:'0 2px 10px rgba(255,255,255,0.9)'}}>
-                5200+ members. 40+ cities.<br/>One community. Countless stories.
+          {/* Left Column - Hero Text */}
+          <div className="space-y-6 pt-4 lg:pt-10">
+            <div className="space-y-2 relative">
+               {/* Decorative Plane Path SVG */}
+              <div className="absolute -top-12 -right-10 w-48 h-32 opacity-60 pointer-events-none hidden md:block">
+                  <svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10,90 Q50,20 150,10" stroke="#333" strokeWidth="1" strokeDasharray="4 4" fill="none" />
+                    <path d="M150,10 L140,5 L145,15 Z" fill="#333" />
+                  </svg>
               </div>
 
-              <div style={{display:'flex', gap:'16px', alignItems:'center'}}>
-                <button onClick={handleExploreJourney} style={{background:'#0f1016', color:'white', padding:'12px 24px', borderRadius:'99px', fontSize:'14px', fontWeight:600, boxShadow:'0 8px 20px rgba(0,0,0,0.3)'}}>
-                  Start Exploring ↗
-                </button>
-                <button style={{display:'flex', alignItems:'center', gap:'8px', color:'#111', fontWeight:600, fontSize:'14px', background:'rgba(255,255,255,0.8)', padding:'8px 16px', borderRadius:'99px'}}>
-                  <span style={{background:'#ef4444', color:'white', borderRadius:'50%', width:'24px', height:'24px', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'10px'}}>▶</span>
-                  Watch Our Journey
-                </button>
-              </div>
-
-              {/* Stats Bar */}
-              <div className="hidden md:flex" style={{
-                background:'rgba(255,255,255,0.85)', backdropFilter:'blur(10px)',
-                padding:'20px 30px', borderRadius:'20px', justifyContent:'space-between',
-                marginTop:'60px', boxShadow:'0 10px 30px rgba(0,0,0,0.1)', border:'1px solid rgba(255,255,255,0.4)'
-              }}>
-                {[
-                  {icon:'👥', val:'5200+', lbl:'Members Connected'},
-                  {icon:'👩', val:'1200+', lbl:'Female Members'},
-                  {icon:'📍', val:'40+', lbl:'Cities Reached'},
-                  {icon:'🎒', val:'110+', lbl:'Core Members'},
-                  {icon:'🤝', val:'Collabs', lbl:'Across Societies'}
-                ].map(s=>(
-                  <div key={s.lbl} style={{textAlign:'center', position:'relative', padding:'0 10px'}}>
-                    <div style={{fontSize:'24px', marginBottom:'4px'}}>{s.icon}</div>
-                    <div style={{fontFamily:'var(--font-heading)', fontWeight:800, fontSize:'20px', color:'#4a1225', lineHeight:1}}>{s.val}</div>
-                    <div style={{fontSize:'10px', fontWeight:700, color:'#666', marginTop:'4px', textTransform:'uppercase'}}>{s.lbl}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Column - Map & Polaroids */}
-            <div className="hidden lg:block" style={{flex:'1 1 400px', position:'relative', minHeight:'400px'}}>
-              <div style={{position:'absolute', top:0, left:'-20px', width:'120%', height:'450px', opacity:0.95}}>
-                <IndiaMap onCityClick={handleMapCityClick} />
-              </div>
-
-              <div className="polaroid-stack" style={{position:'absolute', right:'0', top:'20px', width:'160px'}}>
-                <div className="polaroid-card">
-                  <div className="tape"></div>
-                  <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=300" style={{width:'100%', height:'100px', objectFit:'cover'}}/>
-                  <p className="font-script" style={{textAlign:'center', marginTop:'10px', fontSize:'14px', color:'#111', lineHeight:1.2}}>40+ Cities<br/>12 States<br/>Countless Memories ♡</p>
-                </div>
-                <div className="polaroid-card" style={{marginTop:'-30px'}}>
-                  <div className="tape"></div>
-                  <img src="https://images.unsplash.com/photo-1533692328991-08159ff19fca?w=300" style={{width:'100%', height:'100px', objectFit:'cover'}}/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom overlapping cards */}
-        <div className="layout-container hidden md:flex" style={{position:'absolute', bottom:'70px', left:0, right:0, zIndex:30, gap:'20px', justifyContent:'flex-end'}}>
-          {[
-            {img:'https://images.unsplash.com/photo-1546708973-23118ef86b96?w=400', title:'Tricolor Trails 2.0', sub:'12 Cities • Independence Week'},
-            {img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400', title:'Trips & Expeditions', sub:'Mountains • Lakes • More'},
-            {img:'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400', title:'City Meetups', sub:'Connections • Fun • Friends'},
-            {img:'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400', title:'Events & Celebrations', sub:'Moments that matter'}
-          ].map((c,i)=>(
-            <div key={i} className="polaroid-card" style={{width:'200px', padding:'8px 8px 16px 8px', transform:`rotate(${i%2===0?-2:3}deg) translateY(${i*10}px)`}}>
-              <div className="tape"></div>
-              <img src={c.img} style={{width:'100%', height:'90px', objectFit:'cover', borderRadius:'4px'}}/>
-              <h4 style={{fontFamily:'var(--font-heading)', fontWeight:800, fontSize:'13px', marginTop:'12px', color:'#111'}}>{c.title}</h4>
-              <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginTop:'4px'}}>
-                <span style={{fontSize:'9px', color:'#666', fontWeight:600}}>{c.sub}</span>
-                <span style={{background:'#e0e7ff', color:'#4f46e5', width:'14px', height:'14px', borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'9px', fontWeight:'bold'}}>→</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Ripped paper overlay */}
-        <div className="ripped-paper-bottom"></div>
-      </div>
-
-      {/* Our Journey Timeline */}
-      <div style={{background:'#fcf7e7', padding:'60px 0 100px 0', position:'relative', zIndex:40}}>
-        <div className="layout-container">
-          <div style={{display:'flex', alignItems:'center', gap:'16px', marginBottom:'40px'}}>
-            <div style={{background:'linear-gradient(135deg, #fcd34d, #d97706)', padding:'12px', borderRadius:'50%', boxShadow:'0 4px 12px rgba(217,119,6,0.3)'}}>
-              <Compass size={32} color="#fff" />
-            </div>
-            <div>
-              <h3 style={{fontFamily:'var(--font-heading)', fontSize:'28px', fontWeight:800, color:'#111', lineHeight:1}}>Our Journey</h3>
-              <p className="font-script" style={{fontSize:'24px', color:'#666', marginTop:'4px'}}>A timeline of memories</p>
-            </div>
-          </div>
-          
-          <div style={{position:'relative', overflow:'visible'}}>
-            <Timeline activeMonthId={activeMonthId} onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} />
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div style={{background:'#1c1917', color:'white', padding:'40px 0'}}>
-        <div className="layout-container" style={{display:'flex', flexDirection:'column', md:{flexDirection:'row'}, justifyContent:'space-between', alignItems:'center', gap:'20px'}}>
-          <div className="font-script" style={{fontSize:'26px', color:'#fbbf24', textAlign:'center', md:{textAlign:'left'}}}>
-            Every trip tells a story,<br/>Every person adds to it. ♡
-          </div>
-          <div style={{textAlign:'center'}}>
-            <h4 style={{fontFamily:'var(--font-heading)', fontSize:'20px', fontWeight:600, color:'white'}}>The Journey Continues...</h4>
-            <p style={{fontSize:'14px', color:'#a8a29e'}}>Let's keep exploring the world, together!</p>
-          </div>
-          <button onClick={handleExploreJourney} style={{background:'#d97706', color:'white', padding:'12px 24px', borderRadius:'99px', fontSize:'14px', fontWeight:600, display:'flex', gap:'8px', alignItems:'center', boxShadow:'0 4px 12px rgba(217,119,6,0.3)'}}>
-            Explore Full Tenure Report →
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-  // Page 2: Monthly Event View
-  const MonthlyView = () => {
-    const month = timelineMonths.find(m => m.id === activeMonthId);
-    const monthEvents = eventsByMonth[activeMonthId] || [];
-    
-    return (
-      <div className="animate-in slide-in-from-right duration-400 pb-20">
-        <div className="warm-ambient-glow" style={{ top: '25%', left: '8%' }} />
-        
-        {/* Navigation & Header with "Go Back" */}
-        <div className="layout-container pt-12 pb-8 border-b border-burgundy/10">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div className="space-y-1">
-              <button 
-                onClick={goBack} 
-                className="flex items-center space-x-2 text-burgundy hover:text-gold transition-colors font-bold text-[13px] uppercase tracking-wider mb-2 font-mono"
-              >
-                <ArrowLeft size={14} />
-                <span>← BACK TO TIMELINE</span>
-              </button>
-              <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-gold animate-ping" />
-                <h1 className="font-heading text-2xl md:text-4xl font-extrabold text-burgundy uppercase tracking-wide">
-                  {month ? month.title : 'Monthly Events'}
-                </h1>
-              </div>
-              <p className="text-xs text-gray-500 font-light leading-relaxed max-w-xl">
-                {month ? month.summary : ''}
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-serif text-[#111] tracking-tight leading-[1.1] drop-shadow-md">
+                Boundless <span className="font-sans font-normal tracking-normal">2025</span>
+              </h1>
+              <p className="text-2xl sm:text-3xl font-serif italic text-amber-900/90 max-w-lg leading-snug drop-shadow-sm">
+                A year of journeys, friendships & endless memories. ✨
               </p>
             </div>
+
+            <div className="flex flex-col gap-1 text-gray-800 font-medium border-l-4 border-amber-500 pl-4 py-1">
+              <p className="text-lg">5200+ members. 40+ cities.</p>
+              <p className="text-lg">One community. Countless stories.</p>
+            </div>
+
+            <div className="flex flex-wrap gap-4 pt-6">
+              <button className="bg-[#1A1A1A] text-white px-8 py-3.5 rounded-full font-medium hover:bg-gray-800 transition-all flex items-center gap-2 shadow-lg shadow-gray-900/30 group">
+                Start Exploring 
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button className="bg-white/60 backdrop-blur-md hover:bg-white text-gray-900 px-6 py-3.5 rounded-full font-medium transition-all flex items-center gap-3 border border-gray-300/50 shadow-sm hover:shadow-md">
+                <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center border border-red-200">
+                  <Play className="w-4 h-4 text-red-600 ml-0.5 fill-red-600" />
+                </div>
+                Watch Our Journey
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column - Map & Polaroids */}
+          <div className="relative h-[500px] lg:h-[600px] w-full flex items-center justify-center">
+             
+            {/* Map Container */}
+            <Map />
+
+            {/* Floating Polaroids */}
+            <div className="absolute top-12 lg:top-20 right-0 sm:-right-8 lg:-right-16 rotate-6 hover:rotate-0 transition-transform cursor-pointer hover:z-30 z-20">
+              <div className="bg-[#fcfbf9] p-2 pb-8 rounded-sm shadow-2xl border border-gray-200/60 max-w-[180px] sm:max-w-[220px]">
+                <ImageWithFallback 
+                  src="https://images.unsplash.com/photo-1523580494112-071dcb849ea4?auto=format&fit=crop&q=80" 
+                  alt="Group photo mountains" 
+                  className="w-full aspect-[4/3] object-cover mb-2 border border-gray-100"
+                />
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 bg-[#e3d5c8] rotate-3 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
+              </div>
+            </div>
+
+            <div className="absolute top-64 lg:top-80 right-4 sm:-right-12 lg:-right-24 -rotate-6 hover:rotate-0 transition-transform cursor-pointer hover:z-30 z-20 group">
+              {/* Polaroid Photo */}
+              <div className="bg-[#fcfbf9] p-2 pb-2 rounded-sm shadow-2xl border border-gray-200/60 max-w-[160px] sm:max-w-[200px]">
+                <ImageWithFallback 
+                  src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80" 
+                  alt="Group photo beach" 
+                  className="w-full aspect-[4/3] object-cover border border-gray-100 filter sepia-[0.1]"
+                />
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 bg-[#e3d5c8] -rotate-3 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
+              </div>
+              
+              {/* Pinned Parchment Note */}
+              <div className="absolute -bottom-10 -left-10 sm:-left-16 rotate-6 group-hover:rotate-3 transition-transform z-30 drop-shadow-xl">
+                 <div 
+                   className="relative bg-[#F4EBD9] p-4 pt-6 pb-5 rounded-sm border border-[#e5d5b5]/50" 
+                   style={{ clipPath: 'polygon(0% 4%, 5% 0%, 15% 3%, 25% 0%, 35% 4%, 45% 0%, 55% 4%, 65% 0%, 75% 3%, 85% 0%, 95% 4%, 100% 1%, 100% 95%, 95% 100%, 85% 97%, 75% 100%, 65% 96%, 55% 100%, 45% 97%, 35% 100%, 25% 96%, 15% 100%, 5% 97%, 0% 100%)' }}
+                 >
+                   {/* Paper texture overlay */}
+                   <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
+                   
+                   {/* Text Content */}
+                   <div className="relative z-10 text-center font-sans font-bold text-sm sm:text-base text-slate-700 leading-tight flex flex-col gap-0.5 transform -rotate-2">
+                     <p>40+ Cities</p>
+                     <p>12 States</p>
+                     <p>Countless</p>
+                     <p className="flex items-center justify-center gap-1">Memories <span className="text-red-500 text-lg sm:text-xl font-serif">♡</span></p>
+                   </div>
+                 </div>
+                 
+                 {/* Golden Pin */}
+                 <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-40">
+                   <div className="relative">
+                     {/* Pin shadow */}
+                     <div className="absolute top-1 left-1 w-5 h-5 bg-black/40 rounded-full blur-[2px]"></div>
+                     {/* Pin head */}
+                     <div className="relative w-5 h-5 bg-gradient-to-br from-yellow-300 via-amber-500 to-yellow-700 rounded-full shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.3)] border border-amber-800/40">
+                       {/* Highlight */}
+                       <div className="absolute top-1 left-1 w-1.5 h-1.5 bg-white/70 rounded-full blur-[0.5px]"></div>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+            </div>
             
-            <div className="chapter-tally-chip">
-              <span className="label">Chapter Tally</span>
-              <span className="count">{monthEvents.length} Milestone Events</span>
+            {/* Bottom left stats polaroid style box */}
+            <div className="absolute bottom-0 left-0 md:-left-12 -rotate-2 hover:rotate-0 transition-transform cursor-pointer z-20 hidden md:block">
+              <div className="bg-[#fcfbf9] p-3 rounded-sm shadow-2xl border border-gray-200/60 max-w-[150px]">
+                <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-5 h-5 text-blue-600"/>
+                    <span className="font-bold text-gray-900">5200+</span>
+                </div>
+                <p className="text-xs text-gray-600 font-medium leading-tight">Members Connected</p>
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-4 bg-[#e3d5c8] rotate-2 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
+              </div>
             </div>
 
           </div>
         </div>
-        {/* Content: Visually appealing Event Grid */}
-        <div className="layout-container py-12">
-          {monthEvents.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {monthEvents.map((event) => (
-                <div
-                  key={event.id}
-                  onClick={() => navigateTo('detail', activeMonthId, event.id)}
-                  className="monthly-event-card"
-                  style={{display:'flex', flexDirection:'column'}}
-                >
-                  <div className="monthly-card-img-frame">
-                    <img src={event.image} alt={event.title} />
-                    <div className="monthly-card-tag-absolute">
-                      {event.category.toUpperCase()}
-                    </div>
+
+        {/* Bottom Half: Stats & Event Cards side-by-side */}
+        <div className="mt-8 lg:-mt-6 flex flex-col lg:flex-row gap-4 lg:gap-6 items-end relative z-20 w-full px-2 lg:px-4">
+          
+          {/* Stats Section */}
+          <div style={{ flex: '1.4' }} className="w-full lg:w-auto bg-[#F4EBD9] border-[3px] border-white/40 rounded-[2.5rem] p-4 lg:p-5 shadow-[0_12px_40px_rgb(0,0,0,0.15)] shrink-0 relative hover:-translate-y-1 transition-transform duration-300">
+            <div className="flex justify-between items-start divide-x divide-[#e2d5bd]">
+              {STATS.map((stat, idx) => (
+                <div key={idx} className="flex flex-col items-center justify-start flex-1 px-1 text-center group cursor-pointer">
+                  <div className="mb-2 group-hover:scale-110 transition-transform duration-300">
+                      {stat.icon}
                   </div>
-
-                  {/* Card body — flex column so footer always pins to bottom */}
-                  <div style={{display:'flex', flexDirection:'column', flex:1, padding:'20px 20px 16px 20px', gap:'10px'}}>
-
-                    {/* Tagline — strict 1 line */}
-                    <span style={{
-                      display:'block', fontSize:'9px', fontFamily:'var(--font-mono)',
-                      fontWeight:700, color:'var(--color-gold)', textTransform:'uppercase',
-                      letterSpacing:'0.07em', lineHeight:'1.3',
-                      overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'
-                    }}>
-                      📍 {event.tagline || event.mainEventTitle}
-                    </span>
-
-                    {/* Title — strict 1 line */}
-                    <h3 style={{
-                      fontFamily:'var(--font-heading)', fontSize:'17px', fontWeight:800,
-                      color:'var(--color-burgundy)', lineHeight:'1.25', margin:0,
-                      overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'
-                    }}>
-                      {event.title}
-                    </h3>
-
-                    {/* Description — always exactly 3 lines */}
-                    <p style={{
-                      flex:1,
-                      fontSize:'12px', color:'rgba(74,18,37,0.55)', fontWeight:300,
-                      lineHeight:'1.6', margin:0,
-                      display:'-webkit-box', WebkitLineClamp:3,
-                      WebkitBoxOrient:'vertical', overflow:'hidden'
-                    }}>
-                      {event.summary}
-                    </p>
-
-                    {/* Footer badges — always at bottom */}
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', paddingTop:'12px', borderTop:'1px solid rgba(74,18,37,0.07)', marginTop:'4px'}}>
-                      <span style={{display:'inline-flex',alignItems:'center',gap:'5px',background:'rgba(74,18,37,0.05)',borderRadius:'99px',padding:'4px 10px',fontSize:'10px',fontFamily:'var(--font-mono)',fontWeight:700,color:'var(--color-burgundy)',letterSpacing:'0.04em'}}>
-                        📅 {event.date}
-                      </span>
-                      <span style={{display:'inline-flex',alignItems:'center',gap:'5px',background:'rgba(217,119,6,0.08)',borderRadius:'99px',padding:'4px 10px',fontSize:'10px',fontFamily:'var(--font-mono)',fontWeight:700,color:'var(--color-gold)',letterSpacing:'0.04em'}}>
-                        👥 {event.attendees}
-                      </span>
-                    </div>
-                  </div>
+                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 leading-none mb-1.5">{stat.value}</h3>
+                  <p className="text-[10px] lg:text-[11px] xl:text-[12px] text-gray-700 font-semibold leading-[1.2] whitespace-pre-line">
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="text-center py-16 bg-[#fffaf0] border border-dashed border-burgundy/20 rounded-3xl space-y-4 max-w-lg mx-auto">
-              <span className="text-4xl">🏕️</span>
-              <h3 className="font-heading text-lg font-bold text-burgundy">Quiet Period</h3>
-              <p className="text-xs text-gray-500 font-light max-w-xs mx-auto">
-                No offline expeditions scheduled during this period. Society members stayed connected virtually through forums.
-              </p>
-              <button 
-                onClick={goBack} 
-                className="btn-secondary text-[11px] py-1.5 px-4"
-              >
-                Back to Timeline
+          </div>
+
+          {/* Polaroids Grid Section */}
+          <div style={{ flex: '1' }} className="w-full lg:w-auto flex gap-2 lg:gap-3 justify-between items-end">
+            {CARDS.map((card, idx) => {
+              const rotations = ['-rotate-2', 'rotate-2', '-rotate-1', 'rotate-3'];
+              // Safely map colors for Tailwind JIT
+              const colorMap = {
+                'text-orange-500': 'bg-orange-500',
+                'text-green-500': 'bg-green-500',
+                'text-blue-500': 'bg-blue-500',
+                'text-purple-500': 'bg-purple-500'
+              };
+              const bgColor = colorMap[card.color] || 'bg-gray-500';
+              
+              return (
+              <div key={idx} className={`shrink-0 flex-1 min-w-0 bg-[#FDF9F1] rounded-[14px] p-1.5 lg:p-2 shadow-lg hover:-translate-y-3 hover:shadow-2xl transition-all duration-300 border-[3px] border-[#E8DCC4] relative ${rotations[idx]} hover:rotate-0 hover:z-30 cursor-pointer flex flex-col`}>
+                 {/* Tape element */}
+                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 lg:w-10 h-4 bg-[#DDBB8E] -rotate-3 shadow-sm rounded-sm z-10"></div>
+                 
+                <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-2 shadow-sm border border-[#E8DCC4]">
+                  <ImageWithFallback 
+                    src={card.image} 
+                    alt={card.title}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                  />
+                  {/* Optional flag graphic for specific cards */}
+                  {card.flag && (
+                      <div className="absolute top-1 left-1 flex gap-[1px] shadow-sm overflow-hidden rounded-sm border border-white/50">
+                          <div className="w-3 h-2 bg-orange-500"></div>
+                          <div className="w-3 h-2 bg-white"></div>
+                          <div className="w-3 h-2 bg-green-500"></div>
+                      </div>
+                  )}
+                </div>
+                <div className="px-1 pb-1 flex-1 flex flex-col justify-end">
+                  <h3 className="font-bold text-gray-900 text-[11px] lg:text-[12px] xl:text-[13px] leading-tight mb-1 truncate font-serif">{card.title}</h3>
+                  <div className="flex items-end justify-between gap-1 mt-auto">
+                    <p className="text-[8px] lg:text-[9px] xl:text-[10px] text-gray-600 font-medium leading-[1.1] max-w-[80%]">{card.desc}</p>
+                    <div className={`w-4 h-4 lg:w-5 lg:h-5 rounded-full flex items-center justify-center shrink-0 shadow-sm text-white ${bgColor}`}>
+                      <ArrowRight className="w-2.5 h-2.5 lg:w-3 lg:h-3" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )})}
+          </div>
+
+        </div>
+      </main>
+
+      {/* Timeline Section with Horizontal Parchment Ripped Edge */}
+      <section className="relative z-20 mt-32 pb-16 shadow-2xl">
+         {/* Ripped edge SVG Top (outside overflow-hidden so it's visible) */}
+        <div className="absolute top-0 left-0 w-full h-8 -mt-7 z-10 text-[#F4EBD9]">
+             <svg viewBox="0 0 1200 50" preserveAspectRatio="none" className="w-full h-full drop-shadow-[0_-3px_3px_rgba(0,0,0,0.2)] text-[#F4EBD9]">
+                <defs>
+                  <pattern id="torn-edge-top" width="60" height="50" patternUnits="userSpaceOnUse">
+                    {/* Fills BOTTOM, waves on TOP */}
+                    <path d="M0,50 L0,30 Q15,15 30,35 Q45,55 60,30 L60,50 Z" fill="currentColor" />
+                  </pattern>
+                </defs>
+                <rect x="0" y="0" width="1200" height="50" fill="url(#torn-edge-top)" />
+             </svg>
+        </div>
+
+        {/* Ripped Paper Background Layer */}
+        <div className="absolute inset-0 bg-[#F4EBD9] -z-10 shadow-xl overflow-hidden">
+             {/* Paper texture overlay */}
+            <div className="absolute inset-0 opacity-50 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]"></div>
+            {/* Edge burn/shadow effect */}
+            <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(100,60,20,0.15)] pointer-events-none"></div>
+        </div>
+        
+        <div className="max-w-[1400px] mx-auto relative py-6 lg:py-8 overflow-x-auto custom-scrollbar">
+          <div className="flex items-center min-w-[1000px] w-full px-4 relative">
+            
+            {/* Title Block (Left) */}
+            <div className="flex items-center gap-6 z-10 w-[380px] shrink-0 pl-2">
+               {/* Compass Graphic */}
+              <div className="relative">
+                  <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden shadow-[0_10px_15px_rgba(0,0,0,0.5)] border-[3px] border-[#927855] z-10 relative">
+                     <ImageWithFallback src="https://images.unsplash.com/photo-1549487532-35805542a198?auto=format&fit=crop&q=80" alt="Compass" className="w-full h-full object-cover saturate-[1.2] sepia-[0.2]" />
+                  </div>
+                  {/* Compass ring loop */}
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 border-[3px] border-[#927855] rounded-full z-0 drop-shadow-md"></div>
+              </div>
+              
+              <div className="relative">
+                <h2 className="text-3xl lg:text-4xl font-serif font-bold text-[#111] flex items-center gap-2">
+                  Our Journey
+                  <svg viewBox="0 0 100 100" className="w-8 h-8 opacity-70 mt-1">
+                      {/* Dotted line loop to pin */}
+                      <path d="M10,80 Q30,80 50,60 T70,30" fill="none" stroke="#444" strokeWidth="2.5" strokeDasharray="3 3"/>
+                      <path d="M70,30 A 8 8 0 1 0 86,30 A 8 8 0 1 0 70,30 Z" fill="none" stroke="#444" strokeWidth="2"/>
+                      <circle cx="78" cy="30" r="3" fill="#444"/>
+                  </svg>
+                </h2>
+                <div className="relative mt-1 pl-1">
+                  <p className="text-lg lg:text-xl font-serif italic text-[#333]">A timeline of memories</p>
+                  {/* Orange brush stroke */}
+                  <div className="absolute -bottom-1 left-0 w-[90%] h-1.5 bg-orange-400 rounded-full opacity-80" style={{ clipPath: 'polygon(0 40%, 100% 0, 95% 100%, 5% 80%)' }}></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Timeline Nodes Container */}
+            <div className="relative flex-1 flex justify-between items-center px-4">
+              
+              {/* Wavy Timeline Path (SVG) behind pins */}
+              <div className="absolute top-1/2 -translate-y-1/2 left-0 w-full h-24 pointer-events-none z-0">
+                   <svg viewBox="0 0 1000 100" preserveAspectRatio="none" className="w-full h-full overflow-visible opacity-70">
+                      {/* Generative wavy path, passing near nodes */}
+                      <path d="M-50,50 Q20,20 80,45 T220,60 T360,40 T500,55 T640,40 T780,55 T950,25" fill="none" stroke="#333" strokeWidth="1.5" strokeDasharray="4 4" />
+                      {/* Paper plane at end */}
+                      <g transform="translate(950, 25) rotate(-15)">
+                        <path d="M0,0 L20,-10 L5,15 Z" fill="#b45309" stroke="#78350f" strokeWidth="1"/>
+                      </g>
+                   </svg>
+              </div>
+              
+              {/* Nodes */}
+              {TIMELINE.map((item, idx) => {
+                // Determine vertical offset for wavy look (up and down alternately)
+                const yOffsets = ['-translate-y-4', 'translate-y-3', '-translate-y-3', 'translate-y-2', '-translate-y-2', 'translate-y-3', '-translate-y-5'];
+                
+                return (
+                  <div key={idx} className={`relative z-10 flex flex-col items-center text-center group w-[100px] ${yOffsets[idx % yOffsets.length]}`}>
+                    <div className="relative mb-1">
+                      <MapPin className={`w-8 h-8 lg:w-9 lg:h-9 drop-shadow-md group-hover:-translate-y-1 transition-transform duration-300 ${item.iconColor} fill-current`} />
+                      <div className="absolute top-[6px] lg:top-[8px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white rounded-full"></div>
+                    </div>
+                    
+                    <div className="flex flex-col gap-0.5 items-center mt-1">
+                      <span className="text-xs lg:text-sm font-bold text-gray-900 leading-tight">{item.month}</span>
+                      <span className="text-[10px] lg:text-[11px] text-gray-700 font-medium whitespace-pre-line leading-tight">{item.title}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Trees Illustration (Bottom Right) */}
+            <div className="absolute bottom-2 right-4 opacity-70 pointer-events-none z-10">
+                <svg viewBox="0 0 100 80" className="w-20 h-16 lg:w-28 lg:h-20">
+                   {/* Pine Tree 1 */}
+                   <path d="M20,80 L35,40 L50,80 Z" fill="none" stroke="#333" strokeWidth="1.5"/>
+                   <path d="M25,60 L35,30 L45,60 Z" fill="none" stroke="#333" strokeWidth="1"/>
+                   <path d="M35,80 L35,40" stroke="#333" strokeWidth="1.5"/>
+                   {/* Pine Tree 2 */}
+                   <path d="M10,80 L20,50 L30,80 Z" fill="none" stroke="#333" strokeWidth="1"/>
+                   <path d="M20,80 L20,50" stroke="#333" strokeWidth="1"/>
+                   {/* Pine Tree 3 */}
+                   <path d="M60,80 L75,20 L90,80 Z" fill="none" stroke="#333" strokeWidth="1.5"/>
+                   <path d="M65,55 L75,10 L85,55 Z" fill="none" stroke="#333" strokeWidth="1"/>
+                   <path d="M75,80 L75,20" stroke="#333" strokeWidth="1.5"/>
+                   <path d="M75,50 L95,80" stroke="#333" strokeWidth="1"/>
+                   <path d="M75,40 L55,80" stroke="#333" strokeWidth="1"/>
+                   {/* Mountain */}
+                   <path d="M40,80 L55,35 L70,80" fill="none" stroke="#333" strokeWidth="1.5"/>
+                   <path d="M50,50 L55,35 L60,50 L55,55 Z" fill="none" stroke="#333" strokeWidth="1"/>
+                </svg>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Section with Transparent Background and Dotted Path */}
+      <footer className="relative bg-transparent text-white pt-24 z-30 flex flex-col">
+         {/* Top Ripped edge SVG (Beige paper tearing downwards) */}
+        <div className="absolute -top-[1px] left-0 w-full h-12 z-10 text-[#F4EBD9]">
+             <svg viewBox="0 0 1200 50" preserveAspectRatio="none" className="w-full h-full drop-shadow-[0_4px_4px_rgba(0,0,0,0.15)] text-[#F4EBD9]">
+                <defs>
+                  <pattern id="torn-edge-bottom" width="60" height="50" patternUnits="userSpaceOnUse">
+                    {/* Fills TOP, waves on BOTTOM */}
+                    <path d="M0,0 L0,20 Q15,40 30,20 Q45,0 60,20 L60,0 Z" fill="currentColor" />
+                  </pattern>
+                </defs>
+                <rect x="0" y="0" width="1200" height="50" fill="url(#torn-edge-bottom)" />
+             </svg>
+        </div>
+
+        {/* Dotted Flight Path */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+          <svg className="w-full h-full opacity-60" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1200 300">
+            {/* Wavy looping flight path */}
+            <path d="M 1250,50 C 1100,250 950,-50 800,100 C 650,250 450,50 200,150" fill="none" stroke="#ffffff" strokeWidth="1.5" strokeDasharray="6 6" />
+            {/* Paper plane icon */}
+            <g transform="translate(1120, 80) rotate(-25)">
+              <path d="M0,0 L24,-12 L6,18 Z" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinejoin="round"/>
+              <path d="M6,18 L10,6 L24,-12" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinejoin="round"/>
+            </g>
+          </svg>
+        </div>
+
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-10 mb-16 lg:px-8">
+            
+            {/* Left Column: Script Text & Heart */}
+            <div className="flex items-center gap-4 lg:gap-6 text-center lg:text-left">
+              <h3 className="font-caveat text-3xl lg:text-[40px] text-[#EBD08B] leading-[1.2] drop-shadow-md font-medium">
+                Every trip tells a story.<br/>
+                Every person adds to it.
+              </h3>
+              {/* Hand-drawn open heart */}
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#EBD08B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform rotate-12 drop-shadow-sm -mt-6">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35" fill="none" strokeDasharray="50" strokeDashoffset="5" />
+              </svg>
+            </div>
+
+            {/* Middle Column: Title & Subtitle */}
+            <div className="text-center space-y-2 flex flex-col items-center">
+              <h2 className="text-[28px] lg:text-[34px] font-serif font-bold text-white flex items-center justify-center gap-3 tracking-wide drop-shadow-md">
+                The Journey Continues...
+                 {/* Small mountain graphic */}
+                 <svg width="36" height="18" viewBox="0 0 40 20" fill="none" stroke="#d1d5db" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:block">
+                    <path d="M5,20 L15,5 L20,12 L30,2 L38,20" />
+                 </svg>
+              </h2>
+              <p className="text-gray-200 font-medium tracking-wide text-sm lg:text-base drop-shadow-md">Let's keep exploring the world, together!</p>
+              {/* Orange brush stroke underline */}
+              <div className="w-24 h-1.5 bg-[#d97706] rounded-full mt-2 opacity-90" style={{ clipPath: 'polygon(0 0, 100% 20%, 95% 100%, 5% 80%)' }}></div>
+            </div>
+
+            {/* Right Column: Button */}
+            <div className="relative group shrink-0 mt-4 lg:mt-0">
+              <div className="absolute inset-0 bg-[#b45309] rounded-full blur opacity-50 group-hover:opacity-80 transition-opacity"></div>
+              <button className="relative bg-[#a5520e] hover:bg-[#8d4409] text-white px-7 py-3.5 rounded-full font-medium transition-colors flex items-center gap-3 border border-[#d97706]/50 shadow-lg text-sm lg:text-base">
+                Explore Full Tenure Report
+                <div className="w-5 h-5 rounded-full border border-white/60 flex items-center justify-center">
+                    <ArrowRight className="w-3 h-3 text-white" />
+                </div>
               </button>
             </div>
-          )}
-        </div>
 
-        {/* Persistent Timeline - Moved to the bottom below event cards */}
-        <div className="layout-container border-t border-burgundy/10 pt-10 mt-8 pb-10 overflow-visible">
-          <div className="flex justify-between items-center mb-6">
-            <h4 className="font-heading text-xs font-mono font-bold text-burgundy/60 uppercase tracking-widest">
-              ✦ CHRONOLOGICAL JOURNEY TIMELINE (PERSISTENT NAVIGATION) ✦
-            </h4>
-            <span className="text-[10px] font-mono text-gray-400 font-bold uppercase tracking-wider">
-              Selected: {month ? month.title : ''}
-            </span>
           </div>
-          
-          <Timeline 
-            activeMonthId={activeMonthId} 
-            onMonthSelect={(monthId) => navigateTo('monthly', monthId, null)} 
-          />
-        </div>
-      </div>
-    );
-  };
-
-  // Page 3: Event Detail View
-  const DetailView = () => {
-    const event = eventsList.find(e => e.id === activeEventId);
-    if (!event) return null;
-    
-    return (
-      <div className="animate-in slide-in-from-bottom duration-450 pb-24 relative">
-        <div className="warm-ambient-glow" style={{ bottom: '10%', right: '8%' }} />
-        
-        {/* Immersive Header Navigation */}
-        <div className="layout-container pt-12 pb-6 border-b border-burgundy/10">
-          <button 
-            onClick={goBack} 
-            className="flex items-center space-x-2 text-burgundy hover:text-gold transition-colors font-bold text-[13px] uppercase tracking-wider font-mono"
-          >
-            <ArrowLeft size={14} />
-            <span>← GO BACK TO FEED</span>
-          </button>
         </div>
 
-        {/* Level 3 Content: Dedicated Full-Page View */}
-        <div className="layout-container py-12">
-          <div className="event-detail-card overflow-hidden">
-            
-            {/* Visual Cover Header */}
-            <div className="h-[280px] md:h-[420px] relative border-b border-burgundy/15 overflow-hidden">
-              <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#4a1225]/85 to-transparent pointer-events-none" />
-              
-              <div className="absolute bottom-6 left-6 right-6 z-10 space-y-2">
-                <span className="badge-orange uppercase tracking-wider text-[9px] font-bold">
-                  {event.tagline || event.mainEventTitle}
-                </span>
-                <h1 className="text-3xl md:text-5xl font-extrabold text-white font-heading leading-tight">
-                  {event.title}
-                </h1>
-              </div>
-            </div>
-
-            {/* Expanded Content Details Grid */}
-            <div className="detail-content-pad bg-transparent">
-              
-              {/* Event Metadata Ribbon */}
-              <div className="flex flex-col sm:flex-row gap-6 pb-6 border-b border-burgundy/10">
-                <div className="flex-1 flex items-start gap-4">
-                  <div style={{padding: '12px'}} className="bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
-                    <Clock size={20} />
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wider font-mono text-gray-500 mb-0.5">Chronology</div>
-                    <div className="text-[13px] font-bold text-burgundy">{event.date}</div>
-                  </div>
-                </div>
-                
-                <div className="hidden sm:block w-px bg-burgundy/10"></div>
-                
-                <div className="flex-1 flex items-start gap-4">
-                  <div style={{padding: '12px'}} className="bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
-                    <MapPin size={20} />
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wider font-mono text-gray-500 mb-0.5">Chapters & Coordinates</div>
-                    <div className="text-[13px] font-bold text-burgundy">{event.location}</div>
-                  </div>
-                </div>
-                
-                <div className="hidden sm:block w-px bg-burgundy/10"></div>
-                
-                <div className="flex-1 flex items-start gap-4">
-                  <div style={{padding: '12px'}} className="bg-[#fffaf0] border border-burgundy/10 text-burgundy rounded-xl">
-                    <Users size={20} />
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-wider font-mono text-gray-500 mb-0.5">Active Turnout</div>
-                    <div className="text-[13px] font-bold text-burgundy">{event.attendees} Student Explorers</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Story Narrative Expanded Text */}
-              <div className="space-y-4">
-                <h3 className="font-heading text-xl font-bold text-burgundy">Expedition Chronicles</h3>
-                <p className="text-sm text-gray-600 leading-relaxed font-light">
-                  {event.summary}
-                </p>
-                <p className="text-xs text-gray-400 font-light leading-relaxed">
-                  Every expedition represents the core DNA of the Boundless Travel Society. Connected in gratitude, academic sharing, and adventure, students built strong peer networks supported by the IIT Madras BS Student Activity Fee. All pictures, files, and coordinates are chronologically archived.
-                </p>
-              </div>
-
-              {/* Multi-Day Detailed Itinerary — numbered steps */}
-              {event.itinerary && event.itinerary.length > 0 && (
-                <div style={{paddingTop:'28px', borderTop:'1px solid rgba(74,18,37,0.1)'}}>
-                  <h3 style={{
-                    fontFamily:'var(--font-heading)', fontSize:'20px',
-                    fontWeight:800, color:'var(--color-burgundy)',
-                    marginBottom:'24px'
-                  }}>Day-by-Day Expedition Itinerary</h3>
-
-                  <div style={{display:'flex', flexDirection:'column', gap:'16px'}}>
-                    {event.itinerary.map((item, index) => (
-                      <div key={index} style={{
-                        display:'flex', gap:'20px', alignItems:'flex-start'
-                      }}>
-                        {/* Day number bubble */}
-                        <div style={{
-                          flexShrink:0,
-                          width:'44px', height:'44px',
-                          borderRadius:'50%',
-                          background:'var(--color-burgundy)',
-                          color:'white',
-                          display:'flex', alignItems:'center', justifyContent:'center',
-                          fontFamily:'var(--font-heading)', fontSize:'14px', fontWeight:800
-                        }}>
-                          {index + 1}
-                        </div>
-
-                        {/* Card */}
-                        <div style={{
-                          flex:1,
-                          background:'rgba(74,18,37,0.03)',
-                          border:'1px solid rgba(74,18,37,0.09)',
-                          borderRadius:'14px',
-                          padding:'16px 20px'
-                        }}>
-                          <div style={{
-                            fontFamily:'var(--font-mono)', fontSize:'9px',
-                            fontWeight:700, color:'var(--color-gold)',
-                            textTransform:'uppercase', letterSpacing:'0.08em',
-                            marginBottom:'6px'
-                          }}>{item.day}</div>
-                          <h4 style={{
-                            fontFamily:'var(--font-heading)', fontSize:'14px',
-                            fontWeight:800, color:'var(--color-burgundy)',
-                            margin:'0 0 8px 0'
-                          }}>{item.title}</h4>
-                          <p style={{
-                            fontSize:'12px', color:'rgba(74,18,37,0.55)',
-                            fontWeight:300, lineHeight:'1.65', margin:0
-                          }}>{item.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Visual Memories Glimpses Gird */}
-              {event.glimpses && event.glimpses.length > 0 && (
-                <div className="space-y-4 pt-6 border-t border-burgundy/10 animate-in fade-in duration-300">
-                  <h3 className="font-heading text-lg font-bold text-burgundy flex items-center gap-2">
-                    <ImageIcon size={18} /> Visual Glimpses & Memories
-                  </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {event.glimpses.map((src, i) => (
-                      <div 
-                        key={i} 
-                        className="glimpse-thumb animate-in zoom-in-95"
-                        onClick={() => openLightbox(event.glimpses, i, `${event.title} - Glimpse ${i + 1}`)}
-                      >
-                        <img 
-                          src={src} 
-                          alt={`${event.title} glimpse`} 
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-
-              {/* Event Navigation Footer — Next Event CTA only */}
-              <div style={{display:'flex', justifyContent:'center', paddingTop:'40px', borderTop:'1px solid rgba(74,18,37,0.1)', marginTop:'48px'}}>
-                {nextNav && (
-                  <button
-                    onClick={() => {
-                      if (nextNav.isRestart) {
-                        navigateTo('overview', null, null);
-                      } else {
-                        navigateTo('detail', nextNav.monthId, nextNav.eventId);
-                      }
-                    }}
-                    style={{
-                      display:'inline-flex', alignItems:'center', gap:'12px',
-                      padding:'16px 40px',
-                      border:'none',
-                      borderRadius:'14px',
-                      background:'var(--color-burgundy)',
-                      color:'white',
-                      fontFamily:'var(--font-mono)',
-                      fontSize:'11px', fontWeight:700,
-                      letterSpacing:'0.07em', textTransform:'uppercase',
-                      cursor:'pointer',
-                      transition:'all 0.25s ease',
-                      boxShadow:'0 6px 20px -4px rgba(74,18,37,0.28)',
-                    }}
-                    onMouseEnter={e=>{ e.currentTarget.style.background='var(--color-burgundy-glow)'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 10px 28px -6px rgba(74,18,37,0.38)'; }}
-                    onMouseLeave={e=>{ e.currentTarget.style.background='var(--color-burgundy)'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 6px 20px -4px rgba(74,18,37,0.28)'; }}
-                  >
-                    <span>{nextNav.label.toUpperCase()} : {nextNav.title ? nextNav.title.toUpperCase() : 'OVERVIEW'}</span>
-                    <span style={{fontSize:'16px'}}>→</span>
-                  </button>
-                )}
-              </div>
-
+        {/* Footer Bottom Links - Full Width Solid Background */}
+        <div className="w-full bg-[#111111] relative z-10 mt-12 sm:mt-16">
+          <div className="flex flex-col items-center justify-center gap-3 text-[13px] text-gray-300 py-6 px-4">
+            <p className="flex items-center gap-2">
+                © 2025 Boundless Travel Society. 
+                <Navigation className="w-3.5 h-3.5 -rotate-45 text-gray-400" />
+            </p>
+            <div className="flex gap-8 font-medium">
+              <a href="#" className="hover:text-white transition-colors">Instagram</a>
+              <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+              <a href="#" className="hover:text-white transition-colors">Contact</a>
             </div>
           </div>
         </div>
-      </div>
-    );
-  };
+      </footer>
 
-  // --- RENDER ---
-  return (
-    <>
-      <div className="min-h-screen flex flex-col relative" style={{ backgroundColor: '#fcf7e7' }}>
-        
-        {/* Main Content Area */}
-        <main className="flex-grow">
-          {currentView === 'overview' && <OverviewView />}
-          {currentView === 'monthly' && <MonthlyView />}
-          {currentView === 'detail' && <DetailView />}
-        </main>
-      </div>
-
-      {/* Full Screen Lightbox Modal */}
-      {lightboxState.isOpen && (
-        <div className="lightbox-frame animate-in fade-in" onClick={closeLightbox}>
-          <button 
-            className="lightbox-close-btn" 
-            style={{ 
-              position: 'absolute', 
-              top: 24, 
-              right: 24, 
-              background: 'rgba(255,255,255,0.05)', 
-              color: 'white', 
-              border: '1px solid rgba(255,255,255,0.1)', 
-              padding: 12, 
-              borderRadius: '50%',
-              cursor: 'pointer'
-            }} 
-            onClick={closeLightbox}
-          >
-            <X size={20} />
-          </button>
-          
-          <button 
-            style={{ 
-              position: 'absolute', 
-              left: 24, 
-              background: 'rgba(255,255,255,0.05)', 
-              color: 'white', 
-              border: '1px solid rgba(255,255,255,0.1)', 
-              padding: 16, 
-              borderRadius: '50%',
-              cursor: 'pointer'
-            }} 
-            onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }}
-          >
-            <ChevronLeft size={24} />
-          </button>
-          
-          <img 
-            className="lightbox-main-img" 
-            src={lightboxState.images[lightboxState.currentIndex]} 
-            alt="Enlarged gallery memory" 
-            onClick={(e) => e.stopPropagation()} 
-          />
-          
-          <button 
-            style={{ 
-              position: 'absolute', 
-              right: 24, 
-              background: 'rgba(255,255,255,0.05)', 
-              color: 'white', 
-              border: '1px solid rgba(255,255,255,0.1)', 
-              padding: 16, 
-              borderRadius: '50%',
-              cursor: 'pointer'
-            }} 
-            onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }}
-          >
-            <ChevronRight size={24} />
-          </button>
-          
-          <div style={{ marginTop: 16, color: '#fcf7e7', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            {lightboxState.caption}
-          </div>
-        </div>
-      )}
-    </>
+    </div>
   );
 }
