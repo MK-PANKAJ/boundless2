@@ -431,9 +431,13 @@ export default function App() {
                       {event.summary}
                     </p>
                     
-                    <div className="flex justify-between items-center text-[10px] font-mono font-bold text-burgundy pt-3 border-t border-burgundy/5">
-                      <span className="flex items-center gap-1"><Calendar size={11} /> {event.date}</span>
-                      <span className="flex items-center gap-1"><Users size={11} /> {event.attendees} attendees</span>
+                    <div className="flex justify-between items-center pt-4 border-t border-burgundy/8" style={{borderTopColor:'rgba(74,18,37,0.07)'}}>
+                      <span style={{display:'inline-flex',alignItems:'center',gap:'5px',background:'rgba(74,18,37,0.05)',borderRadius:'99px',padding:'4px 10px',fontSize:'10px',fontFamily:'var(--font-mono)',fontWeight:700,color:'var(--color-burgundy)',letterSpacing:'0.04em'}}>
+                        📅 {event.date}
+                      </span>
+                      <span style={{display:'inline-flex',alignItems:'center',gap:'5px',background:'rgba(217,119,6,0.08)',borderRadius:'99px',padding:'4px 10px',fontSize:'10px',fontFamily:'var(--font-mono)',fontWeight:700,color:'var(--color-gold)',letterSpacing:'0.04em'}}>
+                        👥 {event.attendees}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -610,12 +614,28 @@ export default function App() {
 
 
               {/* Event Navigation Footer controls */}
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-burgundy/10 mt-10">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-10 border-t border-burgundy/10 mt-12">
                 <button 
-                  onClick={goBack} 
-                  className="btn-secondary text-[11px] py-2 px-6 w-full sm:w-auto"
+                  onClick={goBack}
+                  style={{
+                    display:'inline-flex', alignItems:'center', gap:'10px',
+                    padding:'14px 28px',
+                    border:'1.5px solid rgba(74,18,37,0.2)',
+                    borderRadius:'14px',
+                    background:'transparent',
+                    color:'var(--color-burgundy)',
+                    fontFamily:'var(--font-mono)',
+                    fontSize:'11px', fontWeight:700,
+                    letterSpacing:'0.06em', textTransform:'uppercase',
+                    cursor:'pointer',
+                    transition:'all 0.25s ease',
+                    width:'100%', justifyContent:'center'
+                  }}
+                  onMouseEnter={e=>{ e.currentTarget.style.background='rgba(74,18,37,0.05)'; e.currentTarget.style.borderColor='rgba(74,18,37,0.35)'; }}
+                  onMouseLeave={e=>{ e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(74,18,37,0.2)'; }}
                 >
-                  &larr; Return to {timelineMonths.find(m => m.id === activeMonthId)?.label} Feed
+                  <span style={{fontSize:'14px'}}>←</span>
+                  Return to {timelineMonths.find(m => m.id === activeMonthId)?.label} Feed
                 </button>
                 
                 {nextNav && (
@@ -627,10 +647,26 @@ export default function App() {
                         navigateTo('detail', nextNav.monthId, nextNav.eventId);
                       }
                     }}
-                    className="btn-primary text-[11px] py-2.5 px-6 flex items-center justify-center gap-2 w-full sm:w-auto group"
+                    style={{
+                      display:'inline-flex', alignItems:'center', gap:'10px',
+                      padding:'14px 28px',
+                      border:'none',
+                      borderRadius:'14px',
+                      background:'var(--color-burgundy)',
+                      color:'white',
+                      fontFamily:'var(--font-mono)',
+                      fontSize:'11px', fontWeight:700,
+                      letterSpacing:'0.06em', textTransform:'uppercase',
+                      cursor:'pointer',
+                      transition:'all 0.25s ease',
+                      boxShadow:'0 6px 20px -4px rgba(74,18,37,0.28)',
+                      width:'100%', justifyContent:'center'
+                    }}
+                    onMouseEnter={e=>{ e.currentTarget.style.background='var(--color-burgundy-glow)'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 10px 28px -6px rgba(74,18,37,0.38)'; }}
+                    onMouseLeave={e=>{ e.currentTarget.style.background='var(--color-burgundy)'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 6px 20px -4px rgba(74,18,37,0.28)'; }}
                   >
-                    <span>{nextNav.label.toUpperCase()} : {nextNav.title ? nextNav.title : 'Overview'}</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    <span>{nextNav.label.toUpperCase()} : {nextNav.title ? nextNav.title.toUpperCase() : 'OVERVIEW'}</span>
+                    <span style={{fontSize:'15px'}}>→</span>
                   </button>
                 )}
               </div>
