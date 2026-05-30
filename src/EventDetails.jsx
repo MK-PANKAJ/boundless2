@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
 import eventsData from './data/events';
 import SubEventDetails from './SubEventDetails';
@@ -7,6 +7,7 @@ import SubEventDetails from './SubEventDetails';
 export default function EventDetails() {
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   
   const event = eventsData.find((e) => e.id === eventId);
 
@@ -59,11 +60,12 @@ export default function EventDetails() {
           {feedItems.map((item, idx) => {
             const isItinerary = !item.id;
             const itemId = item.id || `day-${idx+1}`;
+            const sourceRoute = location.state?.from || location.pathname;
             
             return (
               <div 
                 key={itemId}
-                onClick={() => navigate(`/event/${eventId}/${itemId}`)}
+                onClick={() => navigate(`/event/${eventId}/${itemId}`, { state: { from: sourceRoute } })}
                 className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.05)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.1)] transition-all duration-300"
               >
                 {/* Image Section */}

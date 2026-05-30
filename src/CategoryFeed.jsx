@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
 import eventsData from './data/events';
 import { getTimelineEvents } from './data/timelineEvents';
@@ -7,6 +7,7 @@ import { getTimelineEvents } from './data/timelineEvents';
 export default function CategoryFeed() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,10 +76,11 @@ export default function CategoryFeed() {
               <div 
                 key={item.id || idx}
                 onClick={() => {
+                  const sourceRoute = location.pathname;
                   if (item.isMainEvent) {
-                    navigate(`/event/${item.id}`);
+                    navigate(`/event/${item.id}`, { state: { from: sourceRoute } });
                   } else {
-                    navigate(`/event/${item.parentEventId}/${item.id}`);
+                    navigate(`/event/${item.parentEventId}/${item.id}`, { state: { from: sourceRoute } });
                   }
                 }}
                 className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.05)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.1)] transition-all duration-300"

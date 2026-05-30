@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Clock, MapPin, Users, ArrowRight, ImageIcon } from 'lucide-react';
 import eventsData from './data/events';
 
@@ -8,6 +8,7 @@ export default function SubEventDetails({ providedEventId, providedSubEventId })
   const eventId = providedEventId || params.eventId;
   const subEventId = providedSubEventId || params.subEventId || eventId;
   const navigate = useNavigate();
+  const location = useLocation();
 
   const isMainEventView = eventId === subEventId;
 
@@ -21,6 +22,8 @@ export default function SubEventDetails({ providedEventId, providedSubEventId })
 
   const event = eventsData.find((e) => e.id === eventId);
   if (!event) return <div>Event Not Found</div>;
+
+  const backRoute = location.state?.from || (event.category === 'trip' ? '/category/trips' : `/event/${eventId}`);
 
   const feedItems = event.subEvents?.length > 0 ? event.subEvents : (event.itinerary || []);
   
@@ -70,10 +73,10 @@ export default function SubEventDetails({ providedEventId, providedSubEventId })
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-6">
         <button 
-          onClick={() => navigate(`/event/${eventId}`)}
+          onClick={() => navigate(backRoute)}
           className="flex items-center gap-2 text-[#4a1225] font-bold text-xs tracking-[0.15em] hover:text-[#d97706] transition-colors uppercase"
         >
-          <ArrowLeft size={14} strokeWidth={3} /> GO BACK TO FEED
+          <ArrowLeft size={14} strokeWidth={3} /> {location.state?.from ? 'GO BACK' : (event.category === 'trip' ? 'GO BACK TO TRIPS' : 'GO BACK TO FEED')}
         </button>
       </div>
 
