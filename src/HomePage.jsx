@@ -553,11 +553,6 @@ export default function HomePage() {
               © 2025 Boundless Travel Society.
               <Navigation className="w-3.5 h-3.5 -rotate-45 text-gray-400" />
             </p>
-            <div className="flex gap-8 font-medium">
-              <a href="#" className="hover:text-white transition-colors">Instagram</a>
-              <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
-            </div>
           </div>
         </div>
       </footer>
