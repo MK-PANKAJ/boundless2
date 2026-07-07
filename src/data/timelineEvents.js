@@ -11,7 +11,7 @@ export const timelineMonths = [
   { id: '2026-02', label: 'Feb 2026', title: 'February 2026', summary: 'Dense Vikarabad forest treks and misty valley sunrise walking trails.' },
   { id: '2026-03', label: 'Mar 2026', title: 'March 2026', summary: 'Women\'s Day Championship and Rajasthan Girls Getaway empowerment retreat.' },
   { id: '2026-04', label: 'Apr 2026', title: 'April 2026', summary: 'Refreshing spring escapes to Nainital lake viewpoints and campfire circles.' },
-  { id: '2026-05', label: 'May 2026', title: 'May 2026', summary: 'Nepal Expedition, Pink Verdict & Regional Meetups.' },
+  { id: '2026-05', label: 'May 2026', title: 'May 2026', summary: 'Gaya Escape spiritual journey, Ahmedabad & Ranchi meetups, The Nepal Trip across Kathmandu, Pokhara & Lumbini, and The Pink Verdict girls-only event.' },
   { id: '2026-06', label: 'Jun 2026', title: 'June 2026', summary: 'Sun-kissed Goan beach excursions and Portuguese quarter heritage photowalks.' }
 ];
 

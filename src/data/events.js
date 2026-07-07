@@ -653,34 +653,35 @@ const eventsData = [
   {
     id: 'girls-getaway',
     title: 'Rajasthan Girls Getaway',
-    tagline: 'Vibrant culture, female empowerment, and desert exploration',
-    description: 'An exclusive four-day trip designed for 14 female BS students to explore the colorful royal heritage of Rajasthan between 18–21 March 2026. Supported by the IIT Madras Student Activity Fee, the trip focused on historical exploration, female empowerment, confidence building, and forming close-knit lifelong friendships.',
+    tagline: 'The very first all-girls trip — freedom, friendship, and royal Rajasthan',
+    description: 'Boundless proudly organized Rajasthan Girls Getaway, the very first all-girls trip hosted by the community — a milestone that became one of the biggest and most beautiful achievements in Boundless history. More than just a trip, it was a celebration of freedom, friendship, confidence, and unforgettable memories across Jaipur and Jodhpur between 18–21 March 2026. Filled with laughter, late-night conversations, vibrant culture, and endless energy, the getaway quickly became known as one of the best trips Boundless has ever organized.',
     image: '/images/events/girls-getaway.webp',
     stats: { cities: 2, participants: 14 },
     category: 'trip',
+    date: '18-21 March 2026',
     glimpses: [
       '/images/events/girls-getaway.webp',
     ],
     itinerary: [
       {
         day: 'Day 1',
-        title: 'Arrival & Royal Welcome',
-        description: 'The group gathered in Rajasthan, welcomed with local folk music. They enjoyed a cozy dinner circle, sharing introductions and travel expectations.'
+        title: 'Jaipur: Heritage & First Impressions',
+        description: 'The journey began in Jaipur with check-in and group bonding. The first evening included visits to the iconic Hawa Mahal and Jantar Mantar, where participants admired the beautiful architecture, clicked endless photographs, and experienced the lively energy of Jaipur. Walking through colorful streets together instantly brought warmth and bonding within the group.'
       },
       {
         day: 'Day 2',
-        title: 'Fort Exploration & Photo Walks',
-        description: 'Spent the day exploring grand palaces, walking through colorful royal streets, capturing aesthetic pictures, and learning about the royal history.'
+        title: 'Forts, Views & Royal Rajasthan',
+        description: 'A full day exploring Rajasthan\'s royal beauty. The group visited Jal Mahal, admired the grandeur of Amber Fort, and explored the scenic surroundings of Jaipur. The day\'s highlight was Nahargarh Fort, where breathtaking panoramic sunset views became one of the most beautiful moments of the trip. The evening ended with a visit to Albert Hall Museum followed by dinner together.'
       },
       {
         day: 'Day 3',
-        title: 'Traditional Bazaars & Late-Night Bonding',
-        description: 'Shopped for local handicrafts and jewelry in traditional bazaars. The evening wrapped up with a late-night music circle, sharing personal stories.'
+        title: 'Journey to Jodhpur & Blue City Vibes',
+        description: 'The group checked out from Jaipur and journeyed to Jodhpur — the bus ride itself became legendary, filled with music, dancing, storytelling, and nonstop chaos. After check-in, participants explored Toorji Ka Jhalra, the iconic Clock Tower, and shopped at the vibrant Sadar Market. Local food, colorful shops, and endless conversations made the evening unforgettable.'
       },
       {
         day: 'Day 4',
-        title: 'Empowerment Reflection & Departure',
-        description: 'Gathered for a reflection circle, discussing student life and building a strong sisterhood network. Departures in the afternoon.'
+        title: 'Mehrangarh & Farewell',
+        description: 'The final day began with a visit to the majestic Mehrangarh Fort, walking through historic corridors and admiring panoramic city views. The group also visited Jaswant Thada and the Umaid Bhawan Palace Museum. As evening approached, participants gathered near the sunset viewpoint around Mehrangarh Fort for their final moments together before the trip concluded.'
       }
     ],
     subEvents: []
@@ -757,8 +758,18 @@ const eventsData = [
         location: 'Online Google Meet',
         attendees: 50,
         image: '/images/events/womens-day.webp',
-        summary: 'Celebrated the strength and talent of women in our community. Over 50 students participated in interactive competitions, creative showcases, and open discussion panels, filling the chat with support and empowerment.'
-      }
+        summary: 'Boundless celebrated Women\'s Day 2026 with great enthusiasm through the Women\'s Day Championship, an engaging interactive online event on Google Meet that brought together 50+ BS students from across the country. The session began with a warm welcome, setting a positive and inclusive tone. Participants actively engaged in a variety of fun and interactive activities that encouraged creativity, collaboration, and expression. The competitive yet friendly environment kept energy high, with students showcasing their talents and ideas. The event featured interactive competitions, participant engagement through discussions and chats, and a celebration of creativity, talent, and expression. The chat box was filled with encouragement, appreciation, and lively interactions, making the experience feel warm and connected despite being virtual.',
+        glimpses: []
+      },
+      {
+        id: 'the-pink-verdict',
+        title: 'The Pink Verdict',
+        date: '30 May 2026',
+        location: 'Online Google Meet',
+        attendees: 50,
+        image: '/images/events/pink-verdict.webp',
+        summary: 'Boundless organized The Pink Verdict on 30th May, an exciting girls-only online event filled with debates, opinions, laughter, and creativity. Designed as an interactive "Guilty or Not Guilty" game, the event brought together participants for lively debates, ending with a chill session of singing, dancing, poetry, and spontaneous performances.',
+      },
     ]
   },
   {
@@ -792,28 +803,34 @@ const eventsData = [
 
   {
     id: 'uttarakhand-trip',
-    title: 'Uttarakhand Diaries',
-    tagline: 'A serene and refreshing lakeside escape in Devbhoomi Nainital',
-    description: 'A three-day student escape into the misty mountains of Nainital, Devbhoomi between 16–18 April 2026. Walking along the serene Naini Lake, enjoying the cool mountain breeze, and sharing cozy evening campfire chats strengthened student bonding and created lasting memories for 20 adventurous explorers.',
+    title: 'Uttarakhand Trip',
+    tagline: 'A refreshing mountain escape through the peaceful hills of Devbhoomi Nainital',
+    description: 'Boundless organized the Uttarakhand Trip, a refreshing mountain escape that brought BS students together for a beautiful experience amidst the peaceful hills of Nainital, in the heart of Devbhoomi. Filled with scenic landscapes, calm lakes, fun adventures, and meaningful connections, the trip became a perfect blend of relaxation, exploration, and unforgettable memories between 16–18 April 2026.',
     image: '/images/events/uttarakhand-cover.webp',
     stats: { cities: 1, participants: 20 },
     category: 'trip',
+    date: '16-18 April 2026',
     glimpses: ['/images/events/uttarakhand-cover.webp'],
     itinerary: [
       {
+        day: 'Day 0',
+        title: 'Arrival at Nainital',
+        description: 'Participants arrived in Nainital from different cities, carrying excitement and anticipation for the days ahead. The cool mountain breeze, winding hill roads, and mist-covered views instantly created a refreshing atmosphere. As everyone gathered at the hotel, introductions slowly turned into conversations, laughter, and instant bonding within the group.'
+      },
+      {
         day: 'Day 1',
-        title: 'Scenic Arrival in Nainital',
-        description: 'Began with a gorgeous winding drive into the mist-covered hills of Uttarakhand. Explored Nainital lakeside and enjoyed the refreshing cool mountain breeze.'
+        title: 'Exploring Nainital',
+        description: 'The first full day was dedicated to exploring the beauty and charm of Nainital. The group visited the peaceful Naina Devi Temple, followed by Eco Cave Gardens and the famous Nainital Zoo. In the evening, participants enjoyed boating at Naini Lake surrounded by calm waters and beautiful sunset views. Later, the group explored Mall Road, trying street food, café hopping, and enjoying fun late-night walks together.'
       },
       {
         day: 'Day 2',
-        title: 'Lake Exploration & Viewpoints',
-        description: 'Soaked in the tranquility of Nainital, walking along Naini Lake and exploring nearby viewpoints. Evenings were filled with warm community bonding and campfire games.'
+        title: 'Lakes, Peaks & Devbhoomi Vibes',
+        description: 'Participants visited the famous Kainchi Dham, where the calm spiritual atmosphere added a unique experience. The group then explored Bhimtal Lake and continued toward Sattal for trekking and nature exploration. Surrounded by forests and mountain views, the trek became one of the highlights of the trip. The journey further continued toward Naina Peak for stunning panoramic views of the hills and valleys.'
       },
       {
         day: 'Day 3',
-        title: 'Morning Calm & Departures',
-        description: 'Woke up to the unique morning calm of Nainital. Had a relaxed lakeside breakfast and took final group photos before heading to the departure points.'
+        title: 'Farewell to the Hills',
+        description: 'Participants spent their final moments together capturing photographs, revisiting memories, and soaking in the peaceful beauty of Uttarakhand one last time. The return journey felt emotional yet fulfilling, filled with sleepy smiles, laughter, and reflections on the unforgettable moments shared throughout the trip.'
       }
     ],
     subEvents: []
@@ -822,7 +839,7 @@ const eventsData = [
     id: 'gaya-escape',
     title: 'Gaya Escape (Meetup)',
     tagline: 'A memorable journey through the cultural and spiritual beauty of Gaya Ji',
-    description: 'Boundless organized Gaya Escape on 22nd March, a refreshing mini trip/meetup that brought BS students together for a memorable journey through the cultural and spiritual beauty of Gaya Ji. Starting early in the morning from Patna, the meetup quickly transformed into a day filled with exploration, conversations, laughter, and meaningful experiences.',
+    description: 'Boundless organized Gaya Escape on 22nd March, a refreshing mini trip/meetup that brought BS students together for a memorable journey through the cultural and spiritual beauty of Gaya Ji. The journey began around 8:00 AM as participants gathered in Patna with excitement and enthusiasm. Travel itself became lively and enjoyable, filled with introductions, music, conversations, and bonding. Upon reaching Gaya Ji, the group explored iconic locations including the famous Mahabodhi Temple, Gaya Temple, and various nearby attractions. Walking through the streets, exploring temples, trying local food, capturing photographs, and spending time together made the meetup feel much more than just a casual gathering. The peaceful environment, combined with the cheerful energy of the group, created a perfect balance of relaxation, exploration, and togetherness.',
     image: '/images/events/gaya-escape.webp',
     stats: { cities: 1, participants: 25 },
     category: 'trip',
@@ -835,11 +852,12 @@ const eventsData = [
     id: 'ahmedabad-escape-may',
     title: 'Ahmedabad Escape (Meetup)',
     tagline: 'Exploration, bonding, and exciting experiences at Science City',
-    description: 'Boundless, in collaboration with Sundarbans, organized Ahmedabad Escape (Meetup), a fun and refreshing gathering that brought BS students together for a memorable day filled with exploration, bonding, and exciting experiences in the vibrant city of Ahmedabad. From interactive science exhibits to enjoying the city\'s culture and food together, the meetup became a perfect blend of learning, fun, and connection.',
+    description: 'Boundless, in collaboration with Sundarbans, organized Ahmedabad Escape (Meetup) on 17th May — a fun and refreshing gathering that brought 24 BS students together for a memorable day at Science City, Ahmedabad. The meetup began early in the morning as participants gathered with excitement and enthusiasm. One of the major highlights was the visit to Science City, where participants explored interactive exhibits, innovative displays, and engaging science-based attractions. After exploring Science City, the group enjoyed pizza together, turning the meetup into an even more lively and cheerful experience. Sitting together over food, conversations, and laughter created a comfortable and friendly atmosphere that strengthened the bond among participants. Filled with exploration, fun, food, and togetherness, the meetup became a truly memorable experience for everyone involved.',
     image: '/images/events/ahmedabad-escape-may.webp',
     stats: { cities: 1, participants: 24 },
     category: 'meetup',
     date: '17 May 2026',
+    associations: 'Boundless x Sundarbans',
     glimpses: [],
     itinerary: [],
     subEvents: []
@@ -848,11 +866,12 @@ const eventsData = [
     id: 'ranchi-escape',
     title: 'Ranchi Escape (Meetup)',
     tagline: 'Fun, bonding, games, and food at Mall of Ranchi',
-    description: 'Boundless in collaboration with Nallamala, organized Ranchi Escape Meetup, a fun and lively gathering that brought BS students together for a memorable day filled with bonding, games, food, and unforgettable vibes at Mall of Ranchi.',
+    description: 'Boundless, in collaboration with Nallamala, organized Ranchi Escape Meetup on 17th May — a fun and lively gathering that brought 17 BS students together for a memorable day at Mall of Ranchi. The meetup began with participants gathering with excitement, introductions quickly turning into engaging conversations, laughter, and instant bonding. Participants explored Mall of Ranchi together, visiting stores, capturing photographs, and simply enjoying each other\'s company. One of the most enjoyable parts was the fun games and activities shared by the group, which filled the day with energy, laughter, and endless entertainment. The group later gathered to enjoy burgers and food together, turning simple moments into some of the most memorable parts of the day. As the meetup concluded, participants carried back new friendships, unforgettable memories, and moments filled with joy and togetherness.',
     image: '/images/events/ranchi-escape.webp',
     stats: { cities: 1, participants: 17 },
     category: 'meetup',
     date: '17 May 2026',
+    associations: 'Boundless x Nallamala',
     glimpses: [],
     itinerary: [],
     subEvents: []
@@ -899,33 +918,20 @@ const eventsData = [
         id: 'lumbini-meetup',
         title: 'Lumbini Meetup',
         date: '26 May 2026',
-        location: 'Lumbini',
+        location: 'Lumbini, Nepal',
         attendees: 44,
         image: '/images/events/lumbini-meetup.webp',
         associations: 'Boundless x Nallamala',
-        summary: 'A peaceful gathering held in the spiritual city of Lumbini. Participants explored the beautiful monastery areas and the Lumbini Monastic Zone, admiring the architecture and cultural beauty before enjoying a relaxing lunch at a nearby restaurant.',
+        summary: 'As part of the Nepal journey, Boundless in collaboration with Nallamala House organized the Lumbini Meetup on 26th May — a peaceful and memorable gathering held in the spiritual city of Lumbini, the birthplace of Gautam Buddha. Participants explored the beautiful monastery areas and the Lumbini Monastic Zone, admiring the architecture, peaceful surroundings, and cultural beauty of the place. Walking together through the serene pathways allowed students to slow down, connect with each other, and truly experience the peaceful essence of Lumbini. The meetup also included a relaxing lunch at a nearby restaurant, where participants gathered over food, conversations, and shared laughter. Filled with calm moments, meaningful conversations, and unforgettable memories, the Lumbini Meetup added a special touch to the final day of the Nepal trip.',
         glimpses: []
       }
     ]
   },
   {
-    id: 'the-pink-verdict',
-    title: 'The Pink Verdict',
-    tagline: 'Guilty or Not Guilty? A girls-only online game night of debates and creativity',
-    description: 'Boundless organized The Pink Verdict on 30th May, an exciting girls-only online event filled with debates, opinions, laughter, and creativity. Designed as an interactive "Guilty or Not Guilty" game, the event brought together participants for lively debates, ending with a chill session of singing, dancing, poetry, and spontaneous performances.',
-    image: '/images/events/pink-verdict.webp',
-    stats: { cities: 'Pan-India', participants: '50+' },
-    category: 'online',
-    date: '30 May 2026',
-    glimpses: [],
-    itinerary: [],
-    subEvents: []
-  },
-  {
     id: 'kerala-trip-2',
-    title: 'Kerala 2.0 (Upcoming)',
-    tagline: 'Upcoming return trip to God\'s Own Country',
-    description: 'Scheduled future trip. Details to be updated.',
+    title: 'Kerala 2.0',
+    tagline: 'Return to God\'s Own Country — backwaters, beaches, and beyond',
+    description: 'Boundless returns to Kerala for a second chapter of exploration across God\'s Own Country. Stay tuned for full details.',
     image: '/images/events/kerala2-cover.webp',
     stats: { cities: 0, participants: 0 },
     category: 'trip',
@@ -936,9 +942,9 @@ const eventsData = [
   },
   {
     id: 'pondicherry-trip',
-    title: 'Pondicherry Trip (Upcoming)',
-    tagline: 'Upcoming coastal expedition',
-    description: 'Scheduled future trip. Details to be updated.',
+    title: 'Pondicherry Trip',
+    tagline: 'French Riviera of the East — coastal charm, cafés, and culture',
+    description: 'Boundless heads to Pondicherry for a coastal expedition through the French Quarter, beachside promenades, and serene Auroville. Full details coming soon.',
     image: '/images/events/pondicherry-cover.webp',
     stats: { cities: 0, participants: 0 },
     category: 'trip',
@@ -949,9 +955,9 @@ const eventsData = [
   },
   {
     id: 'post-paradox-trip',
-    title: 'Post Paradox Trip (Upcoming)',
-    tagline: 'Upcoming post-event student trip',
-    description: 'Scheduled future trip. Details to be updated.',
+    title: 'Post Paradox Trip',
+    tagline: 'A post-event student adventure — destination to be revealed',
+    description: 'A special Boundless trip planned in the aftermath of Paradox, bringing students together for one more unforgettable journey. Full details coming soon.',
     image: '/images/events/post-paradox-cover.webp',
     stats: { cities: 0, participants: 0 },
     category: 'trip',

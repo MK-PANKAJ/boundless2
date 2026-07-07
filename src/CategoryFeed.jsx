@@ -34,15 +34,45 @@ export default function CategoryFeed() {
   } else if (categoryId === 'meetups') {
     title = 'City Meetups';
     tagline = 'Connections, fun, and friends across 40+ cities.';
-    feedItems = eventsData.filter(e => e.category === 'multi-city').map(e => ({
-      ...e,
-      monthId: '',
-      parentEventId: e.id,
-      date: e.date || '2025-2026',
-      location: e.stats?.cities ? `${e.stats.cities} Cities` : 'Pan-India',
-      attendees: e.stats?.participants,
-      isMainEvent: true
-    }));
+
+    // 1. Collect all individual sub-event meetups from multi-city and trip parent events
+    const subEventMeetups = [];
+    eventsData.forEach(parentEvent => {
+      if (
+        (parentEvent.category === 'multi-city' || parentEvent.category === 'trip') &&
+        parentEvent.subEvents?.length > 0
+      ) {
+        parentEvent.subEvents.forEach(sub => {
+          subEventMeetups.push({
+            ...sub,
+            monthId: '',
+            parentEventId: parentEvent.id,
+            summary: sub.summary || parentEvent.description,
+            category: 'meetup',
+            date: sub.date || parentEvent.date || '2025-2026',
+            location: sub.location || parentEvent.title,
+            attendees: sub.attendees,
+            isMainEvent: false,
+            mainEventTitle: parentEvent.title,
+          });
+        });
+      }
+    });
+
+    // 2. Collect standalone top-level meetup/meetup-tagged events
+    const standaloneMeetups = eventsData
+      .filter(e => e.category === 'meetup')
+      .map(e => ({
+        ...e,
+        monthId: '',
+        parentEventId: e.id,
+        date: e.date || '2025-2026',
+        location: e.stats?.cities ? `${e.stats.cities} Cities` : 'Pan-India',
+        attendees: e.stats?.participants,
+        isMainEvent: true,
+      }));
+
+    feedItems = [...subEventMeetups, ...standaloneMeetups];
   } else if (categoryId === 'events') {
     title = 'Events & Celebrations';
     tagline = 'Moments that matter, celebrated pan-India.';
