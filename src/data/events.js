@@ -203,7 +203,7 @@ const eventsData = [
       },
       {
         id: 'ahmedabad-escape',
-        title: 'Ahmedabad Escape (Meetup)',
+        title: 'Ahmedabad Raas',
         date: '27 Sep 2025',
         time: '8:00 PM onwards',
         location: 'Green Place, Ahmedabad',
@@ -837,12 +837,12 @@ const eventsData = [
   },
   {
     id: 'gaya-escape',
-    title: 'Gaya Escape (Meetup)',
+    title: 'Gaya Escape',
     tagline: 'A memorable journey through the cultural and spiritual beauty of Gaya Ji',
     description: 'Boundless organized Gaya Escape on 22nd March, a refreshing mini trip/meetup that brought BS students together for a memorable journey through the cultural and spiritual beauty of Gaya Ji. The journey began around 8:00 AM as participants gathered in Patna with excitement and enthusiasm. Travel itself became lively and enjoyable, filled with introductions, music, conversations, and bonding. Upon reaching Gaya Ji, the group explored iconic locations including the famous Mahabodhi Temple, Gaya Temple, and various nearby attractions. Walking through the streets, exploring temples, trying local food, capturing photographs, and spending time together made the meetup feel much more than just a casual gathering. The peaceful environment, combined with the cheerful energy of the group, created a perfect balance of relaxation, exploration, and togetherness.',
     image: '/images/events/gaya-escape.webp',
     stats: { cities: 1, participants: 25 },
-    category: 'trip',
+    category: 'meetup',
     date: '22 March 2026',
     glimpses: [],
     itinerary: [],
@@ -850,7 +850,7 @@ const eventsData = [
   },
   {
     id: 'ahmedabad-escape-may',
-    title: 'Ahmedabad Escape (Meetup)',
+    title: 'Ahmedabad Escape',
     tagline: 'Exploration, bonding, and exciting experiences at Science City',
     description: 'Boundless, in collaboration with Sundarbans, organized Ahmedabad Escape (Meetup) on 17th May — a fun and refreshing gathering that brought 24 BS students together for a memorable day at Science City, Ahmedabad. The meetup began early in the morning as participants gathered with excitement and enthusiasm. One of the major highlights was the visit to Science City, where participants explored interactive exhibits, innovative displays, and engaging science-based attractions. After exploring Science City, the group enjoyed pizza together, turning the meetup into an even more lively and cheerful experience. Sitting together over food, conversations, and laughter created a comfortable and friendly atmosphere that strengthened the bond among participants. Filled with exploration, fun, food, and togetherness, the meetup became a truly memorable experience for everyone involved.',
     image: '/images/events/ahmedabad-escape-may.webp',
@@ -864,7 +864,7 @@ const eventsData = [
   },
   {
     id: 'ranchi-escape',
-    title: 'Ranchi Escape (Meetup)',
+    title: 'Ranchi Escape',
     tagline: 'Fun, bonding, games, and food at Mall of Ranchi',
     description: 'Boundless, in collaboration with Nallamala, organized Ranchi Escape Meetup on 17th May — a fun and lively gathering that brought 17 BS students together for a memorable day at Mall of Ranchi. The meetup began with participants gathering with excitement, introductions quickly turning into engaging conversations, laughter, and instant bonding. Participants explored Mall of Ranchi together, visiting stores, capturing photographs, and simply enjoying each other\'s company. One of the most enjoyable parts was the fun games and activities shared by the group, which filled the day with energy, laughter, and endless entertainment. The group later gathered to enjoy burgers and food together, turning simple moments into some of the most memorable parts of the day. As the meetup concluded, participants carried back new friendships, unforgettable memories, and moments filled with joy and togetherness.',
     image: '/images/events/ranchi-escape.webp',

@@ -35,31 +35,20 @@ export default function CategoryFeed() {
     title = 'City Meetups';
     tagline = 'Connections, fun, and friends across 40+ cities.';
 
-    // 1. Collect all individual sub-event meetups from multi-city and trip parent events
-    const subEventMeetups = [];
-    eventsData.forEach(parentEvent => {
-      if (
-        (parentEvent.category === 'multi-city' || parentEvent.category === 'trip') &&
-        parentEvent.subEvents?.length > 0
-      ) {
-        parentEvent.subEvents.forEach(sub => {
-          subEventMeetups.push({
-            ...sub,
-            monthId: '',
-            parentEventId: parentEvent.id,
-            summary: sub.summary || parentEvent.description,
-            category: 'meetup',
-            date: sub.date || parentEvent.date || '2025-2026',
-            location: sub.location || parentEvent.title,
-            attendees: sub.attendees,
-            isMainEvent: false,
-            mainEventTitle: parentEvent.title,
-          });
-        });
-      }
-    });
+    // Multi-city flagship events (Tricolor Trails, Navrang, etc.)
+    const multiCityEvents = eventsData
+      .filter(e => e.category === 'multi-city')
+      .map(e => ({
+        ...e,
+        monthId: '',
+        parentEventId: e.id,
+        date: e.date || '2025-2026',
+        location: e.stats?.cities ? `${e.stats.cities} Cities` : 'Pan-India',
+        attendees: e.stats?.participants,
+        isMainEvent: true
+      }));
 
-    // 2. Collect standalone top-level meetup/meetup-tagged events
+    // Standalone top-level meetup-tagged events (Ahmedabad Escape May, Ranchi Escape, etc.)
     const standaloneMeetups = eventsData
       .filter(e => e.category === 'meetup')
       .map(e => ({
@@ -69,10 +58,10 @@ export default function CategoryFeed() {
         date: e.date || '2025-2026',
         location: e.stats?.cities ? `${e.stats.cities} Cities` : 'Pan-India',
         attendees: e.stats?.participants,
-        isMainEvent: true,
+        isMainEvent: true
       }));
 
-    feedItems = [...subEventMeetups, ...standaloneMeetups];
+    feedItems = [...multiCityEvents, ...standaloneMeetups];
   } else if (categoryId === 'events') {
     title = 'Events & Celebrations';
     tagline = 'Moments that matter, celebrated pan-India.';
@@ -117,11 +106,10 @@ export default function CategoryFeed() {
               <div
                 key={item.id || idx}
                 onClick={() => {
-                  const sourceRoute = location.pathname;
                   if (item.isMainEvent) {
-                    navigate(`/event/${item.id}`);
+                    navigate(`/event/${item.id}`, { state: { from: location.pathname } });
                   } else {
-                    navigate(`/event/${item.parentEventId}/${item.id}`);
+                    navigate(`/event/${item.parentEventId}/${item.id}`, { state: { from: location.pathname } });
                   }
                 }}
                 className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.05)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.1)] transition-all duration-300"
