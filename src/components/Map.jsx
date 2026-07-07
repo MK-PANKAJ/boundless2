@@ -150,7 +150,9 @@ const Map = ({ className }) => {
           { lat: 22.5726, lng: 88.3639, label: 'Kolkata' },
           { lat: 22.8046, lng: 86.2029, label: 'Jamshedpur' },
           { lat: 25.5941, lng: 85.1376, label: 'Patna' },
-          { lat: 26.7606, lng: 83.3732, label: 'Gorakhpur' }
+          { lat: 26.7606, lng: 83.3732, label: 'Gorakhpur' },
+          { lat: 23.0225, lng: 72.5714, label: 'Ahmedabad' },
+          { lat: 12.9716, lng: 77.5946, label: 'Bengaluru' }
         ];
 
         // Draw curved dashed route line

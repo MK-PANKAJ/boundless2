@@ -117,18 +117,15 @@ export const getTimelineEvents = () => {
       } else if (mainEvent.id === 'kerala-yatra') {
         monthId = '2026-01';
         dateRange = '8-11 Jan 2026';
-      } else if (mainEvent.id === 'ananthagiri-trip') {
-        monthId = '2026-02';
-        dateRange = '7-8 Feb 2026';
       } else if (mainEvent.id === 'girls-getaway') {
         monthId = '2026-03';
         dateRange = '18-21 Mar 2026';
       } else if (mainEvent.id === 'uttarakhand-trip') {
         monthId = '2026-04';
         dateRange = '16-18 Apr 2026';
-      } else if (mainEvent.id === 'goa-trip') {
+      } else if (mainEvent.id === 'panjim-meetup') {
         monthId = '2026-06';
-        dateRange = '5-8 Jun 2026';
+        dateRange = 'June 2026';
       }
 
       items.push({

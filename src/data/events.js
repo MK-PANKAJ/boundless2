@@ -157,9 +157,11 @@ const eventsData = [
         id: 'mumbai-raas',
         title: 'Mumbai Raas',
         date: '23 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'Kora Kendra Ground, Borivali',
-        attendees: 32,
+        attendees: 22,
         image: '/images/events/navrang-mumbai.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'Mumbai set the perfect tone for Navrang 2.0 at Kora Kendra Ground. Students enjoyed warm introductions before diving into massive Garba circles. The energetic festive crowd blended with student enthusiasm, culminating in a beautiful night of photography, laughter, and complimentary goodies.',
         glimpses: ['/images/events/navrang-mumbai.webp']
       },
@@ -167,9 +169,11 @@ const eventsData = [
         id: 'patna-raas',
         title: 'Patna Raas',
         date: '27 Sep 2025',
+        time: '7:30 PM onwards',
         location: 'Patliputra Community Hall, Patna',
         attendees: 32,
         image: '/images/events/navrang-patna.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'Patna blended traditional Garba beats with localized Bhojpuri energy at Patliputra Community Hall. Students kicked off with icebreakers, recorded dynamic reels, and danced in a joyous fusion circle. The evening was completed with local snacks, gift hampers, and tight-knit community bonding.',
         glimpses: ['/images/events/navrang-patna.webp']
       },
@@ -177,9 +181,11 @@ const eventsData = [
         id: 'jaipur-raas',
         title: 'Jaipur Raas',
         date: '27 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'LBS College, Raja Park, Jaipur',
         attendees: 30,
         image: '/images/events/navrang-jaipur.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'Jaipur glowed with traditional Pink City elegance at LBS College. Dressed in gorgeous ethnic wear, students shared laughs, warm introductions, and synced steps in Garba circles. The evening concluded with delicious food, gift hampers, and deep conversations.',
         glimpses: ['/images/events/navrang-jaipur.webp']
       },
@@ -187,19 +193,23 @@ const eventsData = [
         id: 'hyderabad-raas',
         title: 'Hyderabad Raas',
         date: '27 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'SK Creations, Hyderabad',
         attendees: 50,
         image: '/images/events/navrang-hyderabad.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'One of the largest gatherings of Navrang 2.0. Dressed in colorful attire, 50 students lit up the dance floor at SK Creations with high-energy Garba tracks. The room was filled with laughter, followed by delicious refreshments, photo ops, and memorable student interactions.',
         glimpses: ['/images/events/navrang-hyderabad.webp']
       },
       {
-        id: 'ahmedabad-raas',
-        title: 'Ahmedabad Raas',
+        id: 'ahmedabad-escape',
+        title: 'Ahmedabad Escape (Meetup)',
         date: '27 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'Green Place, Ahmedabad',
         attendees: 7,
         image: '/images/events/navrang-ahmedabad.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'Ahmedabad delivered an intimate, deeply authentic Garba night. Dancing to classic Gujarati tunes at Green Place, the small group created a cozy, warm, and highly engaging vibe, capturing scenic aesthetic photos and bonding deeply over shared stories.',
         glimpses: ['/images/events/navrang-ahmedabad.webp']
       },
@@ -207,9 +217,11 @@ const eventsData = [
         id: 'lucknow-raas',
         title: 'Lucknow Raas',
         date: '28 Sep 2025',
+        time: '7:30 PM onwards',
         location: 'Janeshwar Mishra Park, Lucknow',
         attendees: 35,
         image: '/images/events/navrang-lucknow.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'Lucknow brought poise and historical charm as 35 students met at Janeshwar Mishra Park. The lush gardens provided a refreshing backdrop as students danced in organized Garba circles, wrapping up with cozy park chats, traditional snacks, and custom gift boxes.',
         glimpses: ['/images/events/navrang-lucknow.webp']
       },
@@ -217,9 +229,11 @@ const eventsData = [
         id: 'nagpur-raas',
         title: 'Nagpur Raas',
         date: '28 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'Trimurti Nagar Durga Pandal, Nagpur',
         attendees: 17,
         image: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=600',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'Hosted under the beautiful glowing lights of Trimurti Nagar Durga Pandal, 17 Nagpur students enjoyed a vibrant evening. They recorded candid reels, danced under the pandal canopy, and shared dinner to discuss future local events.',
         glimpses: []
       },
@@ -227,9 +241,11 @@ const eventsData = [
         id: 'delhi-raas',
         title: 'Delhi Raas',
         date: '28 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'Pacific Garba Night, Tagore Garden, Delhi',
         attendees: 35,
         image: '/images/events/navrang-delhi.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'Grand celebration under the electrifying neon lights of Pacific Garba Night. Dressed in spectacular traditional attire, students clicked group pictures, swapped study experiences, danced late into the night, and enjoyed street food.',
         glimpses: ['/images/events/navrang-delhi.webp']
       },
@@ -237,9 +253,11 @@ const eventsData = [
         id: 'kolkata-raas',
         title: 'Kolkata Raas',
         date: '29 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'Salt Lake IB Block Durga Puja, Kolkata',
         attendees: 30,
         image: '/images/events/navrang-kolkata.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'A magnificent cultural fusion. The event began with a beautiful guided tour of the massive Salt Lake pandal, admiring traditional clay art. Soon, the group transitioned into Garba mode, dancing in the lit courtyard and sharing festive sweets.',
         glimpses: ['/images/events/navrang-kolkata.webp']
       },
@@ -247,9 +265,11 @@ const eventsData = [
         id: 'gorakhpur-raas',
         title: 'Gorakhpur Raas',
         date: '27 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'Maharana Pratap Inter College, Gorakhpur',
         attendees: 15,
         image: '/images/events/navrang-gorakhpur.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'A cozy, heartfelt meetup of 15 students. They gathered in the college grounds, kicking off with lively introductions and dhol beats before forming simple, synchronized dance circles. Wrapped up with shared hampers and home-style sweets.',
         glimpses: ['/images/events/navrang-gorakhpur.webp']
       },
@@ -257,9 +277,11 @@ const eventsData = [
         id: 'jamshedpur-raas',
         title: 'Jamshedpur Raas',
         date: '28 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'Kasidih Durga Puja Pandal, Jamshedpur',
         attendees: 11,
         image: '/images/events/navrang-jamshedpur.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'Under the beautiful canopy of Kasidih Durga Puja Pandal, students gathered for light-hearted chats. They danced Garba to traditional tracks, took festive photographs, and bonded over local street food.',
         glimpses: ['/images/events/navrang-jamshedpur.webp']
       },
@@ -267,9 +289,11 @@ const eventsData = [
         id: 'indore-raas',
         title: 'Indore Raas',
         date: '28 Sep 2025',
+        time: '8:00 PM onwards',
         location: 'Sheraton Grand Palace, Indore',
         attendees: 18,
         image: '/images/events/navrang-indore.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'A premium, late-night festive celebration. Gathering at the grand Sheraton Palace, the group shared a luxurious dinner, followed by dynamic and highly rhythmic Garba circles. The elegant setup made it a truly memorable night.',
         glimpses: ['/images/events/navrang-indore.webp']
       },
@@ -277,9 +301,11 @@ const eventsData = [
         id: 'chennai-raas',
         title: 'Chennai Raas',
         date: '1 Oct 2025',
+        time: '10:00 PM onwards',
         location: 'Ampa Skyone Mall, Chennai',
         attendees: 11,
         image: '/images/events/navrang-chennai.webp',
+        associations: 'Boundless x Sundarbans x Nallamala x Corbett x Pravaha x Synapse x Jarvis',
         summary: 'The perfect closing chapter to Navrang 2.0. Eleven Chennai-based students gathered at Ampa Skyone Mall, opening with casual café chats and creative photos. The Garba session, though intimate, radiated high energy and concluded with festive goodbyes.',
         glimpses: ['/images/events/navrang-chennai.webp']
       }
@@ -303,7 +329,7 @@ const eventsData = [
       {
         id: 'kanpur',
         title: 'Kanpur Diaries',
-        date: '10 Jan 2026',
+        date: '10 Jan 2026 (Saturday)',
         location: 'Allen Forest Zoo, Kanpur',
         attendees: 18,
         image: '/images/events/tt3-kanpur.webp',
@@ -313,7 +339,7 @@ const eventsData = [
       {
         id: 'siliguri',
         title: 'Siliguri Diaries',
-        date: '21 Jan 2026',
+        date: '21 Jan 2026 (Wednesday)',
         location: 'Coronation Bridge & EWAM Monastery',
         attendees: 8,
         image: '/images/events/tt3-siliguri.webp',
@@ -323,7 +349,7 @@ const eventsData = [
       {
         id: 'kolkata-diaries',
         title: 'Kolkata Diaries',
-        date: '24 Jan 2026',
+        date: '24 Jan 2026 (Sunday)',
         location: 'Indian Museum, Kolkata',
         attendees: 31,
         image: '/images/events/tt3-kolkata.webp',
@@ -333,7 +359,7 @@ const eventsData = [
       {
         id: 'chennai-diaries',
         title: 'Chennai Diaries',
-        date: '25 Jan 2026',
+        date: '25 Jan 2026 (Sunday)',
         location: 'Arignar Anna Zoological Park (Vandalur)',
         attendees: 23,
         image: '/images/events/tt3-chennai.webp',
@@ -343,7 +369,7 @@ const eventsData = [
       {
         id: 'rishikesh',
         title: 'Rishikesh Diaries',
-        date: '25 Jan 2026',
+        date: '25 Jan 2026 (Sunday)',
         location: 'Janki Setu & Holy Ganges',
         attendees: 19,
         image: '/images/events/tt3-rishikesh.webp',
@@ -353,7 +379,7 @@ const eventsData = [
       {
         id: 'vrindavan',
         title: 'Vrindavan Diaries',
-        date: '10-11 Jan 2026',
+        date: '10-11 Jan 2026 (Saturday-Sunday)',
         location: 'Mathura & Prem Mandir, Vrindavan',
         attendees: 18,
         image: '/images/events/tt3-vrindavan.webp',
@@ -363,7 +389,7 @@ const eventsData = [
       {
         id: 'parasnath',
         title: 'Parasnath Diaries',
-        date: '10-11 Jan 2026',
+        date: '10-11 Jan 2026 (Saturday-Sunday)',
         location: 'Parasnath Trek, Madhuban, Jharkhand',
         attendees: 13,
         image: '/images/events/tt3-parasnath.webp',
@@ -373,7 +399,7 @@ const eventsData = [
       {
         id: 'coimbatore',
         title: 'Coimbatore Diaries',
-        date: '26 Jan 2026',
+        date: '26 Jan 2026 (Monday)',
         location: 'Mettupalayam → Ooty Hill Station',
         attendees: 10,
         image: '/images/events/tt3-coimbatore.webp',
@@ -383,7 +409,7 @@ const eventsData = [
       {
         id: 'rajgir',
         title: 'Rajgir & Nalanda Diaries',
-        date: '18 Jan 2026',
+        date: '18 Jan 2026 (Sunday)',
         location: 'Vishwa Shanti Stupa & Nalanda Ruins',
         attendees: 25,
         image: '/images/events/tt3-rajgir.webp',
@@ -393,7 +419,7 @@ const eventsData = [
       {
         id: 'mahabaleshwar',
         title: 'Mahabaleshwar Diaries',
-        date: '18-20 Jan 2026',
+        date: '18-20 Jan 2026 (Sunday-Tuesday)',
         location: 'Mahabaleshwar & Lingmala Trek',
         attendees: 16,
         image: '/images/events/tt3-mahabaleshwar.webp',
@@ -403,7 +429,7 @@ const eventsData = [
       {
         id: 'udaipur-diaries',
         title: 'Udaipur Diaries',
-        date: '18-20 Jan 2026',
+        date: '18-20 Jan 2026 (Sunday-Tuesday)',
         location: 'Ambrai Ghat, City Palace & Mount Abu',
         attendees: 25,
         image: '/images/events/tt3-udaipur.webp',
@@ -413,7 +439,7 @@ const eventsData = [
       {
         id: 'himachal',
         title: 'Himachal Diaries',
-        date: '29 Jan – 1 Feb 2026',
+        date: '29 Jan – 1 Feb 2026 (Thursday-Sunday)',
         location: 'Manali, Solang Valley, Kasol & Kullu',
         attendees: 40,
         image: '/images/events/tt3-himachal.webp',
@@ -421,14 +447,14 @@ const eventsData = [
         glimpses: ['/images/events/tt3-himachal.webp']
       },
       {
-        id: 'chopta',
-        title: 'Chopta Trek',
-        date: '26 Jan 2026',
-        location: 'Chopta, Tungnath & Chandrashila Peak',
-        attendees: 15,
-        image: 'https://images.unsplash.com/photo-1548680373-ab6d4a5b48d7?auto=format&fit=crop&q=80&w=600',
-        summary: 'A breathtaking winter trek to Tungnath, the highest Shiva temple in the world, and further up to Chandrashila Peak. The group climbed through snow-laden forest paths under clear blue skies, proudly hoisting the national flag at the summit.',
-        glimpses: []
+        id: 'ananthagiri-diaries',
+        title: 'Ananthagiri Hills Diaries',
+        date: '7-8 Feb 2026 (Saturday-Sunday)',
+        location: 'Ananthagiri Hills, Vikarabad',
+        attendees: 14,
+        image: '/images/events/tt3-ananthagiri.webp',
+        summary: 'As part of Tricolor Trails 3.0, the Boundless Chapter organized Ananthagiri Hills Diaries, a student trip that brought BS students together for an adventurous, refreshing, and truly unforgettable experience. Ventured through dense forest trails, walking together along scenic paths, building teamwork, sharing laughter, and appreciating the tranquil landscape.',
+        glimpses: ['/images/events/tt3-ananthagiri.webp']
       }
     ]
   },
@@ -440,6 +466,7 @@ const eventsData = [
     image: '/images/events/shimoga-cover.webp',
     stats: { cities: 4, participants: 30 },
     category: 'trip',
+    date: '5-7 Sep 2025',
     glimpses: [
       '/images/events/shimoga-trip.webp',
       '/images/events/shimoga-cover.webp',
@@ -469,8 +496,9 @@ const eventsData = [
     tagline: 'Royal history, lakeside luxury, and high-altitude sunsets',
     description: 'A grand four-day royal expedition exploring Udaipur (the City of Lakes), Mount Abu (Rajasthan\'s scenic hill station), and the historic Chittorgarh. The trip, themed "Padharo Mhare Desh," provided 30 participants an immersive educational and cultural experience, highlighting architectural marvels, spiritual temples, traditional dances, and lakeside pool bonding sessions.',
     image: '/images/events/mewar-cover.webp',
-    stats: { cities: 3, participants: 30 },
+    stats: { cities: 3, participants: 'Details not specified' },
     category: 'trip',
+    date: '12th - 15th September 2025',
     glimpses: [
       '/images/events/mewar-trip.webp',
       '/images/events/mewar-cover.webp',
@@ -518,6 +546,7 @@ const eventsData = [
     image: '/images/events/meghalaya1-cover.webp',
     stats: { cities: 4, participants: 30 },
     category: 'trip',
+    date: '28 Nov 2025-01 Dec 2025',
     glimpses: [
       '/images/events/meghalaya1-cover.webp',
     ],
@@ -553,6 +582,8 @@ const eventsData = [
     image: '/images/events/meghalaya2-cover.webp',
     stats: { cities: 4, participants: 20 },
     category: 'trip',
+    date: '25-28 Dec 2025',
+    exclusions: ['Lunch meals', 'Entry fees', 'Optional activity charges', 'Personal expenses'],
     glimpses: [
       '/images/events/meghalaya2-trip.webp',
       '/images/events/meghalaya2-cover.webp',
@@ -583,12 +614,15 @@ const eventsData = [
   },
   {
     id: 'kerala-yatra',
-    title: 'Kerala Yatra',
+    title: 'Kerala Yatra (Varkala Diaries)',
     tagline: 'Backwaters, giant sculptures, and coastal cliffs of Varkala',
     description: 'An unforgettable 4-day trip exploring the diverse heritage, tranquil backwaters, and grand cliffside beaches of "God\'s Own Country" between 8–11 January 2026. Dressed in traditional attire, 23 students sailed on luxury houseboats in Alleppey, explored historical Fort Kochi, hiked the giant bird sculpture at Jatayu, and watched golden sunsets over the Arabian Sea from Varkala Cliff.',
     image: '/images/events/kerala-cover.webp',
     stats: { cities: 4, participants: 23 },
     category: 'trip',
+    date: '8 – 11 January 2026',
+    cost: '₹5300 per person',
+    exclusions: ['Lunch meals', 'Entry fees for attractions', 'Optional activity charges', 'Personal expenses and shopping'],
     glimpses: [
       '/images/events/kerala-cover.webp',
     ],
@@ -653,12 +687,13 @@ const eventsData = [
   },
   {
     id: 'kalsubai-trek',
-    title: 'Kalsubai Peak Trek',
+    title: 'Kalsubai Peak Trek (Kalsubai Diaries)',
     tagline: 'Climbing under the stars to Maharashtra\'s highest point',
     description: 'What started as a simple meetup for Boundless Mumbai Chapter students turned into a legendary overnight trek to Kalsubai Peak, the highest point in Maharashtra (1,646 meters). Supported by the IITM Student Activity Fee, 17 participants hiked under a starry night sky, slept in mountain tents, and witnessed a breathtaking golden sunrise over the Sahyadri range.',
     image: '/images/events/kalsubai-cover.webp',
     stats: { cities: 1, participants: 17 },
     category: 'trip',
+    date: '5 Dec 2025',
     glimpses: [
       '/images/events/kalsubai-cover.webp',
     ],
@@ -754,29 +789,7 @@ const eventsData = [
     ],
     subEvents: []
   },
-  {
-    id: 'ananthagiri-trip',
-    title: 'Ananthagiri Hills Diaries',
-    tagline: 'Trekking through lush green forest trails and dense Vikarabad valley',
-    description: 'A nature-filled escape from daily routines, surrounded by lush forest greenery and fresh mountain air on 7–8 February 2026. Supported by the IIT Madras BS Student Activity Fee, 14 participants ventured through Vikarabad forest trails, building teamwork, sharing laughter, and appreciating the tranquil landscape before concluding with a memorable sunrise trek.',
-    image: '/images/events/tt3-ananthagiri.webp',
-    stats: { cities: 1, participants: 14 },
-    category: 'trip',
-    glimpses: ['/images/events/tt3-ananthagiri.webp'],
-    itinerary: [
-      {
-        day: 'Day 1',
-        title: 'Forest Trek & Nature Trail',
-        description: 'Arrived at Ananthagiri Hills in Vikarabad. Ventured through dense forest trails under tranquil surroundings, engaging in icebreakers and teamwork exercises among 14 participants.'
-      },
-      {
-        day: 'Day 2',
-        title: 'Sunrise Walk & Reflections',
-        description: 'Began early with a scenic sunrise trek overlooking the misty Vikarabad valley, followed by a local breakfast and a community circle of reflection.'
-      }
-    ],
-    subEvents: []
-  },
+
   {
     id: 'uttarakhand-trip',
     title: 'Uttarakhand Diaries',
@@ -806,43 +819,17 @@ const eventsData = [
     subEvents: []
   },
   {
-    id: 'goa-trip',
-    title: 'Goa Summer Expedition',
-    tagline: 'Sun-kissed beaches, historic forts, and colorful Portuguese quarters',
-    description: 'A planned flagship summer getaway to Goa in June 2026. This trip connects students through heritage walks in Panjim, water adventures on the sun-kissed beaches, and sunset circle bonding sessions at historic fort ruins, creating a bounding family outside classroom screens.',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1600',
+    id: 'panjim-meetup',
+    title: 'Panjim Meetup',
+    tagline: 'Cultural and social experience in the heart of Goa\'s Latin Quarter',
+    description: 'Held on the second day of the Goa trip, the Panjim Meetup was a cultural and social experience thoughtfully curated in the heart of Goa’s Latin Quarter. The event began with a peaceful gathering at the St. Sebastian Chapel, offering a calm and reflective start. From there, participants took a relaxed stroll through the Fontainhas Quarters, famous for their colorful Portuguese-style houses and old-world charm, capturing the essence of what it means to travel together.',
+    image: 'https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?auto=format&fit=crop&q=80&w=600',
     stats: { cities: 1, participants: 30 },
-    category: 'trip',
+    category: 'meetup',
+    date: 'June 2026',
     glimpses: [],
-    itinerary: [
-      {
-        day: 'Day 1',
-        title: 'Arrival & Beach Sunset',
-        description: 'Gather at Goa\'s sun-kissed coast. Meet fellow travelers and enjoy a scenic sunset circle bonding session on the beach.'
-      },
-      {
-        day: 'Day 2',
-        title: 'Panjim Cultural Meetup',
-        description: 'Explore the Portuguese Latin Quarter, Fontainhas, and St. Sebastian Chapel. Capture colorful historical houses, photo walks, and cafe catchups.'
-      },
-      {
-        day: 'Day 3',
-        title: 'Historic Fort Walks & Water Sports',
-        description: 'Visit historic fort ruins for panoramic sea views. Engage in water adventures on the beach and enjoy a final night bonfire circle.'
-      }
-    ],
-    subEvents: [
-      {
-        id: 'panjim-meetup',
-        title: 'Panjim Meetup',
-        date: 'June 2026',
-        location: 'Fontainhas & St. Sebastian Chapel, Panjim',
-        attendees: 30,
-        image: 'https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?auto=format&fit=crop&q=80&w=600',
-        summary: 'Held on the second day of the Goa trip, the Panjim Meetup was a cultural and social experience thoughtfully curated in the heart of Goa’s Latin Quarter. The event began with a peaceful gathering at the St. Sebastian Chapel, offering a calm and reflective start. From there, participants took a relaxed stroll through the Fontainhas Quarters, famous for their colorful Portuguese-style houses and old-world charm, capturing the essence of what it means to travel together.',
-        glimpses: []
-      }
-    ]
+    itinerary: [],
+    subEvents: []
   }
 ];
 

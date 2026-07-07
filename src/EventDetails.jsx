@@ -42,7 +42,7 @@ export default function EventDetails() {
     );
   }
 
-  if (event.category === 'trip') {
+  if (event.category === 'trip' || !event.subEvents || event.subEvents.length === 0) {
     return <SubEventDetails providedEventId={eventId} providedSubEventId={eventId} providedFrom={previousPath} />;
   }
 

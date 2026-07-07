@@ -76,9 +76,8 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
              : ev.id === 'girls-getaway' ? '2026-03'
              : ev.id === 'kalsubai-trek' ? '2025-12'
              : ev.id === 'pushkar-trip' ? '2025-11'
-             : ev.id === 'ananthagiri-trip' ? '2026-02'
              : ev.id === 'uttarakhand-trip' ? '2026-04'
-             : ev.id === 'goa-trip' ? '2026-06'
+             : ev.id === 'panjim-meetup' ? '2026-06'
              : ev.id === 'tricolor-trails-2' ? '2025-08'
              : ev.id === 'navrang-2' ? '2025-09'
              : ev.id === 'tricolor-trails-3' ? '2026-01'
@@ -92,9 +91,8 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
           : ev.id === 'girls-getaway' ? '18 Mar 2026'
           : ev.id === 'kalsubai-trek' ? '5 Dec 2025'
           : ev.id === 'pushkar-trip' ? '2 Nov 2025'
-          : ev.id === 'ananthagiri-trip' ? '7 Feb 2026'
           : ev.id === 'uttarakhand-trip' ? '16 Apr 2026'
-          : ev.id === 'goa-trip' ? '5 Jun 2026'
+          : ev.id === 'panjim-meetup' ? 'June 2026'
           : ev.id === 'navrang-2' ? '23 Sep 2025'
           : '1 Aug 2025'
     });
@@ -281,6 +279,51 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
                 Every expedition represents the core DNA of the Boundless Travel Society. Connected in gratitude, academic sharing, and adventure, students built strong peer networks supported by the IIT Madras BS Student Activity Fee. All pictures, files, and coordinates are chronologically archived.
               </p>
             </div>
+
+            {/* Metadata Box (Timings, Cost, Collaborators, Inclusions, Exclusions) */}
+            {(currentItem.time || currentItem.associations || currentItem.cost || currentItem.exclusions || currentItem.inclusions) && (
+              <div className="mt-8 p-6 bg-[#FDF9F1] border border-[#e5d5b5] rounded-3xl space-y-4 max-w-2xl">
+                <h3 className="text-lg font-bold font-serif text-[#4a1225] border-b border-[#e5d5b5] pb-2">
+                  Event Information & Details
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  {currentItem.time && (
+                    <div>
+                      <p className="text-[10px] font-bold text-[#d97706] tracking-[0.1em] uppercase mb-0.5">Start Time</p>
+                      <p className="font-semibold text-[#4a1225]">{currentItem.time}</p>
+                    </div>
+                  )}
+                  {currentItem.cost && (
+                    <div>
+                      <p className="text-[10px] font-bold text-[#d97706] tracking-[0.1em] uppercase mb-0.5">Budget / Cost</p>
+                      <p className="font-semibold text-[#4a1225]">{currentItem.cost}</p>
+                    </div>
+                  )}
+                  {currentItem.associations && (
+                    <div className="md:col-span-2">
+                      <p className="text-[10px] font-bold text-[#d97706] tracking-[0.1em] uppercase mb-0.5">Collaborating Societies / Associations</p>
+                      <p className="font-semibold text-[#4a1225]">{currentItem.associations}</p>
+                    </div>
+                  )}
+                  {currentItem.inclusions && currentItem.inclusions.length > 0 && (
+                    <div>
+                      <p className="text-[10px] font-bold text-[#d97706] tracking-[0.1em] uppercase mb-1">Inclusions</p>
+                      <ul className="list-disc pl-4 text-xs font-semibold text-[#4a1225] space-y-0.5">
+                        {currentItem.inclusions.map((inc, i) => <li key={i}>{inc}</li>)}
+                      </ul>
+                    </div>
+                  )}
+                  {currentItem.exclusions && currentItem.exclusions.length > 0 && (
+                    <div>
+                      <p className="text-[10px] font-bold text-[#d97706] tracking-[0.1em] uppercase mb-1">Exclusions</p>
+                      <ul className="list-disc pl-4 text-xs font-semibold text-[#4a1225] space-y-0.5">
+                        {currentItem.exclusions.map((exc, i) => <li key={i}>{exc}</li>)}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Day-by-Day Expedition Itinerary (Only for Main Event Trips) */}
