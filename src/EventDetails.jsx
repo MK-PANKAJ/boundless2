@@ -83,6 +83,7 @@ export default function EventDetails() {
           {feedItems.map((item, idx) => {
             const isItinerary = !item.id;
             const itemId = item.id || `day-${idx+1}`;
+            const sourceRoute = location.state?.from || location.pathname;
             
             return (
               <div 

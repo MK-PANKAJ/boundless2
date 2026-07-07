@@ -8,7 +8,7 @@ export default function CategoryFeed() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [categoryId]);
@@ -59,10 +59,10 @@ export default function CategoryFeed() {
 
   return (
     <div className="min-h-screen bg-[#F8F5EE] font-sans selection:bg-orange-200">
-      
+
       {/* Top Navigation */}
       <nav className="w-full px-6 py-6 border-b border-[#e5d5b5]/40 flex items-center gap-2">
-        <button 
+        <button
           onClick={() => navigate('/')}
           className="flex items-center gap-2 text-[#4a1225] font-bold text-xs tracking-[0.15em] hover:text-[#d97706] transition-colors uppercase"
         >
@@ -80,18 +80,16 @@ export default function CategoryFeed() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
           {feedItems.map((item, idx) => {
             const isItinerary = item.category === 'trip';
-            
+
             return (
-              <div 
+              <div
                 key={item.id || idx}
                 onClick={() => {
+                  const sourceRoute = location.pathname;
                   if (item.isMainEvent) {
-                    navigate(`/event/${item.id}`, { state: { from: location.pathname } });
-                  } else if (item.parentIsTrip) {
-                    // Trip sub-events belong to the parent trip page — don't create a separate page
-                    navigate(`/event/${item.parentEventId}`, { state: { from: location.pathname } });
+                    navigate(`/event/${item.id}`);
                   } else {
-                    navigate(`/event/${item.parentEventId}/${item.id}`, { state: { from: location.pathname } });
+                    navigate(`/event/${item.parentEventId}/${item.id}`);
                   }
                 }}
                 className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.05)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.1)] transition-all duration-300"
@@ -99,9 +97,9 @@ export default function CategoryFeed() {
                 {/* Image Section */}
                 <div className="w-full h-56 relative overflow-hidden bg-[#F4EBD9]">
                   {item.image ? (
-                    <img 
-                      src={item.image} 
-                      alt={item.title} 
+                    <img
+                      src={item.image}
+                      alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   ) : (
@@ -109,7 +107,7 @@ export default function CategoryFeed() {
                       {item.title}
                     </div>
                   )}
-                  
+
                   {/* MEETUP Tag */}
                   <div className="absolute top-4 right-4 bg-[#4a1225] text-white text-[9px] font-bold tracking-widest px-3 py-1.5 rounded-full uppercase">
                     {item.isMainEvent ? 'FLAGSHIP EVENT' : (isItinerary ? 'TRIP' : 'MEETUP')}
@@ -121,10 +119,10 @@ export default function CategoryFeed() {
                   {/* Category / Sub-title */}
                   <div className="flex items-center gap-1.5 mb-2 text-[#d97706]">
                     {isItinerary ? <MapPin size={12} strokeWidth={3} /> : (
-                       <svg width="10" height="12" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="5" cy="5" r="3" fill="#d97706"/>
-                          <path d="M5 8V14" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round"/>
-                       </svg>
+                      <svg width="10" height="12" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="5" cy="5" r="3" fill="#d97706" />
+                        <path d="M5 8V14" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
                     )}
                     <span className="text-[10px] font-bold tracking-[0.15em] uppercase truncate pr-2">
                       {item.mainEventTitle || item.tagline || 'EXPEDITION'}

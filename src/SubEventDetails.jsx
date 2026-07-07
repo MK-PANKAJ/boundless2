@@ -54,6 +54,8 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
     return <Navigate to={`/event/${eventId}`} replace state={{ from: feedPath }} />;
   }
 
+  const backRoute = location.state?.from || (event.category === 'trip' ? '/category/trips' : `/event/${eventId}`);
+
   const feedItems = event.subEvents?.length > 0 ? event.subEvents : (event.itinerary || []);
   
   // Create a flattened timeline of all events and their sub-events in chronological order

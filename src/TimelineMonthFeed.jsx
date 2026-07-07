@@ -71,6 +71,7 @@ export default function TimelineMonthFeed() {
           {feedItems.map((item, idx) => {
             const isItinerary = item.category === 'trip';
             const itemId = item.id || `day-${idx+1}`;
+            const sourceRoute = location.pathname;
             
             return (
               <div 
