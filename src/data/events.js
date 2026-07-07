@@ -4,14 +4,14 @@ const eventsData = [
     title: 'Tricolor Trails 2.0',
     tagline: 'Independence Week nationwide multi-city series',
     description: 'To celebrate the spirit of Independence Week, Boundless launched Tricolor Trails 2.0 — a nationwide multi-city initiative conducted across 12 cities in 11 states. Held in collaboration with Nallamala and Sundarbans Houses, and supported by the IIT Madras BS Student Activity Fee, the series brought students together through heritage walks, local treks, historical explorations, and community gatherings, proudly culminating in singing the National Anthem at each meetup.',
-    image: '/images/events/tricolor-trails2-banner.png',
+    image: '/images/events/tricolor-trails2-banner.webp',
     stats: { cities: 12, participants: '300+' },
     category: 'multi-city',
     glimpses: [
-      '/images/events/tricolor-trails2-banner.png',
-      '/images/events/tricolor-patna.png',
-      '/images/events/tricolor-delhi.png',
-      '/images/events/tricolor-bengaluru.png',
+      '/images/events/tricolor-trails2-banner.webp',
+      '/images/events/tricolor-patna.webp',
+      '/images/events/tricolor-delhi.webp',
+      '/images/events/tricolor-bengaluru.webp',
     ],
     subEvents: [
       {
@@ -20,10 +20,10 @@ const eventsData = [
         date: '6 Aug 2025',
         location: 'Gandhi Maidan → Bodhgaya',
         attendees: 25,
-        image: '/images/events/tricolor-patna.png',
+        image: '/images/events/tricolor-patna.webp',
         summary: 'Enthusiastic participation from students across Bihar. The group boarded a bus from Gandhi Maidan, Patna, beginning a lively road trip with icebreakers. The core highlights included a beautiful trek to Dungeshwari Hills to hoist the national flag, followed by spiritual explorations of the Mahabodhi Temple and peaceful monasteries in Bodhgaya.',
         glimpses: [
-          '/images/events/tricolor-patna.png'
+          '/images/events/tricolor-patna.webp'
         ]
       },
       {
@@ -32,9 +32,9 @@ const eventsData = [
         date: '8 Oct 2025',
         location: 'Zilpi Lake & Siddhivinayak Mandir',
         attendees: 25,
-        image: '/images/events/tricolor-nagpur.png',
+        image: '/images/events/tricolor-nagpur.webp',
         summary: 'A refreshing one-day outing at the scenic Zilpi Lake. Students started the day with a lively bus ride full of music and introductions, followed by darshan at the peaceful Siddhivinayak Mandir. At the lakeside, they enjoyed bonding games and sang the National Anthem surrounded by calm waves.',
-        glimpses: ['/images/events/tricolor-nagpur.png']
+        glimpses: ['/images/events/tricolor-nagpur.webp']
       },
       {
         id: 'bhubaneswar',
@@ -42,9 +42,9 @@ const eventsData = [
         date: '14 Aug 2025',
         location: 'Esplanade Mall, Bhubaneswar',
         attendees: 15,
-        image: '/images/events/tricolor-bhubaneswar.png',
+        image: '/images/events/tricolor-bhubaneswar.webp',
         summary: 'Delayed by heavy rain for a week, the excitement was undiminished when students finally gathered on 14th August. The meetup began with warm introductions and singing the National Anthem. The group then enjoyed refreshments at Burger King, sharing academic experiences and building friendships.',
-        glimpses: ['/images/events/tricolor-bhubaneswar.png']
+        glimpses: ['/images/events/tricolor-bhubaneswar.webp']
       },
       {
         id: 'mumbai',
@@ -52,9 +52,9 @@ const eventsData = [
         date: '14 Aug 2025',
         location: 'Sanjay Gandhi National Park & Kanheri Caves',
         attendees: 25,
-        image: '/images/events/tricolor-mumbai.png',
+        image: '/images/events/tricolor-mumbai.webp',
         summary: 'An adventure combining heritage and nature. The day kicked off with cheerful icebreakers in the lush surrounding of SGNP. The group hiked to the historic Kanheri Caves, sharing stories and taking photos, before participating in a thrilling and competitive treasure hunt that sparked grand teamwork and laughter.',
-        glimpses: ['/images/events/tricolor-mumbai.png']
+        glimpses: ['/images/events/tricolor-mumbai.webp']
       },
       {
         id: 'delhi',
@@ -62,9 +62,9 @@ const eventsData = [
         date: '10 Aug 2025',
         location: 'Central Park, Connaught Place',
         attendees: 40,
-        image: '/images/events/tricolor-delhi.png',
+        image: '/images/events/tricolor-delhi.webp',
         summary: 'A heartwarming gathering of 40 students in the heart of Delhi. Gathered at Central Park, CP, the group introduced themselves and stood together to proud-sing the National Anthem. Afterward, they moved to Haldiram’s for snacks and concluded the day in the park with acoustic music, poetry, and shared stories.',
-        glimpses: ['/images/events/tricolor-delhi.png']
+        glimpses: ['/images/events/tricolor-delhi.webp']
       },
       {
         id: 'bureau',
@@ -72,9 +72,9 @@ const eventsData = [
         date: '10 Aug 2025',
         location: 'Bugle Rock Park & Bull Temple',
         attendees: 30,
-        image: '/images/events/tricolor-bengaluru.png',
+        image: '/images/events/tricolor-bengaluru.webp',
         summary: 'Rain could not dampen the spirits! The meetup began at Domino’s Basavanagudi with pizza and interactive games like Pass the Story. Once the sky cleared, students walked through Bugle Rock Park, climbed the giant rocks, sang the National Anthem, and concluded with visits to the iconic Bull and Ganapathi Temples.',
-        glimpses: ['/images/events/tricolor-bengaluru.png']
+        glimpses: ['/images/events/tricolor-bengaluru.webp']
       },
       {
         id: 'kolkata',
@@ -82,9 +82,9 @@ const eventsData = [
         date: '10 Aug 2025',
         location: 'BITM & Quest Mall',
         attendees: 40,
-        image: '/images/events/tricolor-kolkata.png',
+        image: '/images/events/tricolor-kolkata.webp',
         summary: 'A day combining learning and leisure. The group thoroughly explored the Birla Industrial & Technological Museum, enjoying the interactive 3D and Coal Mine shows. Afterward, they stood outside BITM to sing the National Anthem before heading to Quest Mall Burger King for refreshments and deep conversation.',
-        glimpses: ['/images/events/tricolor-kolkata.png']
+        glimpses: ['/images/events/tricolor-kolkata.webp']
       },
       {
         id: 'gorakhpur',
@@ -92,9 +92,9 @@ const eventsData = [
         date: '10 Aug 2025',
         location: 'Gorakhnath Temple & Café',
         attendees: 20,
-        image: '/images/events/tricolor-gorakhpur.png',
+        image: '/images/events/tricolor-gorakhpur.webp',
         summary: 'Blending spirituality and community bonding. The participants met at the sacred Gorakhnath Temple for introductions and absorbed the serene, calm atmosphere. They then headed to a nearby cozy café for snacks, playing engaging group games and discussing life as IITM students.',
-        glimpses: ['/images/events/tricolor-gorakhpur.png']
+        glimpses: ['/images/events/tricolor-gorakhpur.webp']
       },
       {
         id: 'jamshedpur',
@@ -102,9 +102,9 @@ const eventsData = [
         date: '10 Aug 2025',
         location: 'Tata Steel Zoological Park',
         attendees: 15,
-        image: '/images/events/tricolor-jamshedpur.png',
+        image: '/images/events/tricolor-jamshedpur.webp',
         summary: 'A joyful meetup surrounded by green landscapes and wildlife. Sponsored by the BS Student Activity Fee, the event opened with warm introductions and singing the National Anthem. The students explored the zoological park, enjoying the peace of nature and planning future community chapter meetups.',
-        glimpses: ['/images/events/tricolor-jamshedpur.png']
+        glimpses: ['/images/events/tricolor-jamshedpur.webp']
       },
       {
         id: 'indore',
@@ -112,9 +112,9 @@ const eventsData = [
         date: '13 Aug 2025',
         location: 'Ralamandal Sanctuary → Tincha Waterfall',
         attendees: 25,
-        image: '/images/events/tricolor-indore.png',
+        image: '/images/events/tricolor-indore.webp',
         summary: 'A nature getaway starting with Ralamandal Wildlife Sanctuary for introductions and the National Anthem. The group then embarked on a fun road trip to Tincha Waterfall. The misty breeze and flowing waters provided the perfect landscape to relax, chat, and form lasting friendships.',
-        glimpses: ['/images/events/tricolor-indore.png']
+        glimpses: ['/images/events/tricolor-indore.webp']
       },
       {
         id: 'jaipur',
@@ -122,9 +122,9 @@ const eventsData = [
         date: '14 Aug 2025',
         location: 'Bhangarh Fort, Rajasthan',
         attendees: 25,
-        image: '/images/events/tricolor-jaipur.png',
+        image: '/images/events/tricolor-jaipur.webp',
         summary: 'An adventure-filled outing starting with a music-filled bus ride. Upon reaching the historic Bhangarh Fort, students were welcomed with traditional dhol beats. They explored the ruins, recorded playful ghost-prank videos, danced, and concluded the day with local Rajasthani food and ice cream.',
-        glimpses: ['/images/events/tricolor-jaipur.png']
+        glimpses: ['/images/events/tricolor-jaipur.webp']
       },
       {
         id: 'chennai',
@@ -132,9 +132,9 @@ const eventsData = [
         date: '14 Aug 2025',
         location: 'Dakshina Chitra Museum',
         attendees: 25,
-        image: '/images/events/tricolor-chennai.png',
+        image: '/images/events/tricolor-chennai.webp',
         summary: 'A culturally enriching experience at Dakshina Chitra. BS students admired the traditional architectural styles and art forms representing South India. After a photogenic walk in the museum, they transitioned to a local café to connect over food and share learning journeys.',
-        glimpses: ['/images/events/tricolor-chennai.png']
+        glimpses: ['/images/events/tricolor-chennai.webp']
       }
     ]
   },
@@ -143,14 +143,14 @@ const eventsData = [
     title: 'Navrang 2.0',
     tagline: 'Pan-India festive Navratri celebrations',
     description: 'Navrang 2.0 marked one of the grandest pan-India celebrations organized by the Boundless Travel Society, bringing the festive spirit of Navratri to 14+ cities across the country between 23 Sept – 1 Oct 2025. Hosted in collaboration with Sundarbans, Nallamala, Corbett, Pravaha, Synapse, and Jarvis societies, over 350+ students dressed in vibrant traditional attire gathered to celebrate culture, dance in energetic Garba circles, and enjoy shared moments of happiness.',
-    image: '/images/events/navrang2-cover.png',
+    image: '/images/events/navrang2-cover.webp',
     stats: { cities: 14, participants: '350+' },
     category: 'multi-city',
     glimpses: [
-      '/images/events/navrang-mumbai.png',
-      '/images/events/navrang-hyderabad.png',
-      '/images/events/navrang-kolkata.png',
-      '/images/events/navrang-delhi.png',
+      '/images/events/navrang-mumbai.webp',
+      '/images/events/navrang-hyderabad.webp',
+      '/images/events/navrang-kolkata.webp',
+      '/images/events/navrang-delhi.webp',
     ],
     subEvents: [
       {
@@ -159,9 +159,9 @@ const eventsData = [
         date: '23 Sep 2025',
         location: 'Kora Kendra Ground, Borivali',
         attendees: 32,
-        image: '/images/events/navrang-mumbai.png',
+        image: '/images/events/navrang-mumbai.webp',
         summary: 'Mumbai set the perfect tone for Navrang 2.0 at Kora Kendra Ground. Students enjoyed warm introductions before diving into massive Garba circles. The energetic festive crowd blended with student enthusiasm, culminating in a beautiful night of photography, laughter, and complimentary goodies.',
-        glimpses: ['/images/events/navrang-mumbai.png']
+        glimpses: ['/images/events/navrang-mumbai.webp']
       },
       {
         id: 'patna-raas',
@@ -169,9 +169,9 @@ const eventsData = [
         date: '27 Sep 2025',
         location: 'Patliputra Community Hall, Patna',
         attendees: 32,
-        image: '/images/events/navrang-patna.png',
+        image: '/images/events/navrang-patna.webp',
         summary: 'Patna blended traditional Garba beats with localized Bhojpuri energy at Patliputra Community Hall. Students kicked off with icebreakers, recorded dynamic reels, and danced in a joyous fusion circle. The evening was completed with local snacks, gift hampers, and tight-knit community bonding.',
-        glimpses: ['/images/events/navrang-patna.png']
+        glimpses: ['/images/events/navrang-patna.webp']
       },
       {
         id: 'jaipur-raas',
@@ -179,9 +179,9 @@ const eventsData = [
         date: '27 Sep 2025',
         location: 'LBS College, Raja Park, Jaipur',
         attendees: 30,
-        image: '/images/events/navrang-jaipur.png',
+        image: '/images/events/navrang-jaipur.webp',
         summary: 'Jaipur glowed with traditional Pink City elegance at LBS College. Dressed in gorgeous ethnic wear, students shared laughs, warm introductions, and synced steps in Garba circles. The evening concluded with delicious food, gift hampers, and deep conversations.',
-        glimpses: ['/images/events/navrang-jaipur.png']
+        glimpses: ['/images/events/navrang-jaipur.webp']
       },
       {
         id: 'hyderabad-raas',
@@ -189,9 +189,9 @@ const eventsData = [
         date: '27 Sep 2025',
         location: 'SK Creations, Hyderabad',
         attendees: 50,
-        image: '/images/events/navrang-hyderabad.png',
+        image: '/images/events/navrang-hyderabad.webp',
         summary: 'One of the largest gatherings of Navrang 2.0. Dressed in colorful attire, 50 students lit up the dance floor at SK Creations with high-energy Garba tracks. The room was filled with laughter, followed by delicious refreshments, photo ops, and memorable student interactions.',
-        glimpses: ['/images/events/navrang-hyderabad.png']
+        glimpses: ['/images/events/navrang-hyderabad.webp']
       },
       {
         id: 'ahmedabad-raas',
@@ -199,9 +199,9 @@ const eventsData = [
         date: '27 Sep 2025',
         location: 'Green Place, Ahmedabad',
         attendees: 7,
-        image: '/images/events/navrang-ahmedabad.png',
+        image: '/images/events/navrang-ahmedabad.webp',
         summary: 'Ahmedabad delivered an intimate, deeply authentic Garba night. Dancing to classic Gujarati tunes at Green Place, the small group created a cozy, warm, and highly engaging vibe, capturing scenic aesthetic photos and bonding deeply over shared stories.',
-        glimpses: ['/images/events/navrang-ahmedabad.png']
+        glimpses: ['/images/events/navrang-ahmedabad.webp']
       },
       {
         id: 'lucknow-raas',
@@ -209,9 +209,9 @@ const eventsData = [
         date: '28 Sep 2025',
         location: 'Janeshwar Mishra Park, Lucknow',
         attendees: 35,
-        image: '/images/events/navrang-lucknow.png',
+        image: '/images/events/navrang-lucknow.webp',
         summary: 'Lucknow brought poise and historical charm as 35 students met at Janeshwar Mishra Park. The lush gardens provided a refreshing backdrop as students danced in organized Garba circles, wrapping up with cozy park chats, traditional snacks, and custom gift boxes.',
-        glimpses: ['/images/events/navrang-lucknow.png']
+        glimpses: ['/images/events/navrang-lucknow.webp']
       },
       {
         id: 'nagpur-raas',
@@ -229,9 +229,9 @@ const eventsData = [
         date: '28 Sep 2025',
         location: 'Pacific Garba Night, Tagore Garden, Delhi',
         attendees: 35,
-        image: '/images/events/navrang-delhi.png',
+        image: '/images/events/navrang-delhi.webp',
         summary: 'Grand celebration under the electrifying neon lights of Pacific Garba Night. Dressed in spectacular traditional attire, students clicked group pictures, swapped study experiences, danced late into the night, and enjoyed street food.',
-        glimpses: ['/images/events/navrang-delhi.png']
+        glimpses: ['/images/events/navrang-delhi.webp']
       },
       {
         id: 'kolkata-raas',
@@ -239,9 +239,9 @@ const eventsData = [
         date: '29 Sep 2025',
         location: 'Salt Lake IB Block Durga Puja, Kolkata',
         attendees: 30,
-        image: '/images/events/navrang-kolkata.png',
+        image: '/images/events/navrang-kolkata.webp',
         summary: 'A magnificent cultural fusion. The event began with a beautiful guided tour of the massive Salt Lake pandal, admiring traditional clay art. Soon, the group transitioned into Garba mode, dancing in the lit courtyard and sharing festive sweets.',
-        glimpses: ['/images/events/navrang-kolkata.png']
+        glimpses: ['/images/events/navrang-kolkata.webp']
       },
       {
         id: 'gorakhpur-raas',
@@ -249,9 +249,9 @@ const eventsData = [
         date: '27 Sep 2025',
         location: 'Maharana Pratap Inter College, Gorakhpur',
         attendees: 15,
-        image: '/images/events/navrang-gorakhpur.png',
+        image: '/images/events/navrang-gorakhpur.webp',
         summary: 'A cozy, heartfelt meetup of 15 students. They gathered in the college grounds, kicking off with lively introductions and dhol beats before forming simple, synchronized dance circles. Wrapped up with shared hampers and home-style sweets.',
-        glimpses: ['/images/events/navrang-gorakhpur.png']
+        glimpses: ['/images/events/navrang-gorakhpur.webp']
       },
       {
         id: 'jamshedpur-raas',
@@ -259,9 +259,9 @@ const eventsData = [
         date: '28 Sep 2025',
         location: 'Kasidih Durga Puja Pandal, Jamshedpur',
         attendees: 11,
-        image: '/images/events/navrang-jamshedpur.png',
+        image: '/images/events/navrang-jamshedpur.webp',
         summary: 'Under the beautiful canopy of Kasidih Durga Puja Pandal, students gathered for light-hearted chats. They danced Garba to traditional tracks, took festive photographs, and bonded over local street food.',
-        glimpses: ['/images/events/navrang-jamshedpur.png']
+        glimpses: ['/images/events/navrang-jamshedpur.webp']
       },
       {
         id: 'indore-raas',
@@ -269,9 +269,9 @@ const eventsData = [
         date: '28 Sep 2025',
         location: 'Sheraton Grand Palace, Indore',
         attendees: 18,
-        image: '/images/events/navrang-indore.png',
+        image: '/images/events/navrang-indore.webp',
         summary: 'A premium, late-night festive celebration. Gathering at the grand Sheraton Palace, the group shared a luxurious dinner, followed by dynamic and highly rhythmic Garba circles. The elegant setup made it a truly memorable night.',
-        glimpses: ['/images/events/navrang-indore.png']
+        glimpses: ['/images/events/navrang-indore.webp']
       },
       {
         id: 'chennai-raas',
@@ -279,9 +279,9 @@ const eventsData = [
         date: '1 Oct 2025',
         location: 'Ampa Skyone Mall, Chennai',
         attendees: 11,
-        image: '/images/events/navrang-chennai.png',
+        image: '/images/events/navrang-chennai.webp',
         summary: 'The perfect closing chapter to Navrang 2.0. Eleven Chennai-based students gathered at Ampa Skyone Mall, opening with casual café chats and creative photos. The Garba session, though intimate, radiated high energy and concluded with festive goodbyes.',
-        glimpses: ['/images/events/navrang-chennai.png']
+        glimpses: ['/images/events/navrang-chennai.webp']
       }
     ]
   },
@@ -290,14 +290,14 @@ const eventsData = [
     title: 'Tricolor Trails 3.0',
     tagline: 'Republic Day nationwide celebration series',
     description: 'To commemorate the 77th Republic Day of India, Boundless, in collaboration with Nallamala House, launched Tricolor Trails 3.0. This massive nationwide series of offline meetups and adventure trips connected BS students in major cities and remote landscapes across North, South, East, and West India. Each event was designed to celebrate patriotism, foster student friendships outside classrooms, and reflect the rich cultural diversity of India, concluding with standing for the National Anthem.',
-    image: '/images/events/tricolor-trails3-cover.png',
+    image: '/images/events/tricolor-trails3-cover.webp',
     stats: { cities: 12, participants: '250+' },
     category: 'multi-city',
     glimpses: [
-      '/images/events/tt3-kolkata.png',
-      '/images/events/tt3-himachal.png',
-      '/images/events/tt3-vrindavan.png',
-      '/images/events/tt3-chennai.png',
+      '/images/events/tt3-kolkata.webp',
+      '/images/events/tt3-himachal.webp',
+      '/images/events/tt3-vrindavan.webp',
+      '/images/events/tt3-chennai.webp',
     ],
     subEvents: [
       {
@@ -306,9 +306,9 @@ const eventsData = [
         date: '10 Jan 2026',
         location: 'Allen Forest Zoo, Kanpur',
         attendees: 18,
-        image: '/images/events/tt3-kanpur.png',
+        image: '/images/events/tt3-kanpur.webp',
         summary: 'Gathered at the historic Allen Forest Zoo under pleasant winter skies. 18 students began with energetic introductions, walked through the zoological paths, played bonding games, shared home-cooked snacks, and proudly concluded by singing the National Anthem.',
-        glimpses: ['/images/events/tt3-kanpur.png']
+        glimpses: ['/images/events/tt3-kanpur.webp']
       },
       {
         id: 'siliguri',
@@ -316,9 +316,9 @@ const eventsData = [
         date: '21 Jan 2026',
         location: 'Coronation Bridge & EWAM Monastery',
         attendees: 8,
-        image: '/images/events/tt3-siliguri.png',
+        image: '/images/events/tt3-siliguri.webp',
         summary: 'An intimate, serene meetup in the hills. Eight students explored the Coronation Bridge and visited the peaceful EWAM India Buddhist Monastery. The calm environment was perfect for academic discussions, followed by lunch and singing the National Anthem.',
-        glimpses: ['/images/events/tt3-siliguri.png']
+        glimpses: ['/images/events/tt3-siliguri.webp']
       },
       {
         id: 'kolkata-diaries',
@@ -326,9 +326,9 @@ const eventsData = [
         date: '24 Jan 2026',
         location: 'Indian Museum, Kolkata',
         attendees: 31,
-        image: '/images/events/tt3-kolkata.png',
+        image: '/images/events/tt3-kolkata.webp',
         summary: 'A day packed with cultural learning. 31 students explored the galleries of the iconic Indian Museum, viewing ancient statues, historical remains, and fossils. Over a cozy lunch, they connected deeply and stood for the National Anthem in the museum courtyard.',
-        glimpses: ['/images/events/tt3-kolkata.png']
+        glimpses: ['/images/events/tt3-kolkata.webp']
       },
       {
         id: 'chennai-diaries',
@@ -336,9 +336,9 @@ const eventsData = [
         date: '25 Jan 2026',
         location: 'Arignar Anna Zoological Park (Vandalur)',
         attendees: 23,
-        image: '/images/events/tt3-chennai.png',
+        image: '/images/events/tt3-chennai.webp',
         summary: 'A dynamic outdoor meetup at Vandalur Zoo. 23 students started with early introductions before embarking on a highly fun cycling session through green pathways. The day finished with a delicious pizza gathering and standing together to sing the National Anthem.',
-        glimpses: ['/images/events/tt3-chennai.png']
+        glimpses: ['/images/events/tt3-chennai.webp']
       },
       {
         id: 'rishikesh',
@@ -346,9 +346,9 @@ const eventsData = [
         date: '25 Jan 2026',
         location: 'Janki Setu & Holy Ganges',
         attendees: 19,
-        image: '/images/events/tt3-rishikesh.png',
+        image: '/images/events/tt3-rishikesh.webp',
         summary: 'A soulful gathering along the sacred Ganges. 19 students shared stories, visited riverside temples, and walked across the architectural marvel Janki Setu. They concluded this serene experience by standing together to proud-sing the National Anthem.',
-        glimpses: ['/images/events/tt3-rishikesh.png']
+        glimpses: ['/images/events/tt3-rishikesh.webp']
       },
       {
         id: 'vrindavan',
@@ -356,9 +356,9 @@ const eventsData = [
         date: '10-11 Jan 2026',
         location: 'Mathura & Prem Mandir, Vrindavan',
         attendees: 18,
-        image: '/images/events/tt3-vrindavan.png',
+        image: '/images/events/tt3-vrindavan.webp',
         summary: 'A spiritually enriching 2-day trip. Dressed in traditional clothes, 18 students began with the National Anthem in Mathura. The main highlight was visiting the grand Prem Mandir at night, illuminated in colorful lights, before a peaceful dinner near the ghats.',
-        glimpses: ['/images/events/tt3-vrindavan.png']
+        glimpses: ['/images/events/tt3-vrindavan.webp']
       },
       {
         id: 'parasnath',
@@ -366,9 +366,9 @@ const eventsData = [
         date: '10-11 Jan 2026',
         location: 'Parasnath Trek, Madhuban, Jharkhand',
         attendees: 13,
-        image: '/images/events/tt3-parasnath.png',
+        image: '/images/events/tt3-parasnath.webp',
         summary: 'A challenging, overnight mountain trek. 13 participants assembled late at night at Madhuban and hiked under a starry sky, arriving at the summit just in time for a beautiful sunrise over Parasnath Temple. Completed with a celebratory lunch.',
-        glimpses: ['/images/events/tt3-parasnath.png']
+        glimpses: ['/images/events/tt3-parasnath.webp']
       },
       {
         id: 'coimbatore',
@@ -376,9 +376,9 @@ const eventsData = [
         date: '26 Jan 2026',
         location: 'Mettupalayam → Ooty Hill Station',
         attendees: 10,
-        image: '/images/events/tt3-coimbatore.png',
+        image: '/images/events/tt3-coimbatore.webp',
         summary: 'An adventure in the "Queen of Hill Stations." Ten students met at Mettupalayam and drove up the misty hills of Ooty. They explored the surroundings, shared a warm lunch, and stood together in the cool mountain air to sing the National Anthem.',
-        glimpses: ['/images/events/tt3-coimbatore.png']
+        glimpses: ['/images/events/tt3-coimbatore.webp']
       },
       {
         id: 'rajgir',
@@ -386,9 +386,9 @@ const eventsData = [
         date: '18 Jan 2026',
         location: 'Vishwa Shanti Stupa & Nalanda Ruins',
         attendees: 25,
-        image: '/images/events/tt3-rajgir.png',
+        image: '/images/events/tt3-rajgir.webp',
         summary: 'A journey through history and peace. 25 students gathered in Patna and traveled to Rajgir to hike up the Vishwa Shanti Stupa. They then visited the historical ruins of Nalanda University, enjoying an educational exploration and a pride-filled anthem moment.',
-        glimpses: ['/images/events/tt3-rajgir.png']
+        glimpses: ['/images/events/tt3-rajgir.webp']
       },
       {
         id: 'mahabaleshwar',
@@ -396,9 +396,9 @@ const eventsData = [
         date: '18-20 Jan 2026',
         location: 'Mahabaleshwar & Lingmala Trek',
         attendees: 16,
-        image: '/images/events/tt3-mahabaleshwar.png',
+        image: '/images/events/tt3-mahabaleshwar.webp',
         summary: 'A scenic 3-day trip into the foggy Western Ghats. 16 students experienced early morning forest treks, stunning panoramic views, and bonded over a sponsored group lunch and a moving National Anthem moment together.',
-        glimpses: ['/images/events/tt3-mahabaleshwar.png']
+        glimpses: ['/images/events/tt3-mahabaleshwar.webp']
       },
       {
         id: 'udaipur-diaries',
@@ -406,9 +406,9 @@ const eventsData = [
         date: '18-20 Jan 2026',
         location: 'Ambrai Ghat, City Palace & Mount Abu',
         attendees: 25,
-        image: '/images/events/tt3-udaipur.png',
+        image: '/images/events/tt3-udaipur.webp',
         summary: 'A magnificent 3-day royal getaway. 25 students met at Ambrai Ghat, explored the grand courtyards of City Palace, stood for the National Anthem, shopped in the local markets, and finished with a scenic drive and trek up Mount Abu.',
-        glimpses: ['/images/events/tt3-udaipur.png']
+        glimpses: ['/images/events/tt3-udaipur.webp']
       },
       {
         id: 'himachal',
@@ -416,9 +416,9 @@ const eventsData = [
         date: '29 Jan – 1 Feb 2026',
         location: 'Manali, Solang Valley, Kasol & Kullu',
         attendees: 40,
-        image: '/images/events/tt3-himachal.png',
+        image: '/images/events/tt3-himachal.webp',
         summary: 'An incredible winter trip in collaboration with Synapse. 40 students explored Manali\'s snow-capped mountains, experienced thrilling adventures in Solang Valley, hiked quiet trails in Kasol, and bonded around the Kullu river.',
-        glimpses: ['/images/events/tt3-himachal.png']
+        glimpses: ['/images/events/tt3-himachal.webp']
       },
       {
         id: 'chopta',
@@ -437,12 +437,12 @@ const eventsData = [
     title: 'Shimoga Expedition',
     tagline: 'Expedition through the Western Ghats & Udupi Coast',
     description: 'This legendary three-day expedition through Karnataka offered 30 travelers a perfect blend of rich nature, mountain adventure, coastal culture, and spiritualism. The journey took explorers from the deep elephant camps of Shimoga to the highest peak treks in the Western Ghats, culminating along the golden coastal shores of Udupi.',
-    image: '/images/events/shimoga-cover.png',
+    image: '/images/events/shimoga-cover.webp',
     stats: { cities: 4, participants: 30 },
     category: 'trip',
     glimpses: [
-      '/images/events/shimoga-trip.png',
-      '/images/events/shimoga-cover.png',
+      '/images/events/shimoga-trip.webp',
+      '/images/events/shimoga-cover.webp',
     ],
     itinerary: [
       {
@@ -468,12 +468,12 @@ const eventsData = [
     title: 'Mewar Diaries',
     tagline: 'Royal history, lakeside luxury, and high-altitude sunsets',
     description: 'A grand four-day royal expedition exploring Udaipur (the City of Lakes), Mount Abu (Rajasthan\'s scenic hill station), and the historic Chittorgarh. The trip, themed "Padharo Mhare Desh," provided 30 participants an immersive educational and cultural experience, highlighting architectural marvels, spiritual temples, traditional dances, and lakeside pool bonding sessions.',
-    image: '/images/events/mewar-cover.png',
+    image: '/images/events/mewar-cover.webp',
     stats: { cities: 3, participants: 30 },
     category: 'trip',
     glimpses: [
-      '/images/events/mewar-trip.png',
-      '/images/events/mewar-cover.png',
+      '/images/events/mewar-trip.webp',
+      '/images/events/mewar-cover.webp',
     ],
     itinerary: [
       {
@@ -504,9 +504,9 @@ const eventsData = [
         date: '13 Sep 2025',
         location: 'Sajjangarh Fort, Udaipur',
         attendees: 30,
-        image: '/images/events/udaipur-meetup.png',
+        image: '/images/events/udaipur-meetup.webp',
         summary: 'Boundless, in collaboration with Nallamala, organized a special meetup at the iconic Sajjangarh Fort (Monsoon Palace) in Udaipur on 13th September as a key highlight of the Mewar Trip. Set atop the Aravalli hills, the location offered an inspiring blend of scenic beauty, calm winds, and panoramic views-making it a perfect venue for community bonding. The meetup began at 3:00 PM as the group reached the fort viewpoint. Fun group activities, storytelling moments, and light-hearted interactions made the session highly memorable.',
-        glimpses: ['/images/events/udaipur-meetup.png', '/images/events/udaipur-meetup-cover.png']
+        glimpses: ['/images/events/udaipur-meetup.webp', '/images/events/udaipur-meetup-cover.webp']
       }
     ]
   },
@@ -515,11 +515,11 @@ const eventsData = [
     title: 'Meghalaya Diaries 1.0',
     tagline: 'Misty hills, living root bridges, and turquoise waters',
     description: 'A magical four-day expedition winding through the Khasi Hills, roaring plunge waterfalls, limestone caverns, and clean forest villages of Meghalaya. Thirty students started as strangers at Guwahati station and returned as a boundless family, carrying memories of trekking under the rain and gliding across crystal rivers.',
-    image: '/images/events/meghalaya1-cover.png',
+    image: '/images/events/meghalaya1-cover.webp',
     stats: { cities: 4, participants: 30 },
     category: 'trip',
     glimpses: [
-      '/images/events/meghalaya1-cover.png',
+      '/images/events/meghalaya1-cover.webp',
     ],
     itinerary: [
       {
@@ -550,12 +550,12 @@ const eventsData = [
     title: 'Meghalaya Diaries 2.0',
     tagline: 'Winter expedition through the clouds',
     description: 'A spectacular winter edition of our Meghalaya diaries held between 25–28 December. With 20 adventurous students, the trip focused on cool winter mountain hikes, self-cooking outdoor sessions, exploring deep limestone caves, and sleeping under canvas inside the Snongpdeng riverside campsite in Dawki.',
-    image: '/images/events/meghalaya2-cover.png',
+    image: '/images/events/meghalaya2-cover.webp',
     stats: { cities: 4, participants: 20 },
     category: 'trip',
     glimpses: [
-      '/images/events/meghalaya2-trip.png',
-      '/images/events/meghalaya2-cover.png',
+      '/images/events/meghalaya2-trip.webp',
+      '/images/events/meghalaya2-cover.webp',
     ],
     itinerary: [
       {
@@ -586,11 +586,11 @@ const eventsData = [
     title: 'Kerala Yatra',
     tagline: 'Backwaters, giant sculptures, and coastal cliffs of Varkala',
     description: 'An unforgettable 4-day trip exploring the diverse heritage, tranquil backwaters, and grand cliffside beaches of "God\'s Own Country" between 8–11 January 2026. Dressed in traditional attire, 23 students sailed on luxury houseboats in Alleppey, explored historical Fort Kochi, hiked the giant bird sculpture at Jatayu, and watched golden sunsets over the Arabian Sea from Varkala Cliff.',
-    image: '/images/events/kerala-cover.png',
+    image: '/images/events/kerala-cover.webp',
     stats: { cities: 4, participants: 23 },
     category: 'trip',
     glimpses: [
-      '/images/events/kerala-cover.png',
+      '/images/events/kerala-cover.webp',
     ],
     itinerary: [
       {
@@ -621,11 +621,11 @@ const eventsData = [
     title: 'Rajasthan Girls Getaway',
     tagline: 'Vibrant culture, female empowerment, and desert exploration',
     description: 'An exclusive four-day trip designed for 14 female BS students to explore the colorful royal heritage of Rajasthan between 18–21 March 2026. Supported by the IIT Madras Student Activity Fee, the trip focused on historical exploration, female empowerment, confidence building, and forming close-knit lifelong friendships.',
-    image: '/images/events/girls-getaway.png',
+    image: '/images/events/girls-getaway.webp',
     stats: { cities: 2, participants: 14 },
     category: 'trip',
     glimpses: [
-      '/images/events/girls-getaway.png',
+      '/images/events/girls-getaway.webp',
     ],
     itinerary: [
       {
@@ -656,11 +656,11 @@ const eventsData = [
     title: 'Kalsubai Peak Trek',
     tagline: 'Climbing under the stars to Maharashtra\'s highest point',
     description: 'What started as a simple meetup for Boundless Mumbai Chapter students turned into a legendary overnight trek to Kalsubai Peak, the highest point in Maharashtra (1,646 meters). Supported by the IITM Student Activity Fee, 17 participants hiked under a starry night sky, slept in mountain tents, and witnessed a breathtaking golden sunrise over the Sahyadri range.',
-    image: '/images/events/kalsubai-cover.png',
+    image: '/images/events/kalsubai-cover.webp',
     stats: { cities: 1, participants: 17 },
     category: 'trip',
     glimpses: [
-      '/images/events/kalsubai-cover.png',
+      '/images/events/kalsubai-cover.webp',
     ],
     itinerary: [
       {
@@ -681,10 +681,10 @@ const eventsData = [
     title: 'Online Theme Events',
     tagline: 'Fostering gratitude, creativity, and empowerment virtually',
     description: 'Fostering deep community bonds even across distance, Boundless Travel Society hosted a series of highly successful virtual interactive events on Google Meet. Ranging from national tributes to teachers, structural orientation sessions, creative scribble nights, and national women\'s championships, these sessions connected hundreds of students from their homes.',
-    image: '/images/events/teachers-day.png',
+    image: '/images/events/teachers-day.webp',
     stats: { cities: 'Pan-India', participants: '300+' },
     category: 'online',
-    glimpses: ['/images/events/teachers-day.png', '/images/events/scribble-night.png', '/images/events/womens-day.png'],
+    glimpses: ['/images/events/teachers-day.webp', '/images/events/scribble-night.webp', '/images/events/womens-day.webp'],
     subEvents: [
       {
         id: 'teachers-day',
@@ -692,9 +692,9 @@ const eventsData = [
         date: '5 Sep 2025',
         location: 'Online Google Meet',
         attendees: 120,
-        image: '/images/events/teachers-day.png',
+        image: '/images/events/teachers-day.webp',
         summary: 'A heartfelt session with Beloved Kothai Ma\'am, celebrated by 120+ students. The event transformed into a warm evening of introductions, gratitude wishes in the chat, student-led tribute messages, an interactive Q&A, and a custom gratitude montage prepared by the core team.',
-        glimpses: ['/images/events/teachers-day.png']
+        glimpses: ['/images/events/teachers-day.webp']
       },
       {
         id: 'orientation',
@@ -702,7 +702,7 @@ const eventsData = [
         date: '7 Sep 2025',
         location: 'Online Google Meet',
         attendees: 120,
-        image: '/images/events/teachers-day.png',
+        image: '/images/events/teachers-day.webp',
         summary: 'Introduced the structure of the Boundless Travel Society to new students. The core members explained the chapter layout, upcoming plans for trips, and instructions on how to leverage the Student Activity Fee to host city meetups.'
       },
       {
@@ -711,9 +711,9 @@ const eventsData = [
         date: '12 Oct 2025',
         location: 'Online Google Meet',
         attendees: 15,
-        image: '/images/events/scribble-night.png',
+        image: '/images/events/scribble-night.webp',
         summary: 'An engaging, girls-only creative session. Participants enjoyed themed drawing challenges, rapid-fire doodling, and shared artwork on screen. The relaxed, comfortable environment encouraged free expression, laughter, and personal bonding.',
-        glimpses: ['/images/events/scribble-night.png']
+        glimpses: ['/images/events/scribble-night.webp']
       },
       {
         id: 'womens-day',
@@ -721,7 +721,7 @@ const eventsData = [
         date: '7-8 Mar 2026',
         location: 'Online Google Meet',
         attendees: 50,
-        image: '/images/events/womens-day.png',
+        image: '/images/events/womens-day.webp',
         summary: 'Celebrated the strength and talent of women in our community. Over 50 students participated in interactive competitions, creative showcases, and open discussion panels, filling the chat with support and empowerment.'
       }
     ]
@@ -731,10 +731,10 @@ const eventsData = [
     title: 'Pushkar Mela Trip',
     tagline: 'Vibrant colors, desert dunes, and sunset ghats of Pushkar Mela',
     description: 'The Pushkar Meetup, held on 2nd November 2025, was one of the most vibrant one-day trips organized by Boundless in collaboration with Nallamala House. With 30 enthusiastic participants joining the journey, the meetup turned into a perfect blend of culture, exploration, bonding, and unforgettable experiences at the iconic Pushkar Mela. Students explored the fairgrounds, visited Pushkar Lake & serene ghats, local handicraft bazaars, and folk performances, concluding with a peaceful sunset near the ghats.',
-    image: '/images/events/pushkar-cover.png',
+    image: '/images/events/pushkar-cover.webp',
     stats: { cities: 1, participants: 30 },
     category: 'trip',
-    glimpses: ['/images/events/pushkar-cover.png'],
+    glimpses: ['/images/events/pushkar-cover.webp'],
     itinerary: [
       {
         day: '11:00 AM',
@@ -759,10 +759,10 @@ const eventsData = [
     title: 'Ananthagiri Hills Diaries',
     tagline: 'Trekking through lush green forest trails and dense Vikarabad valley',
     description: 'A nature-filled escape from daily routines, surrounded by lush forest greenery and fresh mountain air on 7–8 February 2026. Supported by the IIT Madras BS Student Activity Fee, 14 participants ventured through Vikarabad forest trails, building teamwork, sharing laughter, and appreciating the tranquil landscape before concluding with a memorable sunrise trek.',
-    image: '/images/events/tt3-ananthagiri.png',
+    image: '/images/events/tt3-ananthagiri.webp',
     stats: { cities: 1, participants: 14 },
     category: 'trip',
-    glimpses: ['/images/events/tt3-ananthagiri.png'],
+    glimpses: ['/images/events/tt3-ananthagiri.webp'],
     itinerary: [
       {
         day: 'Day 1',
@@ -782,10 +782,10 @@ const eventsData = [
     title: 'Uttarakhand Diaries',
     tagline: 'A serene and refreshing lakeside escape in Devbhoomi Nainital',
     description: 'A three-day student escape into the misty mountains of Nainital, Devbhoomi between 16–18 April 2026. Walking along the serene Naini Lake, enjoying the cool mountain breeze, and sharing cozy evening campfire chats strengthened student bonding and created lasting memories for 20 adventurous explorers.',
-    image: '/images/events/uttarakhand-cover.png',
+    image: '/images/events/uttarakhand-cover.webp',
     stats: { cities: 1, participants: 20 },
     category: 'trip',
-    glimpses: ['/images/events/uttarakhand-cover.png'],
+    glimpses: ['/images/events/uttarakhand-cover.webp'],
     itinerary: [
       {
         day: 'Day 1',

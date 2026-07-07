@@ -550,7 +550,6 @@ export default function HomePage() {
           <div className="flex flex-col items-center justify-center gap-3 text-[13px] text-gray-300 py-6 px-4">
             <p className="flex items-center gap-2">
               © 2025 Boundless Travel Society.
-              <Navigation className="w-3.5 h-3.5 -rotate-45 text-gray-400" />
             </p>
           </div>
         </div>
