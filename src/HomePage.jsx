@@ -5,7 +5,6 @@ import {
   Play,
   ChevronDown,
   CheckCircle2,
-  Navigation,
   Users,
   Menu,
   X,
