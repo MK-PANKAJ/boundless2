@@ -1,10 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { MapPin, Compass } from 'lucide-react';
 import { timelineMonths, getEventsByMonth } from '../data/timelineEvents';
 
 export default function Timeline({ activeMonthId, onMonthSelect, compact = false }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const eventsByMonth = getEventsByMonth();
 
   const colors = [
@@ -93,7 +94,7 @@ export default function Timeline({ activeMonthId, onMonthSelect, compact = false
                       onClick={() => {
                         onMonthSelect(m.id);
                         if (monthEvents.length > 0) {
-                          navigate(`/timeline/${m.id}`);
+                          navigate(`/timeline/${m.id}`, { state: { from: location.pathname } });
                         }
                       }}
                       className={`w-28 shrink-0 flex flex-col items-center group cursor-pointer transition-transform duration-300 hover:-translate-y-1 ${isDown ? (compact ? 'mt-4' : 'mt-12') : 'mt-0'}`}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
 import eventsData from './data/events';
 import { getTimelineEvents } from './data/timelineEvents';
@@ -7,6 +7,7 @@ import { getTimelineEvents } from './data/timelineEvents';
 export default function CategoryFeed() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,27 +17,36 @@ export default function CategoryFeed() {
   let tagline = '';
   let feedItems = [];
 
-  // Flattened chronological events from our helper
-  const allTimelineEvents = getTimelineEvents();
-
   if (categoryId === 'trips') {
     title = 'Trips & Expeditions';
     tagline = 'Mountains, lakes, backwaters, and endless adventure.';
-    // Filter trips
-    feedItems = allTimelineEvents.filter(e => e.category === 'trip');
+    feedItems = eventsData.filter(e => e.category === 'trip').map(e => ({
+      ...e,
+      monthId: '',
+      parentEventId: e.id,
+      date: e.date || '2025-2026',
+      location: e.stats?.cities ? `${e.stats.cities} destinations` : 'Scenic Trails',
+      attendees: e.stats?.participants,
+      isMainEvent: true
+    }));
   } else if (categoryId === 'meetups') {
     title = 'City Meetups';
     tagline = 'Connections, fun, and friends across 40+ cities.';
-    // Filter all individual city meetups
-    feedItems = allTimelineEvents.filter(e => e.category === 'meetup');
+    feedItems = eventsData.filter(e => e.category === 'multi-city').map(e => ({
+      ...e,
+      monthId: '',
+      parentEventId: e.id,
+      date: e.date || '2025-2026',
+      location: e.stats?.cities ? `${e.stats.cities} Cities` : 'Pan-India',
+      attendees: e.stats?.participants,
+      isMainEvent: true
+    }));
   } else if (categoryId === 'events') {
     title = 'Events & Celebrations';
     tagline = 'Moments that matter, celebrated pan-India.';
-    // Could just show the main events (Navrang, etc.) or everything
-    // Let's just show multi-city main events and online events
     feedItems = eventsData.filter(e => e.category === 'multi-city' || e.category === 'online').map(e => ({
       ...e,
-      monthId: '2025',
+      monthId: '',
       parentEventId: e.id,
       date: e.date || '2025-2026',
       location: e.stats?.cities ? `${e.stats.cities} Cities` : 'Pan-India',
@@ -76,9 +86,12 @@ export default function CategoryFeed() {
                 key={item.id || idx}
                 onClick={() => {
                   if (item.isMainEvent) {
-                    navigate(`/event/${item.id}`);
+                    navigate(`/event/${item.id}`, { state: { from: location.pathname } });
+                  } else if (item.parentIsTrip) {
+                    // Trip sub-events belong to the parent trip page — don't create a separate page
+                    navigate(`/event/${item.parentEventId}`, { state: { from: location.pathname } });
                   } else {
-                    navigate(`/event/${item.parentEventId}/${item.id}`);
+                    navigate(`/event/${item.parentEventId}/${item.id}`, { state: { from: location.pathname } });
                   }
                 }}
                 className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.05)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.1)] transition-all duration-300"

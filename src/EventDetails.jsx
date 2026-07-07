@@ -1,12 +1,24 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
 import eventsData from './data/events';
 import SubEventDetails from './SubEventDetails';
+import { parseDateToMonthId } from './data/timelineEvents';
 
 export default function EventDetails() {
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Where the user came from (fed by CategoryFeed / TimelineMonthFeed / HomePage)
+  const previousPath = location.state?.from || '/';
+
+  // Derive a contextual label for the back button
+  const backLabel = previousPath.includes('/timeline')
+    ? 'GO BACK TO TIMELINE'
+    : previousPath.includes('/category')
+    ? 'GO BACK TO CATEGORY'
+    : 'GO BACK TO HOME';
   
   const event = eventsData.find((e) => e.id === eventId);
 
@@ -19,7 +31,7 @@ export default function EventDetails() {
       <div className="min-h-screen bg-[#fcfbf9] flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold text-[#4a1225] mb-4">Event Not Found</h1>
         <button 
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(previousPath)}
           className="flex items-center gap-2 text-[#d97706] hover:text-[#4a1225] transition-colors"
         >
           <ArrowLeft size={20} /> Go Back
@@ -29,11 +41,23 @@ export default function EventDetails() {
   }
 
   if (event.category === 'trip') {
-    return <SubEventDetails providedEventId={eventId} providedSubEventId={eventId} />;
+    return <SubEventDetails providedEventId={eventId} providedSubEventId={eventId} providedFrom={previousPath} />;
   }
 
   // Combine subEvents and itinerary to create the feed
-  const feedItems = event.subEvents?.length > 0 ? event.subEvents : (event.itinerary || []);
+  let feedItems = event.subEvents?.length > 0 ? event.subEvents : (event.itinerary || []);
+
+  // Filter sub-events by the clicked timeline month if provided in navigation state
+  const selectedMonthId = location.state?.monthId;
+  if (selectedMonthId) {
+    feedItems = feedItems.filter(item => {
+      let mId = parseDateToMonthId(item.date);
+      // Hand-correct specific edge cases to match timelineEvents.js
+      if (item.id === 'nagpur') mId = '2025-10';
+      if (item.id === 'chennai-raas') mId = '2025-10';
+      return mId === selectedMonthId;
+    });
+  }
 
   return (
     <div className="min-h-screen bg-[#F8F5EE] font-sans selection:bg-orange-200">
@@ -41,10 +65,10 @@ export default function EventDetails() {
       {/* Top Navigation */}
       <nav className="w-full px-6 py-6 border-b border-[#e5d5b5]/40 flex items-center gap-2">
         <button 
-          onClick={() => navigate('/')}
+          onClick={() => navigate(previousPath)}
           className="flex items-center gap-2 text-[#4a1225] font-bold text-xs tracking-[0.15em] hover:text-[#d97706] transition-colors uppercase"
         >
-          <ArrowLeft size={14} strokeWidth={3} /> GO BACK TO HOME
+          <ArrowLeft size={14} strokeWidth={3} /> {backLabel}
         </button>
       </nav>
 
@@ -63,7 +87,7 @@ export default function EventDetails() {
             return (
               <div 
                 key={itemId}
-                onClick={() => navigate(`/event/${eventId}/${itemId}`)}
+                onClick={() => navigate(`/event/${eventId}/${itemId}`, { state: { from: `/event/${eventId}`, feedPath: previousPath } })}
                 className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.05)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.1)] transition-all duration-300"
               >
                 {/* Image Section */}

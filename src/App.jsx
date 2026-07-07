@@ -6,7 +6,7 @@ import SubEventDetails from './SubEventDetails';
 import CategoryFeed from './CategoryFeed';
 import TimelineMonthFeed from './TimelineMonthFeed';
 import AboutUs from './AboutUs';
-import Gallery from './Gallery';
+import Council from './Council';
 
 export default function App() {
   return (
@@ -18,7 +18,7 @@ export default function App() {
         <Route path="/category/:categoryId" element={<CategoryFeed />} />
         <Route path="/timeline/:monthId" element={<TimelineMonthFeed />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/council" element={<Council />} />
       </Routes>
     </Router>
   );

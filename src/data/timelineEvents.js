@@ -16,7 +16,7 @@ export const timelineMonths = [
 ];
 
 // Helper to determine the Month ID from a date string (e.g., "6 Aug 2025" -> "2025-08")
-const parseDateToMonthId = (dateStr) => {
+export const parseDateToMonthId = (dateStr) => {
   if (!dateStr) return null;
   const lower = dateStr.toLowerCase();
   
@@ -44,73 +44,91 @@ export const getTimelineEvents = () => {
   const items = [];
 
   eventsData.forEach(mainEvent => {
-    // If the main event has sub-events (city meetups), each is a separate timeline item
-    if (mainEvent.subEvents && mainEvent.subEvents.length > 0) {
+    // For non-trip main events with sub-events, they can span multiple months.
+    // We group their sub-events by month and push a timeline card for each unique month.
+    if (mainEvent.subEvents && mainEvent.subEvents.length > 0 && mainEvent.category !== 'trip') {
+      const monthsMap = {};
+      
       mainEvent.subEvents.forEach(sub => {
-        let monthId = parseDateToMonthId(sub.date);
-        
+        let mId = parseDateToMonthId(sub.date);
         // Hand-correct specific edge cases
-        if (sub.id === 'nagpur') monthId = '2025-10'; // Nagpur meetup is 8 Oct 2025
-        if (sub.id === 'chennai-raas') monthId = '2025-10'; // Chennai Raas is 1 Oct 2025
+        if (sub.id === 'nagpur') mId = '2025-10'; // Nagpur meetup is 8 Oct 2025
+        if (sub.id === 'chennai-raas') mId = '2025-10'; // Chennai Raas is 1 Oct 2025
         
+        if (mId) {
+          if (!monthsMap[mId]) {
+            monthsMap[mId] = [];
+          }
+          monthsMap[mId].push(sub);
+        }
+      });
+
+      // Push a separate timeline item for each month this event was active
+      Object.keys(monthsMap).forEach(mId => {
+        const subsInMonth = monthsMap[mId];
+        const dateRange = subsInMonth.length === 1 
+          ? subsInMonth[0].date 
+          : `${subsInMonth[0].date.split(' ')[0]} - ${subsInMonth[subsInMonth.length - 1].date}`;
+
         items.push({
-          id: sub.id,
+          id: `${mainEvent.id}-${mId}`, // Unique ID per month instance
           parentEventId: mainEvent.id,
-          title: sub.title,
-          monthId: monthId || '2025-08',
-          date: sub.date,
-          location: sub.location,
-          attendees: sub.attendees,
-          image: sub.image || mainEvent.image,
-          summary: sub.summary,
-          glimpses: sub.glimpses || [],
+          title: mainEvent.title,
+          monthId: mId,
+          date: dateRange,
+          location: mainEvent.category === 'online' 
+            ? `${subsInMonth.length} Online Events` 
+            : `${subsInMonth.length} City Meetups`,
+          attendees: subsInMonth.reduce((acc, curr) => acc + (curr.attendees || 0), 0) || mainEvent.stats?.participants || 30,
+          image: subsInMonth[0].image || mainEvent.image,
+          summary: mainEvent.description,
+          glimpses: mainEvent.glimpses || [],
           itinerary: [],
-          category: mainEvent.category === 'online' ? 'online' : 'meetup',
-          tagline: `${mainEvent.title} Meetup`,
-          mainEventTitle: mainEvent.title
+          category: mainEvent.category,
+          tagline: mainEvent.tagline,
+          mainEventTitle: mainEvent.title,
+          subEventsCount: subsInMonth.length
         });
       });
     }
 
-    // Add main events themselves as timeline items if they represent stand-alone trips
-    // Or if they are trips with detailed itineraries
+    // For standalone trips, we push them once under their specific month
     if (mainEvent.category === 'trip') {
-      let monthId = null;
-      let dateRange = '';
+      let monthId = '2025-08';
+      let dateRange = '2025–2026';
 
-      // Map standalone trips to their exact months
       if (mainEvent.id === 'shimoga-trip') {
-        monthId = '2026-05'; // Shimoga Expedition - May 2026
+        monthId = '2026-05';
         dateRange = '14-17 May 2026';
       } else if (mainEvent.id === 'mewar-trip') {
-        monthId = '2025-09'; // Mewar Diaries - September 2025
+        monthId = '2025-09';
         dateRange = '11-14 Sep 2025';
       } else if (mainEvent.id === 'meghalaya-trip') {
-        monthId = '2025-10'; // Meghalaya Diaries 1.0 - October 2025
+        monthId = '2025-10';
         dateRange = '16-19 Oct 2025';
-      } else if (mainEvent.id === 'meghalaya-2') {
-        monthId = '2025-12'; // Meghalaya Diaries 2.0 - December 2025
-        dateRange = '25-28 Dec 2025';
-      } else if (mainEvent.id === 'kerala-yatra') {
-        monthId = '2026-01'; // Kerala Yatra - January 2026
-        dateRange = '8-11 Jan 2026';
-      } else if (mainEvent.id === 'girls-getaway') {
-        monthId = '2026-03'; // Rajasthan Girls Getaway - March 2026
-        dateRange = '18-21 Mar 2026';
       } else if (mainEvent.id === 'kalsubai-trek') {
-        monthId = '2025-10'; // Kalsubai Peak Trek - October 2025
+        monthId = '2025-10';
         dateRange = '18-19 Oct 2025';
       } else if (mainEvent.id === 'pushkar-trip') {
-        monthId = '2025-11'; // Pushkar Mela Trip - November 2025
+        monthId = '2025-11';
         dateRange = '2 Nov 2025';
+      } else if (mainEvent.id === 'meghalaya-2') {
+        monthId = '2025-12';
+        dateRange = '25-28 Dec 2025';
+      } else if (mainEvent.id === 'kerala-yatra') {
+        monthId = '2026-01';
+        dateRange = '8-11 Jan 2026';
       } else if (mainEvent.id === 'ananthagiri-trip') {
-        monthId = '2026-02'; // Ananthagiri Hills Diaries - February 2026
+        monthId = '2026-02';
         dateRange = '7-8 Feb 2026';
+      } else if (mainEvent.id === 'girls-getaway') {
+        monthId = '2026-03';
+        dateRange = '18-21 Mar 2026';
       } else if (mainEvent.id === 'uttarakhand-trip') {
-        monthId = '2026-04'; // Uttarakhand Diaries - April 2026
+        monthId = '2026-04';
         dateRange = '16-18 Apr 2026';
       } else if (mainEvent.id === 'goa-trip') {
-        monthId = '2026-06'; // Goa Summer Expedition - June 2026
+        monthId = '2026-06';
         dateRange = '5-8 Jun 2026';
       }
 
@@ -118,17 +136,20 @@ export const getTimelineEvents = () => {
         id: mainEvent.id,
         parentEventId: mainEvent.id,
         title: mainEvent.title,
-        monthId: monthId || '2025-08',
-        date: dateRange || '2025-2026',
-        location: mainEvent.stats?.cities ? `${mainEvent.stats.cities} destinations` : 'Scenic Trails',
+        monthId: monthId,
+        date: dateRange,
+        location: mainEvent.stats?.cities 
+          ? `${mainEvent.stats.cities} destinations` 
+          : 'Scenic Trails',
         attendees: mainEvent.stats?.participants || 30,
         image: mainEvent.image,
         summary: mainEvent.description,
         glimpses: mainEvent.glimpses || [],
         itinerary: mainEvent.itinerary || [],
-        category: 'trip',
+        category: mainEvent.category,
         tagline: mainEvent.tagline,
-        mainEventTitle: mainEvent.title
+        mainEventTitle: mainEvent.title,
+        subEventsCount: mainEvent.subEvents?.length || 1
       });
     }
   });

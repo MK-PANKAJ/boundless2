@@ -1,15 +1,34 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { ArrowLeft, Clock, MapPin, Users, ArrowRight, ImageIcon } from 'lucide-react';
 import eventsData from './data/events';
+import { parseDateToMonthId } from './data/timelineEvents';
 
-export default function SubEventDetails({ providedEventId, providedSubEventId }) {
+export default function SubEventDetails({ providedEventId, providedSubEventId, providedFrom }) {
   const params = useParams();
   const eventId = providedEventId || params.eventId;
   const subEventId = providedSubEventId || params.subEventId || eventId;
   const navigate = useNavigate();
+  const location = useLocation();
 
   const isMainEventView = eventId === subEventId;
+
+  // Resolve the original feed path:
+  // - If rendered as a trip shortcut by EventDetails, use providedFrom
+  // - If rendered as a real route, read from router state
+  // - Fall back to home
+  const cameFromParent = !!location.state?.from?.startsWith('/event/');
+  const feedPath = providedFrom || (cameFromParent ? location.state?.feedPath : location.state?.from) || '/';
+
+  // Dynamic label for the feed-level back button
+  const feedLabel = feedPath.includes('/timeline')
+    ? 'GO BACK TO TIMELINE'
+    : feedPath.includes('/category')
+    ? 'GO BACK TO CATEGORY'
+    : 'GO BACK TO HOME';
+
+  // Back to the parent EventDetails page (one level up from SubEventDetails)
+  const isSubRoute = !isMainEventView;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -20,29 +39,90 @@ export default function SubEventDetails({ providedEventId, providedSubEventId })
   }, [subEventId, isMainEventView, providedEventId, eventId, navigate]);
 
   const event = eventsData.find((e) => e.id === eventId);
-  if (!event) return <div>Event Not Found</div>;
+
+  if (!event) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8F5EE] text-[#4a1225] font-serif text-2xl">
+        Event Not Found
+      </div>
+    );
+  }
+
+  // If this is a trip's sub-event accessed directly as a URL route (not rendered by EventDetails),
+  // redirect to the parent trip page — trip sub-events don't have separate pages.
+  if (event.category === 'trip' && !isMainEventView && !providedEventId) {
+    return <Navigate to={`/event/${eventId}`} replace state={{ from: feedPath }} />;
+  }
 
   const feedItems = event.subEvents?.length > 0 ? event.subEvents : (event.itinerary || []);
   
-  // Create a flattened timeline of all events and their sub-events in order
+  // Create a flattened timeline of all events and their sub-events in chronological order
   const flatTimeline = [];
-  eventsData.forEach(ev => {
-    // 1. Add Main Event
+  eventsData.forEach((ev) => {
+    // 1. Add Main Event itself
     flatTimeline.push({
       eventId: ev.id,
       subEventId: ev.id,
-      title: ev.title
+      title: ev.title,
+      monthId: ev.id === 'shimoga-trip' ? '2026-05'
+             : ev.id === 'mewar-trip' ? '2025-09'
+             : ev.id === 'meghalaya-trip' ? '2025-10'
+             : ev.id === 'meghalaya-2' ? '2025-12'
+             : ev.id === 'kerala-yatra' ? '2026-01'
+             : ev.id === 'girls-getaway' ? '2026-03'
+             : ev.id === 'kalsubai-trek' ? '2025-10'
+             : ev.id === 'pushkar-trip' ? '2025-11'
+             : ev.id === 'ananthagiri-trip' ? '2026-02'
+             : ev.id === 'uttarakhand-trip' ? '2026-04'
+             : ev.id === 'goa-trip' ? '2026-06'
+             : ev.id === 'tricolor-trails-2' ? '2025-08'
+             : ev.id === 'navrang-2' ? '2025-10'
+             : ev.id === 'tricolor-trails-3' ? '2026-01'
+             : ev.id === 'interactive-online' ? '2025-09'
+             : '2025-08',
+      date: ev.id === 'shimoga-trip' ? '14 May 2026'
+          : ev.id === 'mewar-trip' ? '11 Sep 2025'
+          : ev.id === 'meghalaya-trip' ? '16 Oct 2025'
+          : ev.id === 'meghalaya-2' ? '25 Dec 2025'
+          : ev.id === 'kerala-yatra' ? '8 Jan 2026'
+          : ev.id === 'girls-getaway' ? '18 Mar 2026'
+          : ev.id === 'kalsubai-trek' ? '18 Oct 2025'
+          : ev.id === 'pushkar-trip' ? '2 Nov 2025'
+          : ev.id === 'ananthagiri-trip' ? '7 Feb 2026'
+          : ev.id === 'uttarakhand-trip' ? '16 Apr 2026'
+          : ev.id === 'goa-trip' ? '5 Jun 2026'
+          : '1 Aug 2025'
     });
-    // 2. Add Sub Events (only if not a trip, so we don't break trips into day-wise pages)
-    if (ev.category !== 'trip' && ev.subEvents?.length > 0) {
+    // 2. Add Sub Events
+    if (ev.subEvents?.length > 0 && ev.category !== 'trip') {
       ev.subEvents.forEach((sub) => {
-        flatTimeline.push({
-          eventId: ev.id,
-          subEventId: sub.id,
-          title: sub.title
-        });
+        if (sub.id) {
+          let mId = parseDateToMonthId(sub.date);
+          if (sub.id === 'nagpur') mId = '2025-10';
+          if (sub.id === 'chennai-raas') mId = '2025-10';
+
+          flatTimeline.push({
+            eventId: ev.id,
+            subEventId: sub.id,
+            title: sub.title,
+            monthId: mId || '2025-08',
+            date: sub.date
+          });
+        }
       });
     }
+  });
+
+  // Chronological Sort
+  flatTimeline.sort((a, b) => {
+    if (a.monthId !== b.monthId) {
+      return a.monthId.localeCompare(b.monthId);
+    }
+    const getDay = (dateStr) => {
+      const match = dateStr?.match(/^\d+/);
+      return match ? parseInt(match[0], 10) : 99;
+    };
+    return getDay(a.date) - getDay(b.date);
   });
 
   const currentIndex = flatTimeline.findIndex(
@@ -57,9 +137,14 @@ export default function SubEventDetails({ providedEventId, providedSubEventId })
   const handleNext = () => {
     if (nextItem) {
       if (nextItem.eventId === nextItem.subEventId) {
-        navigate(`/event/${nextItem.eventId}`);
+        navigate(`/event/${nextItem.eventId}`, { state: { from: feedPath } });
       } else {
-        navigate(`/event/${nextItem.eventId}/${nextItem.subEventId}`);
+        navigate(`/event/${nextItem.eventId}/${nextItem.subEventId}`, { 
+          state: { 
+            from: cameFromParent ? `/event/${eventId}` : feedPath, 
+            feedPath: feedPath 
+          } 
+        });
       }
     }
   };
@@ -67,14 +152,52 @@ export default function SubEventDetails({ providedEventId, providedSubEventId })
   return (
     <div className="min-h-screen bg-[#F8F5EE] font-sans selection:bg-orange-200 pt-8 pb-20 px-4 md:px-8">
       
-      {/* Header */}
+      {/* Header: Back navigation breadcrumb */}
       <div className="max-w-6xl mx-auto mb-6">
-        <button 
-          onClick={() => navigate(`/event/${eventId}`)}
-          className="flex items-center gap-2 text-[#4a1225] font-bold text-xs tracking-[0.15em] hover:text-[#d97706] transition-colors uppercase"
-        >
-          <ArrowLeft size={14} strokeWidth={3} /> GO BACK TO FEED
-        </button>
+        {isSubRoute ? (
+          // Sub-event view
+          <div className="flex items-center gap-5 flex-wrap">
+            {(!location.state?.from || cameFromParent) && (
+              <button 
+                onClick={() => navigate(`/event/${eventId}`, { state: { from: feedPath } })}
+                className="flex items-center gap-2 text-[#4a1225] font-bold text-xs tracking-[0.15em] hover:text-[#d97706] transition-colors uppercase"
+              >
+                <ArrowLeft size={14} strokeWidth={3} /> GO BACK TO EVENT
+              </button>
+            )}
+
+            {/* Show feed shortcut ONLY when we came from the parent and a feed path exists */}
+            {cameFromParent && feedPath !== '/' && (
+              <>
+                <span className="text-[#4a1225]/20 text-xs select-none">|</span>
+                <button 
+                  onClick={() => navigate(feedPath)}
+                  className="flex items-center gap-2 text-[#4a1225]/40 font-bold text-xs tracking-[0.15em] hover:text-[#d97706] hover:text-opacity-100 transition-colors uppercase"
+                >
+                  <ArrowLeft size={12} strokeWidth={3} /> {feedLabel}
+                </button>
+              </>
+            )}
+
+            {/* If they came directly from a feed (no intermediate parent page visit), ONLY show the feed back button */}
+            {!cameFromParent && location.state?.from && (
+              <button 
+                onClick={() => navigate(feedPath)}
+                className="flex items-center gap-2 text-[#4a1225] font-bold text-xs tracking-[0.15em] hover:text-[#d97706] transition-colors uppercase"
+              >
+                <ArrowLeft size={14} strokeWidth={3} /> {feedLabel}
+              </button>
+            )}
+          </div>
+        ) : (
+          // Top-level trip view (no parent EventDetails layer)
+          <button 
+            onClick={() => navigate(feedPath)}
+            className="flex items-center gap-2 text-[#4a1225] font-bold text-xs tracking-[0.15em] hover:text-[#d97706] transition-colors uppercase"
+          >
+            <ArrowLeft size={14} strokeWidth={3} /> {feedLabel}
+          </button>
+        )}
       </div>
 
       {/* Main Card */}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
 import { timelineMonths, getEventsByMonth } from './data/timelineEvents';
 import Timeline from './components/Timeline';
@@ -7,7 +7,7 @@ import Timeline from './components/Timeline';
 export default function TimelineMonthFeed() {
   const { monthId } = useParams();
   const navigate = useNavigate();
-  const [activeMonthId, setActiveMonthId] = React.useState(monthId);
+  const location = useLocation();
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,7 +38,7 @@ export default function TimelineMonthFeed() {
       {/* Header Section */}
       <div className="max-w-7xl mx-auto px-6 pt-12 pb-6">
         <button 
-          onClick={() => navigate('/#timeline-section')}
+          onClick={() => navigate('/')}
           className="flex items-center gap-2 text-[#4a1225] font-bold text-xs tracking-[0.15em] hover:text-[#d97706] transition-colors uppercase mb-8"
         >
           <ArrowLeft size={14} strokeWidth={3} /> BACK TO TIMELINE
@@ -55,7 +55,7 @@ export default function TimelineMonthFeed() {
                 Chapter Tally
               </p>
               <p className="text-[#4a1225] font-black text-lg">
-                {feedItems.length} Milestone Events
+                {feedItems.reduce((acc, curr) => acc + (curr.subEventsCount || 0), 0)} Milestone Events
               </p>
             </div>
           </div>
@@ -75,7 +75,10 @@ export default function TimelineMonthFeed() {
             return (
               <div 
                 key={itemId}
-                onClick={() => navigate(isItinerary ? `/event/${item.parentEventId}` : `/event/${item.parentEventId}/${itemId}`)}
+                onClick={() => {
+                  // Always navigate to the parent event page from the timeline feed, passing the month context
+                  navigate(`/event/${item.parentEventId}`, { state: { from: location.pathname, monthId: item.monthId } });
+                }}
                 className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.05)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.1)] transition-all duration-300"
               >
                 {/* Image Section */}
@@ -153,10 +156,9 @@ export default function TimelineMonthFeed() {
       {/* Timeline Section */}
       <section id="timeline-section" className="w-full fixed bottom-0 left-0 z-50 bg-[#f5f5f4] shadow-[0_-4px_25px_rgba(0,0,0,0.08)] border-t border-[#e5d5b5]">
         <Timeline 
-          activeMonthId={activeMonthId} 
+          activeMonthId={monthId} 
           onMonthSelect={(id) => {
-            setActiveMonthId(id);
-            navigate(`/timeline/${id}`);
+            // Navigation is handled by Timeline.jsx itself (with state.from)
           }} 
           compact={true} 
         />

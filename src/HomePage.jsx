@@ -14,7 +14,7 @@ import {
   Backpack,
   Handshake
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Map from './components/Map';
 import Timeline from './components/Timeline';
 
@@ -87,22 +87,22 @@ export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMonthId, setActiveMonthId] = useState('2025-08');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navLinks = [
     { label: 'Home', path: '/' },
     { label: 'Events', path: '/category/events' },
     { label: 'Cities', path: '/category/meetups' },
     { label: 'Trips', path: '/category/trips' },
-    { label: 'Gallery', path: '/gallery' },
     { label: 'About Us', path: '/about' },
   ];
 
   return (
     <div className="min-h-screen font-sans selection:bg-amber-100 overflow-x-hidden relative">
-      
+
       {/* Global Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <ImageWithFallback 
+        <ImageWithFallback
           src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80"
           alt="Background Mountains"
           className="w-full h-full object-cover"
@@ -121,16 +121,16 @@ export default function HomePage() {
           <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
           {/* Inner shadow for vintage paper feel */}
           <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(100,60,20,0.1)] pointer-events-none rounded-full"></div>
-          
+
           <div className="flex items-center justify-between h-16 sm:h-20 px-4 sm:px-6 relative z-10">
             {/* Left side: Logo and Title */}
             <div className="flex items-center gap-3 sm:gap-4 shrink-0">
               {/* Detailed Logo Badge Container */}
               <div className="bg-[#F4EBD9] rounded-full p-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] shrink-0">
                 {/* User Custom Logo Image */}
-                <img 
-                  src="/logo.png" 
-                  alt="Boundless Travel Society Logo" 
+                <img
+                  src="/logo.png"
+                  alt="Boundless Travel Society Logo"
                   className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover shrink-0 bg-[#0f172a] shadow-inner border-2 border-amber-500"
                   onError={(e) => {
                     // Fallback if logo.png is not found yet
@@ -142,14 +142,14 @@ export default function HomePage() {
                 />
                 {/* Fallback placeholder (hidden by default, shows if logo.png fails to load) */}
                 <div className="hidden w-12 h-12 sm:w-14 sm:h-14 bg-[#0f172a] rounded-full items-center justify-center border-2 border-amber-500 shadow-inner shrink-0 text-white text-[10px] text-center leading-tight p-1 font-bold">
-                  Add<br/>logo.png
+                  Add<br />logo.png
                 </div>
               </div>
-              
+
               {/* Title & Paper Plane Graphic */}
               <div className="flex items-center gap-2">
                 <span className="font-serif font-bold text-lg sm:text-xl md:text-2xl text-slate-900 tracking-tight shrink-0">Boundless Travel Society</span>
-                
+
                 {/* Paper airplane with dotted trail */}
                 <div className="hidden xl:block relative w-24 h-12 -ml-1 overflow-visible">
                   <svg viewBox="0 0 100 50" className="w-full h-full overflow-visible opacity-80">
@@ -167,11 +167,10 @@ export default function HomePage() {
             <div className="nav-desktop items-center space-x-3 lg:space-x-5 xl:space-x-8">
               {navLinks.map((item, i) => {
                 const isHash = item.path.includes('#');
-                const commonClasses = `text-[15px] font-bold transition-all relative group ${
-                  i === 0 
-                    ? 'text-[#c2410c]' 
-                    : 'text-slate-700 hover:text-[#c2410c]'
-                }`;
+                const commonClasses = `text-[15px] font-bold transition-all relative group ${i === 0
+                  ? 'text-[#c2410c]'
+                  : 'text-slate-700 hover:text-[#c2410c]'
+                  }`;
                 const underline = (
                   <>
                     {i === 0 && <span className="absolute -bottom-1.5 left-0 w-full h-0.5 bg-[#c2410c] rounded-full"></span>}
@@ -193,18 +192,18 @@ export default function HomePage() {
               })}
             </div>
 
-            <button 
+            <button
               onClick={() => {
-                document.getElementById('timeline-section')?.scrollIntoView({ behavior: 'smooth' });
+                navigate('/council');
               }}
               className="hidden sm:flex items-center gap-1 lg:gap-2 bg-[#0a0f1c] text-white px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 rounded-full hover:bg-black transition-all transform hover:scale-105 active:scale-95 shadow-md border border-slate-800 shrink-0"
             >
-              <span className="text-xs sm:text-sm font-bold tracking-wide">Explore Journey</span>
+              <span className="text-xs sm:text-sm font-bold tracking-wide">Meet the Council</span>
               <Compass className="w-4 h-4 text-[#ea580c]" />
             </button>
 
             {/* Mobile menu button */}
-            <button 
+            <button
               className="nav-mobile p-2 text-slate-800 hover:bg-black/5 rounded-full transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
@@ -218,17 +217,16 @@ export default function HomePage() {
           <div className="md:hidden absolute top-24 left-4 right-4 bg-[#F4EBD9] rounded-2xl shadow-xl border border-[#e5d5b5]/80 p-4 flex flex-col gap-4 animate-in slide-in-from-top-4 z-50">
             {/* Paper texture for dropdown */}
             <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none rounded-2xl"></div>
-            
+
             <div className="relative z-10 flex flex-col gap-2">
               {navLinks.map((item, i) => {
                 const isHash = item.path.includes('#');
-                const classes = `font-bold p-3 rounded-lg transition-colors ${
-                  i === 0 ? 'text-[#c2410c] bg-orange-900/5' : 'text-slate-700 hover:bg-black/5'
-                }`;
+                const classes = `font-bold p-3 rounded-lg transition-colors ${i === 0 ? 'text-[#c2410c] bg-orange-900/5' : 'text-slate-700 hover:bg-black/5'
+                  }`;
 
                 return isHash ? (
-                  <a 
-                    key={item.label} 
+                  <a
+                    key={item.label}
                     href={item.path.replace('/', '')}
                     className={classes}
                     onClick={() => setIsMenuOpen(false)}
@@ -236,8 +234,8 @@ export default function HomePage() {
                     {item.label}
                   </a>
                 ) : (
-                  <Link 
-                    key={item.label} 
+                  <Link
+                    key={item.label}
                     to={item.path}
                     className={classes}
                     onClick={() => setIsMenuOpen(false)}
@@ -246,14 +244,14 @@ export default function HomePage() {
                   </Link>
                 );
               })}
-              <button 
+              <button
                 onClick={() => {
                   setIsMenuOpen(false);
-                  document.getElementById('timeline-section')?.scrollIntoView({ behavior: 'smooth' });
+                  navigate('/council');
                 }}
                 className="w-full bg-[#0a0f1c] text-white px-5 py-3.5 rounded-xl mt-2 font-bold flex items-center justify-center gap-2 shadow-md"
               >
-                Explore Journey
+                Meet the Council
                 <Compass className="w-4 h-4 text-[#ea580c]" />
               </button>
             </div>
@@ -263,62 +261,67 @@ export default function HomePage() {
 
       <main className="relative z-10 pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          
+
           {/* Left Column - Hero Text */}
           <div className="space-y-6 pt-4 lg:pt-10">
             <div className="space-y-2 relative">
-               {/* Decorative Plane Path SVG */}
+              {/* Decorative Plane Path SVG */}
               <div className="absolute -top-12 -right-10 w-48 h-32 opacity-60 pointer-events-none hidden md:block">
-                  <svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10,90 Q50,20 150,10" stroke="#333" strokeWidth="1" strokeDasharray="4 4" fill="none" />
-                    <path d="M150,10 L140,5 L145,15 Z" fill="#333" />
-                  </svg>
+                <svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10,90 Q50,20 150,10" stroke="#333" strokeWidth="1" strokeDasharray="4 4" fill="none" />
+                  <path d="M150,10 L140,5 L145,15 Z" fill="#333" />
+                </svg>
               </div>
 
-              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-serif text-[#111] tracking-tight leading-[1.1] drop-shadow-md">
-                Boundless <span className="font-sans font-normal tracking-normal">2025</span>
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[1.1] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+                Boundless <span className="font-sans font-normal tracking-normal text-amber-400">2025</span>
               </h1>
-              <p className="text-2xl sm:text-3xl font-serif italic text-amber-900/90 max-w-lg leading-snug drop-shadow-sm">
+              <p className="text-2xl sm:text-3xl font-serif italic text-amber-100 max-w-lg leading-snug drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
                 A year of journeys, friendships & endless memories. ✨
               </p>
             </div>
 
-            <div className="flex flex-col gap-1 text-gray-800 font-medium border-l-4 border-amber-500 pl-4 py-1">
-              <p className="text-lg">5200+ members. 40+ cities.</p>
-              <p className="text-lg">One community. Countless stories.</p>
+            <div className="flex flex-col gap-1 text-white font-medium border-l-4 border-amber-500 pl-4 py-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+              <p className="text-lg font-semibold">5200+ members. 40+ cities.</p>
+              <p className="text-lg font-semibold">One community. Countless stories.</p>
             </div>
 
             <div className="flex flex-wrap gap-4 pt-6">
-              <button 
+              <button
                 onClick={() => {
                   document.getElementById('timeline-section')?.scrollIntoView({ behavior: 'smooth' });
                 }}
                 className="bg-[#1A1A1A] text-white px-8 py-3.5 rounded-full font-medium hover:bg-gray-800 transition-all flex items-center gap-2 shadow-lg shadow-gray-900/30 group"
               >
-                Start Exploring 
+                Start Exploring
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="bg-white/60 backdrop-blur-md hover:bg-white text-gray-900 px-6 py-3.5 rounded-full font-medium transition-all flex items-center gap-3 border border-gray-300/50 shadow-sm hover:shadow-md">
+              <a
+                href="https://www.instagram.com/boundless_iitmbs/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/60 backdrop-blur-md hover:bg-white text-gray-900 px-6 py-3.5 rounded-full font-medium transition-all flex items-center gap-3 border border-gray-300/50 shadow-sm hover:shadow-md"
+              >
                 <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center border border-red-200">
                   <Play className="w-4 h-4 text-red-600 ml-0.5 fill-red-600" />
                 </div>
                 Watch Our Journey
-              </button>
+              </a>
             </div>
           </div>
 
           {/* Right Column - Map & Polaroids */}
           <div className="relative h-[500px] lg:h-[600px] w-full flex items-center justify-center">
-             
+
             {/* Map Container */}
             <Map className="transform scale-110 lg:scale-[1.35] -translate-x-4 lg:-translate-x-24" />
 
             {/* Floating Polaroids */}
             <div className="absolute top-12 lg:top-20 right-0 sm:-right-8 lg:-right-16 rotate-6 hover:rotate-0 transition-transform cursor-pointer hover:z-30 z-20">
               <div className="bg-[#fcfbf9] p-2 pb-8 rounded-sm shadow-2xl border border-gray-200/60 max-w-[180px] sm:max-w-[220px]">
-                <ImageWithFallback 
-                  src="https://images.unsplash.com/photo-1523580494112-071dcb849ea4?auto=format&fit=crop&q=80" 
-                  alt="Group photo mountains" 
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1523580494112-071dcb849ea4?auto=format&fit=crop&q=80"
+                  alt="Group photo mountains"
                   className="w-full aspect-[4/3] object-cover mb-2 border border-gray-100"
                 />
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 bg-[#e3d5c8] rotate-3 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
@@ -328,53 +331,53 @@ export default function HomePage() {
             <div className="absolute top-64 lg:top-80 right-4 sm:-right-12 lg:-right-24 -rotate-6 hover:rotate-0 transition-transform cursor-pointer hover:z-30 z-20 group">
               {/* Polaroid Photo */}
               <div className="bg-[#fcfbf9] p-2 pb-2 rounded-sm shadow-2xl border border-gray-200/60 max-w-[160px] sm:max-w-[200px]">
-                <ImageWithFallback 
-                  src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80" 
-                  alt="Group photo beach" 
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80"
+                  alt="Group photo beach"
                   className="w-full aspect-[4/3] object-cover border border-gray-100 filter sepia-[0.1]"
                 />
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 bg-[#e3d5c8] -rotate-3 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
               </div>
-              
+
               {/* Pinned Parchment Note */}
               <div className="absolute -bottom-10 -left-10 sm:-left-16 rotate-6 group-hover:rotate-3 transition-transform z-30 drop-shadow-xl">
-                 <div 
-                   className="relative bg-[#F4EBD9] p-4 pt-6 pb-5 rounded-sm border border-[#e5d5b5]/50" 
-                   style={{ clipPath: 'polygon(0% 4%, 5% 0%, 15% 3%, 25% 0%, 35% 4%, 45% 0%, 55% 4%, 65% 0%, 75% 3%, 85% 0%, 95% 4%, 100% 1%, 100% 95%, 95% 100%, 85% 97%, 75% 100%, 65% 96%, 55% 100%, 45% 97%, 35% 100%, 25% 96%, 15% 100%, 5% 97%, 0% 100%)' }}
-                 >
-                   {/* Paper texture overlay */}
-                   <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
-                   
-                   {/* Text Content */}
-                   <div className="relative z-10 text-center font-sans font-bold text-sm sm:text-base text-slate-700 leading-tight flex flex-col gap-0.5 transform -rotate-2">
-                     <p>40+ Cities</p>
-                     <p>12 States</p>
-                     <p>Countless</p>
-                     <p className="flex items-center justify-center gap-1">Memories <span className="text-red-500 text-lg sm:text-xl font-serif">♡</span></p>
-                   </div>
-                 </div>
-                 
-                 {/* Golden Pin */}
-                 <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-40">
-                   <div className="relative">
-                     {/* Pin shadow */}
-                     <div className="absolute top-1 left-1 w-5 h-5 bg-black/40 rounded-full blur-[2px]"></div>
-                     {/* Pin head */}
-                     <div className="relative w-5 h-5 bg-gradient-to-br from-yellow-300 via-amber-500 to-yellow-700 rounded-full shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.3)] border border-amber-800/40">
-                       {/* Highlight */}
-                       <div className="absolute top-1 left-1 w-1.5 h-1.5 bg-white/70 rounded-full blur-[0.5px]"></div>
-                     </div>
-                   </div>
-                 </div>
+                <div
+                  className="relative bg-[#F4EBD9] p-4 pt-6 pb-5 rounded-sm border border-[#e5d5b5]/50"
+                  style={{ clipPath: 'polygon(0% 4%, 5% 0%, 15% 3%, 25% 0%, 35% 4%, 45% 0%, 55% 4%, 65% 0%, 75% 3%, 85% 0%, 95% 4%, 100% 1%, 100% 95%, 95% 100%, 85% 97%, 75% 100%, 65% 96%, 55% 100%, 45% 97%, 35% 100%, 25% 96%, 15% 100%, 5% 97%, 0% 100%)' }}
+                >
+                  {/* Paper texture overlay */}
+                  <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
+
+                  {/* Text Content */}
+                  <div className="relative z-10 text-center font-sans font-bold text-sm sm:text-base text-slate-700 leading-tight flex flex-col gap-0.5 transform -rotate-2">
+                    <p>40+ Cities</p>
+                    <p>12 States</p>
+                    <p>Countless</p>
+                    <p className="flex items-center justify-center gap-1">Memories <span className="text-red-500 text-lg sm:text-xl font-serif">♡</span></p>
+                  </div>
+                </div>
+
+                {/* Golden Pin */}
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-40">
+                  <div className="relative">
+                    {/* Pin shadow */}
+                    <div className="absolute top-1 left-1 w-5 h-5 bg-black/40 rounded-full blur-[2px]"></div>
+                    {/* Pin head */}
+                    <div className="relative w-5 h-5 bg-gradient-to-br from-yellow-300 via-amber-500 to-yellow-700 rounded-full shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.3)] border border-amber-800/40">
+                      {/* Highlight */}
+                      <div className="absolute top-1 left-1 w-1.5 h-1.5 bg-white/70 rounded-full blur-[0.5px]"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            
+
             {/* Bottom left stats polaroid style box */}
             <div className="absolute bottom-0 left-0 md:-left-12 -rotate-2 hover:rotate-0 transition-transform cursor-pointer z-20 hidden md:block">
               <div className="bg-[#fcfbf9] p-3 rounded-sm shadow-2xl border border-gray-200/60 max-w-[150px]">
                 <div className="flex items-center gap-2 mb-2">
-                    <Users className="w-5 h-5 text-blue-600"/>
-                    <span className="font-bold text-gray-900">5200+</span>
+                  <Users className="w-5 h-5 text-blue-600" />
+                  <span className="font-bold text-gray-900">5200+</span>
                 </div>
                 <p className="text-xs text-gray-600 font-medium leading-tight">Members Connected</p>
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-4 bg-[#e3d5c8] rotate-2 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
@@ -386,14 +389,14 @@ export default function HomePage() {
 
         {/* Bottom Half: Stats & Event Cards side-by-side */}
         <div className="mt-8 lg:-mt-6 flex flex-col lg:flex-row gap-4 lg:gap-6 items-end relative z-20 w-full px-2 lg:px-4">
-          
+
           {/* Stats Section */}
           <div style={{ flex: '1.4' }} className="w-full lg:w-auto bg-[#F4EBD9] border-[3px] border-white/40 rounded-[2.5rem] p-4 lg:p-5 shadow-[0_12px_40px_rgb(0,0,0,0.15)] shrink-0 relative hover:-translate-y-1 transition-transform duration-300">
             <div className="flex justify-between items-start divide-x divide-[#e2d5bd]">
               {STATS.map((stat, idx) => (
                 <div key={idx} className="flex flex-col items-center justify-start flex-1 px-1 text-center group cursor-pointer">
                   <div className="mb-2 group-hover:scale-110 transition-transform duration-300">
-                      {stat.icon}
+                    {stat.icon}
                   </div>
                   <h3 className="text-xl lg:text-2xl font-bold text-gray-900 leading-none mb-1.5">{stat.value}</h3>
                   <p className="text-[10px] lg:text-[11px] xl:text-[12px] text-gray-700 font-semibold leading-[1.2] whitespace-pre-line">
@@ -416,42 +419,46 @@ export default function HomePage() {
                 'text-purple-500': 'bg-purple-500'
               };
               const bgColor = colorMap[card.color] || 'bg-gray-500';
-              
+
               return (
-              <div 
-                key={idx} 
-                onClick={() => navigate(card.categoryId ? `/category/${card.categoryId}` : `/event/${card.eventId}`)}
-                className={`shrink-0 flex-1 min-w-0 bg-[#FDF9F1] rounded-[14px] p-1.5 lg:p-2 shadow-lg hover:-translate-y-3 hover:shadow-2xl transition-all duration-300 border-[3px] border-[#E8DCC4] relative ${rotations[idx]} hover:rotate-0 hover:z-30 cursor-pointer flex flex-col`}
-              >
-                 {/* Tape element */}
-                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 lg:w-10 h-4 bg-[#DDBB8E] -rotate-3 shadow-sm rounded-sm z-10"></div>
-                 
-                <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-2 shadow-sm border border-[#E8DCC4]">
-                  <ImageWithFallback 
-                    src={card.image} 
-                    alt={card.title}
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
-                  />
-                  {/* Optional flag graphic for specific cards */}
-                  {card.flag && (
-                      <div className="absolute top-1 left-1 flex gap-[1px] shadow-sm overflow-hidden rounded-sm border border-white/50">
-                          <div className="w-3 h-2 bg-orange-500"></div>
-                          <div className="w-3 h-2 bg-white"></div>
-                          <div className="w-3 h-2 bg-green-500"></div>
-                      </div>
+                <div
+                  key={idx}
+                  onClick={() => navigate(
+                    card.categoryId ? `/category/${card.categoryId}` : `/event/${card.eventId}`,
+                    { state: { from: location.pathname } }
                   )}
-                </div>
-                <div className="px-1 pb-1 flex-1 flex flex-col justify-end">
-                  <h3 className="font-bold text-gray-900 text-[11px] lg:text-[12px] xl:text-[13px] leading-tight mb-1 truncate font-serif">{card.title}</h3>
-                  <div className="flex items-end justify-between gap-1 mt-auto">
-                    <p className="text-[8px] lg:text-[9px] xl:text-[10px] text-gray-600 font-medium leading-[1.1] max-w-[80%]">{card.desc}</p>
-                    <div className={`w-4 h-4 lg:w-5 lg:h-5 rounded-full flex items-center justify-center shrink-0 shadow-sm text-white ${bgColor}`}>
-                      <ArrowRight className="w-2.5 h-2.5 lg:w-3 lg:h-3" />
+                  className={`shrink-0 flex-1 min-w-0 bg-[#FDF9F1] rounded-[14px] p-1.5 lg:p-2 shadow-lg hover:-translate-y-3 hover:shadow-2xl transition-all duration-300 border-[3px] border-[#E8DCC4] relative ${rotations[idx]} hover:rotate-0 hover:z-30 cursor-pointer flex flex-col`}
+                >
+                  {/* Tape element */}
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 lg:w-10 h-4 bg-[#DDBB8E] -rotate-3 shadow-sm rounded-sm z-10"></div>
+
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-2 shadow-sm border border-[#E8DCC4]">
+                    <ImageWithFallback
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                    />
+                    {/* Optional flag graphic for specific cards */}
+                    {card.flag && (
+                      <div className="absolute top-1 left-1 flex gap-[1px] shadow-sm overflow-hidden rounded-sm border border-white/50">
+                        <div className="w-3 h-2 bg-orange-500"></div>
+                        <div className="w-3 h-2 bg-white"></div>
+                        <div className="w-3 h-2 bg-green-500"></div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="px-1 pb-1 flex-1 flex flex-col justify-end">
+                    <h3 className="font-bold text-gray-900 text-[11px] lg:text-[12px] xl:text-[13px] leading-tight mb-1 truncate font-serif">{card.title}</h3>
+                    <div className="flex items-end justify-between gap-1 mt-auto">
+                      <p className="text-[8px] lg:text-[9px] xl:text-[10px] text-gray-600 font-medium leading-[1.1] max-w-[80%]">{card.desc}</p>
+                      <div className={`w-4 h-4 lg:w-5 lg:h-5 rounded-full flex items-center justify-center shrink-0 shadow-sm text-white ${bgColor}`}>
+                        <ArrowRight className="w-2.5 h-2.5 lg:w-3 lg:h-3" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )})}
+              )
+            })}
           </div>
 
         </div>
@@ -464,17 +471,17 @@ export default function HomePage() {
 
       {/* Footer Section with Transparent Background and Dotted Path */}
       <footer className="relative bg-transparent text-white pt-24 z-30 flex flex-col">
-         {/* Top Ripped edge SVG (Beige paper tearing downwards) */}
+        {/* Top Ripped edge SVG (Beige paper tearing downwards) */}
         <div className="absolute -top-[1px] left-0 w-full h-12 z-10 text-[#F4EBD9]">
-             <svg viewBox="0 0 1200 50" preserveAspectRatio="none" className="w-full h-full drop-shadow-[0_4px_4px_rgba(0,0,0,0.15)] text-[#F4EBD9]">
-                <defs>
-                  <pattern id="torn-edge-bottom" width="60" height="50" patternUnits="userSpaceOnUse">
-                    {/* Fills TOP, waves on BOTTOM */}
-                    <path d="M0,0 L0,20 Q15,40 30,20 Q45,0 60,20 L60,0 Z" fill="currentColor" />
-                  </pattern>
-                </defs>
-                <rect x="0" y="0" width="1200" height="50" fill="url(#torn-edge-bottom)" />
-             </svg>
+          <svg viewBox="0 0 1200 50" preserveAspectRatio="none" className="w-full h-full drop-shadow-[0_4px_4px_rgba(0,0,0,0.15)] text-[#F4EBD9]">
+            <defs>
+              <pattern id="torn-edge-bottom" width="60" height="50" patternUnits="userSpaceOnUse">
+                {/* Fills TOP, waves on BOTTOM */}
+                <path d="M0,0 L0,20 Q15,40 30,20 Q45,0 60,20 L60,0 Z" fill="currentColor" />
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="1200" height="50" fill="url(#torn-edge-bottom)" />
+          </svg>
         </div>
 
         {/* Dotted Flight Path */}
@@ -484,19 +491,19 @@ export default function HomePage() {
             <path d="M 1250,50 C 1100,250 950,-50 800,100 C 650,250 450,50 200,150" fill="none" stroke="#ffffff" strokeWidth="1.5" strokeDasharray="6 6" />
             {/* Paper plane icon */}
             <g transform="translate(1120, 80) rotate(-25)">
-              <path d="M0,0 L24,-12 L6,18 Z" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinejoin="round"/>
-              <path d="M6,18 L10,6 L24,-12" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinejoin="round"/>
+              <path d="M0,0 L24,-12 L6,18 Z" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinejoin="round" />
+              <path d="M6,18 L10,6 L24,-12" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinejoin="round" />
             </g>
           </svg>
         </div>
 
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-10 mb-16 lg:px-8">
-            
+
             {/* Left Column: Script Text & Heart */}
             <div className="flex items-center gap-4 lg:gap-6 text-center lg:text-left">
               <h3 className="font-caveat text-3xl lg:text-[40px] text-[#EBD08B] leading-[1.2] drop-shadow-md font-medium">
-                Every trip tells a story.<br/>
+                Every trip tells a story.<br />
                 Every person adds to it.
               </h3>
               {/* Hand-drawn open heart */}
@@ -509,10 +516,10 @@ export default function HomePage() {
             <div className="text-center space-y-2 flex flex-col items-center">
               <h2 className="text-[28px] lg:text-[34px] font-serif font-bold text-white flex items-center justify-center gap-3 tracking-wide drop-shadow-md">
                 The Journey Continues...
-                 {/* Small mountain graphic */}
-                 <svg width="36" height="18" viewBox="0 0 40 20" fill="none" stroke="#d1d5db" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:block">
-                    <path d="M5,20 L15,5 L20,12 L30,2 L38,20" />
-                 </svg>
+                {/* Small mountain graphic */}
+                <svg width="36" height="18" viewBox="0 0 40 20" fill="none" stroke="#d1d5db" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:block">
+                  <path d="M5,20 L15,5 L20,12 L30,2 L38,20" />
+                </svg>
               </h2>
               <p className="text-gray-200 font-medium tracking-wide text-sm lg:text-base drop-shadow-md">Let's keep exploring the world, together!</p>
               {/* Orange brush stroke underline */}
@@ -522,15 +529,15 @@ export default function HomePage() {
             {/* Right Column: Button */}
             <div className="relative group shrink-0 mt-4 lg:mt-0">
               <div className="absolute inset-0 bg-[#b45309] rounded-full blur opacity-50 group-hover:opacity-80 transition-opacity"></div>
-              <button 
+              <button
                 onClick={() => {
-                  navigate('/timeline/2025-08');
+                  navigate('/timeline/2025-08', { state: { from: location.pathname } });
                 }}
                 className="relative bg-[#a5520e] hover:bg-[#8d4409] text-white px-7 py-3.5 rounded-full font-medium transition-colors flex items-center gap-3 border border-[#d97706]/50 shadow-lg text-sm lg:text-base"
               >
                 Explore Full Tenure Report
                 <div className="w-5 h-5 rounded-full border border-white/60 flex items-center justify-center">
-                    <ArrowRight className="w-3 h-3 text-white -rotate-90 transition-transform group-hover:rotate-0" />
+                  <ArrowRight className="w-3 h-3 text-white -rotate-90 transition-transform group-hover:rotate-0" />
                 </div>
               </button>
             </div>
@@ -542,8 +549,8 @@ export default function HomePage() {
         <div className="w-full bg-[#111111] relative z-10 mt-12 sm:mt-16">
           <div className="flex flex-col items-center justify-center gap-3 text-[13px] text-gray-300 py-6 px-4">
             <p className="flex items-center gap-2">
-                © 2025 Boundless Travel Society. 
-                <Navigation className="w-3.5 h-3.5 -rotate-45 text-gray-400" />
+              © 2025 Boundless Travel Society.
+              <Navigation className="w-3.5 h-3.5 -rotate-45 text-gray-400" />
             </p>
             <div className="flex gap-8 font-medium">
               <a href="#" className="hover:text-white transition-colors">Instagram</a>
