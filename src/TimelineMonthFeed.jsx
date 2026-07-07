@@ -3,6 +3,8 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
 import { timelineMonths, getEventsByMonth } from './data/timelineEvents';
 import Timeline from './components/Timeline';
+import { getAssetUrl } from './utils/assets';
+
 
 export default function TimelineMonthFeed() {
   const { monthId } = useParams();
@@ -86,7 +88,7 @@ export default function TimelineMonthFeed() {
                 <div className="w-full h-56 relative overflow-hidden bg-[#F4EBD9]">
                   {item.image ? (
                     <img 
-                      src={item.image} 
+                      src={getAssetUrl(item.image)} 
                       alt={item.title} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />

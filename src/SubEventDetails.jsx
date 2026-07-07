@@ -3,6 +3,8 @@ import { useParams, useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { ArrowLeft, Clock, MapPin, Users, ArrowRight, ImageIcon } from 'lucide-react';
 import eventsData from './data/events';
 import { parseDateToMonthId } from './data/timelineEvents';
+import { getAssetUrl } from './utils/assets';
+
 
 export default function SubEventDetails({ providedEventId, providedSubEventId, providedFrom }) {
   const params = useParams();
@@ -66,33 +68,34 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
       eventId: ev.id,
       subEventId: ev.id,
       title: ev.title,
-      monthId: ev.id === 'shimoga-trip' ? '2026-05'
+      monthId: ev.id === 'shimoga-trip' ? '2025-09'
              : ev.id === 'mewar-trip' ? '2025-09'
-             : ev.id === 'meghalaya-trip' ? '2025-10'
+             : ev.id === 'meghalaya-trip' ? '2025-11'
              : ev.id === 'meghalaya-2' ? '2025-12'
              : ev.id === 'kerala-yatra' ? '2026-01'
              : ev.id === 'girls-getaway' ? '2026-03'
-             : ev.id === 'kalsubai-trek' ? '2025-10'
+             : ev.id === 'kalsubai-trek' ? '2025-12'
              : ev.id === 'pushkar-trip' ? '2025-11'
              : ev.id === 'ananthagiri-trip' ? '2026-02'
              : ev.id === 'uttarakhand-trip' ? '2026-04'
              : ev.id === 'goa-trip' ? '2026-06'
              : ev.id === 'tricolor-trails-2' ? '2025-08'
-             : ev.id === 'navrang-2' ? '2025-10'
+             : ev.id === 'navrang-2' ? '2025-09'
              : ev.id === 'tricolor-trails-3' ? '2026-01'
              : ev.id === 'interactive-online' ? '2025-09'
              : '2025-08',
-      date: ev.id === 'shimoga-trip' ? '14 May 2026'
-          : ev.id === 'mewar-trip' ? '11 Sep 2025'
-          : ev.id === 'meghalaya-trip' ? '16 Oct 2025'
+      date: ev.id === 'shimoga-trip' ? '5 Sep 2025'
+          : ev.id === 'mewar-trip' ? '12 Sep 2025'
+          : ev.id === 'meghalaya-trip' ? '28 Nov 2025'
           : ev.id === 'meghalaya-2' ? '25 Dec 2025'
           : ev.id === 'kerala-yatra' ? '8 Jan 2026'
           : ev.id === 'girls-getaway' ? '18 Mar 2026'
-          : ev.id === 'kalsubai-trek' ? '18 Oct 2025'
+          : ev.id === 'kalsubai-trek' ? '5 Dec 2025'
           : ev.id === 'pushkar-trip' ? '2 Nov 2025'
           : ev.id === 'ananthagiri-trip' ? '7 Feb 2026'
           : ev.id === 'uttarakhand-trip' ? '16 Apr 2026'
           : ev.id === 'goa-trip' ? '5 Jun 2026'
+          : ev.id === 'navrang-2' ? '23 Sep 2025'
           : '1 Aug 2025'
     });
     // 2. Add Sub Events
@@ -209,7 +212,7 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
         <div className="w-full h-64 md:h-80 relative overflow-hidden bg-[#F4EBD9]">
           {currentItem.image ? (
             <img 
-              src={currentItem.image} 
+              src={getAssetUrl(currentItem.image)} 
               alt={currentItem.title} 
               className="w-full h-full object-cover"
             />
@@ -322,7 +325,7 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
                 {currentItem.glimpses.map((imgUrl, idx) => (
                   <div key={idx} className="aspect-[4/3] rounded-2xl overflow-hidden shadow-sm border border-gray-100">
                     <img 
-                      src={imgUrl} 
+                      src={getAssetUrl(imgUrl)} 
                       alt={`Glimpse ${idx + 1}`} 
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                     />

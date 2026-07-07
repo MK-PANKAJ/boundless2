@@ -3,6 +3,8 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
 import eventsData from './data/events';
 import { getTimelineEvents } from './data/timelineEvents';
+import { getAssetUrl } from './utils/assets';
+
 
 export default function CategoryFeed() {
   const { categoryId } = useParams();
@@ -98,7 +100,7 @@ export default function CategoryFeed() {
                 <div className="w-full h-56 relative overflow-hidden bg-[#F4EBD9]">
                   {item.image ? (
                     <img
-                      src={item.image}
+                      src={getAssetUrl(item.image)}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />

@@ -4,6 +4,8 @@ import { ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
 import eventsData from './data/events';
 import SubEventDetails from './SubEventDetails';
 import { parseDateToMonthId } from './data/timelineEvents';
+import { getAssetUrl } from './utils/assets';
+
 
 export default function EventDetails() {
   const { eventId } = useParams();
@@ -88,14 +90,14 @@ export default function EventDetails() {
             return (
               <div 
                 key={itemId}
-                onClick={() => navigate(`/event/${eventId}/${itemId}`, { state: { from: `/event/${eventId}`, feedPath: previousPath } })}
+                onClick={() => navigate(`/event/${eventId}/${itemId}`, { state: { from: `/event/${eventId}`, feedPath: previousPath, monthId: selectedMonthId } })}
                 className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.05)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.1)] transition-all duration-300"
               >
                 {/* Image Section */}
                 <div className="w-full h-56 relative overflow-hidden bg-[#F4EBD9]">
                   {item.image ? (
                     <img 
-                      src={item.image} 
+                      src={getAssetUrl(item.image)} 
                       alt={item.title} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />

@@ -2,16 +2,15 @@ import eventsData from './events';
 
 // Map of months to display in our timeline
 export const timelineMonths = [
-  { id: '2025-08', label: 'Aug 2025', title: 'August 2025', summary: 'Nationwide Independence Week meetups across 12 cities.' },
-  { id: '2025-09', label: 'Sep 2025', title: 'September 2025', summary: 'Teachers\' Day tribute, Orientation, Mewar Diaries, and Navrang 2.0 Raas celebrations.' },
-  { id: '2025-10', label: 'Oct 2025', title: 'October 2025', summary: 'Navratri closures, Kalsubai high peak treks, and online scribble sessions.' },
-  { id: '2025-11', label: 'Nov 2025', title: 'November 2025', summary: 'A colorful cultural experience in Rajasthan\'s camel fair and desert dunes.' },
-  { id: '2025-12', label: 'Dec 2025', title: 'December 2025', summary: 'Winter expeditions through the mist, living root bridges, and riverside camping.' },
-  { id: '2026-01', label: 'Jan 2026', title: 'January 2026', summary: 'Republic Day hikes, snowy Manali mountains, sacred Ganges, and backwater yacht yatras.' },
+  { id: '2025-08', label: 'Aug 2025', title: 'August 2025', summary: 'Tricolor Trails 2.0 — Independence Week meetups across 12 cities nationwide.' },
+  { id: '2025-09', label: 'Sep 2025', title: 'September 2025', summary: 'Shimoga Expedition, Mewar Diaries, Teachers\' Day tribute, Orientation, and Navrang 2.0 pan-India Raas celebrations.' },
+  { id: '2025-10', label: 'Oct 2025', title: 'October 2025', summary: 'Navratri closures (Nagpur & Chennai), Girls Scribble Night, and Tricolor Trails 2.0 finale.' },
+  { id: '2025-11', label: 'Nov 2025', title: 'November 2025', summary: 'Meghalaya Diaries 1.0 — misty hills, root bridges, and the vibrant Pushkar Mela.' },
+  { id: '2025-12', label: 'Dec 2025', title: 'December 2025', summary: 'Kalsubai Peak overnight trek and Meghalaya Diaries 2.0 winter expedition.' },
+  { id: '2026-01', label: 'Jan 2026', title: 'January 2026', summary: 'Republic Day hikes, snowy Manali mountains, sacred Ganges, Kerala Yatra, and Tricolor Trails 3.0.' },
   { id: '2026-02', label: 'Feb 2026', title: 'February 2026', summary: 'Dense Vikarabad forest treks and misty valley sunrise walking trails.' },
-  { id: '2026-03', label: 'Mar 2026', title: 'March 2026', summary: 'Women\'s Day Google Meet championships and royal sisterhood empowerment retreats.' },
+  { id: '2026-03', label: 'Mar 2026', title: 'March 2026', summary: 'Women\'s Day Championship and Rajasthan Girls Getaway empowerment retreat.' },
   { id: '2026-04', label: 'Apr 2026', title: 'April 2026', summary: 'Refreshing spring escapes to Nainital lake viewpoints and campfire circles.' },
-  { id: '2026-05', label: 'May 2026', title: 'May 2026', summary: 'Vast Western Ghats elephant camps, high forts, and kayaking Udupi coastal shores.' },
   { id: '2026-06', label: 'Jun 2026', title: 'June 2026', summary: 'Sun-kissed Goan beach excursions and Portuguese quarter heritage photowalks.' }
 ];
 
@@ -98,17 +97,17 @@ export const getTimelineEvents = () => {
       let dateRange = '2025–2026';
 
       if (mainEvent.id === 'shimoga-trip') {
-        monthId = '2026-05';
-        dateRange = '14-17 May 2026';
+        monthId = '2025-09';
+        dateRange = '5-7 Sep 2025';
       } else if (mainEvent.id === 'mewar-trip') {
         monthId = '2025-09';
-        dateRange = '11-14 Sep 2025';
+        dateRange = '12-15 Sep 2025';
       } else if (mainEvent.id === 'meghalaya-trip') {
-        monthId = '2025-10';
-        dateRange = '16-19 Oct 2025';
+        monthId = '2025-11';
+        dateRange = '28 Nov – 1 Dec 2025';
       } else if (mainEvent.id === 'kalsubai-trek') {
-        monthId = '2025-10';
-        dateRange = '18-19 Oct 2025';
+        monthId = '2025-12';
+        dateRange = '5 Dec 2025';
       } else if (mainEvent.id === 'pushkar-trip') {
         monthId = '2025-11';
         dateRange = '2 Nov 2025';
