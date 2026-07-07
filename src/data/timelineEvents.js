@@ -11,6 +11,7 @@ export const timelineMonths = [
   { id: '2026-02', label: 'Feb 2026', title: 'February 2026', summary: 'Dense Vikarabad forest treks and misty valley sunrise walking trails.' },
   { id: '2026-03', label: 'Mar 2026', title: 'March 2026', summary: 'Women\'s Day Championship and Rajasthan Girls Getaway empowerment retreat.' },
   { id: '2026-04', label: 'Apr 2026', title: 'April 2026', summary: 'Refreshing spring escapes to Nainital lake viewpoints and campfire circles.' },
+  { id: '2026-05', label: 'May 2026', title: 'May 2026', summary: 'Nepal Expedition, Pink Verdict & Regional Meetups.' },
   { id: '2026-06', label: 'Jun 2026', title: 'June 2026', summary: 'Sun-kissed Goan beach excursions and Portuguese quarter heritage photowalks.' }
 ];
 
@@ -18,10 +19,10 @@ export const timelineMonths = [
 export const parseDateToMonthId = (dateStr) => {
   if (!dateStr) return null;
   const lower = dateStr.toLowerCase();
-  
+
   let year = '2025';
   if (lower.includes('2026')) year = '2026';
-  
+
   if (lower.includes('jan')) return `${year}-01`;
   if (lower.includes('feb')) return `${year}-02`;
   if (lower.includes('mar')) return `${year}-03`;
@@ -34,7 +35,7 @@ export const parseDateToMonthId = (dateStr) => {
   if (lower.includes('oct')) return `${year}-10`;
   if (lower.includes('nov')) return `${year}-11`;
   if (lower.includes('dec')) return `${year}-12`;
-  
+
   return null;
 };
 
@@ -47,13 +48,13 @@ export const getTimelineEvents = () => {
     // We group their sub-events by month and push a timeline card for each unique month.
     if (mainEvent.subEvents && mainEvent.subEvents.length > 0 && mainEvent.category !== 'trip') {
       const monthsMap = {};
-      
+
       mainEvent.subEvents.forEach(sub => {
         let mId = parseDateToMonthId(sub.date);
         // Hand-correct specific edge cases
         if (sub.id === 'nagpur') mId = '2025-10'; // Nagpur meetup is 8 Oct 2025
         if (sub.id === 'chennai-raas') mId = '2025-10'; // Chennai Raas is 1 Oct 2025
-        
+
         if (mId) {
           if (!monthsMap[mId]) {
             monthsMap[mId] = [];
@@ -65,8 +66,8 @@ export const getTimelineEvents = () => {
       // Push a separate timeline item for each month this event was active
       Object.keys(monthsMap).forEach(mId => {
         const subsInMonth = monthsMap[mId];
-        const dateRange = subsInMonth.length === 1 
-          ? subsInMonth[0].date 
+        const dateRange = subsInMonth.length === 1
+          ? subsInMonth[0].date
           : `${subsInMonth[0].date.split(' ')[0]} - ${subsInMonth[subsInMonth.length - 1].date}`;
 
         items.push({
@@ -75,8 +76,8 @@ export const getTimelineEvents = () => {
           title: mainEvent.title,
           monthId: mId,
           date: dateRange,
-          location: mainEvent.category === 'online' 
-            ? `${subsInMonth.length} Online Events` 
+          location: mainEvent.category === 'online'
+            ? `${subsInMonth.length} Online Events`
             : `${subsInMonth.length} City Meetups`,
           attendees: subsInMonth.reduce((acc, curr) => acc + (curr.attendees || 0), 0) || mainEvent.stats?.participants || 30,
           image: subsInMonth[0].image || mainEvent.image,
@@ -91,8 +92,8 @@ export const getTimelineEvents = () => {
       });
     }
 
-    // For standalone trips, we push them once under their specific month
-    if (mainEvent.category === 'trip') {
+    // For standalone trips and meetups/online events without sub-events, push once under their specific month
+    if (mainEvent.category === 'trip' || ((mainEvent.category === 'meetup' || mainEvent.category === 'online') && (!mainEvent.subEvents || mainEvent.subEvents.length === 0))) {
       let monthId = '2025-08';
       let dateRange = '2025–2026';
 
@@ -123,6 +124,30 @@ export const getTimelineEvents = () => {
       } else if (mainEvent.id === 'uttarakhand-trip') {
         monthId = '2026-04';
         dateRange = '16-18 Apr 2026';
+      } else if (mainEvent.id === 'gaya-escape') {
+        monthId = '2026-03';
+        dateRange = '22 Mar 2026';
+      } else if (mainEvent.id === 'ahmedabad-escape-may') {
+        monthId = '2026-05';
+        dateRange = '17 May 2026';
+      } else if (mainEvent.id === 'ranchi-escape') {
+        monthId = '2026-05';
+        dateRange = '17 May 2026';
+      } else if (mainEvent.id === 'nepal-trip') {
+        monthId = '2026-05';
+        dateRange = '22-26 May 2026';
+      } else if (mainEvent.id === 'the-pink-verdict') {
+        monthId = '2026-05';
+        dateRange = '30 May 2026';
+      } else if (mainEvent.id === 'kerala-trip-2') {
+        monthId = '2026-06';
+        dateRange = '5-8 Jun 2026';
+      } else if (mainEvent.id === 'pondicherry-trip') {
+        monthId = '2026-06';
+        dateRange = '14-17 Jun 2026';
+      } else if (mainEvent.id === 'post-paradox-trip') {
+        monthId = '2026-06';
+        dateRange = '15-18 Jun 2026';
       } else if (mainEvent.id === 'panjim-meetup') {
         monthId = '2026-06';
         dateRange = 'June 2026';
@@ -134,8 +159,8 @@ export const getTimelineEvents = () => {
         title: mainEvent.title,
         monthId: monthId,
         date: dateRange,
-        location: mainEvent.stats?.cities 
-          ? `${mainEvent.stats.cities} destinations` 
+        location: mainEvent.stats?.cities
+          ? `${mainEvent.stats.cities} destinations`
           : 'Scenic Trails',
         attendees: mainEvent.stats?.participants || 30,
         image: mainEvent.image,
@@ -156,13 +181,13 @@ export const getTimelineEvents = () => {
     if (a.monthId !== b.monthId) {
       return a.monthId.localeCompare(b.monthId);
     }
-    
+
     // Sort by day number within the month if available
     const getDay = (dateStr) => {
       const match = dateStr.match(/^\d+/);
       return match ? parseInt(match[0], 10) : 99;
     };
-    
+
     return getDay(a.date) - getDay(b.date);
   });
 };
@@ -171,10 +196,10 @@ export const getTimelineEvents = () => {
 export const getEventsByMonth = () => {
   const events = getTimelineEvents();
   const grouped = {};
-  
+
   timelineMonths.forEach(m => {
     grouped[m.id] = events.filter(e => e.monthId === m.id);
   });
-  
+
   return grouped;
 };

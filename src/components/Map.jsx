@@ -140,23 +140,45 @@ const Map = ({ className }) => {
         }
 
         const mapPins = [
-          { lat: 28.6139, lng: 77.2090, label: 'Delhi' },
-          { lat: 26.9124, lng: 75.7873, label: 'Jaipur' },
-          { lat: 22.7196, lng: 75.8577, label: 'Indore' },
+          { lat: 28.7041, lng: 77.1025, label: 'Delhi' },
           { lat: 19.0760, lng: 72.8777, label: 'Mumbai' },
+          { lat: 12.9716, lng: 77.5946, label: 'Bengaluru' },
           { lat: 13.0827, lng: 80.2707, label: 'Chennai' },
-          { lat: 21.1458, lng: 79.0882, label: 'Nagpur' },
-          { lat: 20.2961, lng: 85.8245, label: 'Bhubaneshwar' },
           { lat: 22.5726, lng: 88.3639, label: 'Kolkata' },
-          { lat: 22.8046, lng: 86.2029, label: 'Jamshedpur' },
+          { lat: 17.3850, lng: 78.4867, label: 'Hyderabad' },
+          { lat: 26.9124, lng: 75.7873, label: 'Jaipur' },
+          { lat: 24.5854, lng: 73.7125, label: 'Udaipur' },
           { lat: 25.5941, lng: 85.1376, label: 'Patna' },
+          { lat: 21.1458, lng: 79.0882, label: 'Nagpur' },
+          { lat: 22.7196, lng: 75.8577, label: 'Indore' },
           { lat: 26.7606, lng: 83.3732, label: 'Gorakhpur' },
+          { lat: 22.8046, lng: 86.2029, label: 'Jamshedpur' },
+          { lat: 20.2961, lng: 85.8245, label: 'Bhubaneswar' },
+          { lat: 26.8467, lng: 80.9462, label: 'Lucknow' },
           { lat: 23.0225, lng: 72.5714, label: 'Ahmedabad' },
-          { lat: 12.9716, lng: 77.5946, label: 'Bengaluru' }
+          { lat: 11.0168, lng: 76.9558, label: 'Coimbatore' },
+          { lat: 29.3803, lng: 79.4636, label: 'Nainital' },
+          { lat: 15.4909, lng: 73.8278, label: 'Panjim (Goa)' },
+          { lat: 17.3364, lng: 77.9048, label: 'Vikarabad' },
+          { lat: 26.4499, lng: 80.3319, label: 'Kanpur' },
+          { lat: 26.7271, lng: 88.3953, label: 'Siliguri' },
+          { lat: 30.0869, lng: 78.2676, label: 'Rishikesh' },
+          { lat: 27.5650, lng: 77.7008, label: 'Vrindavan' },
+          { lat: 23.9782, lng: 86.1158, label: 'Parasnath' },
+          { lat: 25.0300, lng: 85.4150, label: 'Rajgir' },
+          { lat: 17.9258, lng: 73.6586, label: 'Mahabaleshwar' },
+          { lat: 32.2396, lng: 77.1887, label: 'Manali' },
+          { lat: 26.4897, lng: 74.5511, label: 'Pushkar' },
+          { lat: 13.9299, lng: 75.5681, label: 'Shimoga' },
+          { lat: 19.6012, lng: 73.7126, label: 'Kalsubai Peak' },
+          { lat: 25.5788, lng: 91.8831, label: 'Shillong' },
+          { lat: 9.9312, lng: 76.2673, label: 'Kochi' },
+          { lat: 26.2389, lng: 73.0243, label: 'Jodhpur' }
         ];
 
-        // Draw curved dashed route line
-        const routeCoords = mapPins.map(pin => [pin.lat, pin.lng]);
+        // Sort pins by longitude to draw a clean flowing path
+        const sortedPins = [...mapPins].sort((a, b) => a.lng - b.lng);
+        const routeCoords = sortedPins.map(pin => [pin.lat, pin.lng]);
         routeCoords.push(routeCoords[0]); // Loop back to start
         
         L.polyline(routeCoords, {

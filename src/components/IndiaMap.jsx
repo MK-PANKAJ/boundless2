@@ -22,7 +22,6 @@ const mapCities = [
   { name: 'Ahmedabad', lat: 23.0225, lng: 72.5714, info: '7 participants • Green Place Escape Raas', eventId: 'navrang-2', subEventId: 'ahmedabad-escape' },
   { name: 'Coimbatore', lat: 11.0168, lng: 76.9558, info: '10 participants • Ooty Hill Station Expedition', eventId: 'tricolor-trails-3', subEventId: 'coimbatore' },
   { name: 'Nainital', lat: 29.3803, lng: 79.4636, info: '20 participants • Uttarakhand Misty Lakes', eventId: 'uttarakhand-trip', subEventId: null },
-  { name: 'Panjim (Goa)', lat: 15.4909, lng: 73.8278, info: '30 participants • Fontainhas Quarters Heritage Walk', eventId: 'panjim-meetup', subEventId: null },
   { name: 'Vikarabad', lat: 17.3364, lng: 77.9048, info: '14 participants • Ananthagiri Hills Forest Trek', eventId: 'tricolor-trails-3', subEventId: 'ananthagiri-diaries' },
   { name: 'Kanpur', lat: 26.4499, lng: 80.3319, info: '18 participants • Allen Forest Zoo', eventId: 'tricolor-trails-3', subEventId: 'kanpur' },
   { name: 'Siliguri', lat: 26.7271, lng: 88.3953, info: '8 participants • EWAM Monastery & Coronation Bridge', eventId: 'tricolor-trails-3', subEventId: 'siliguri' },
@@ -37,7 +36,12 @@ const mapCities = [
   { name: 'Kalsubai Peak', lat: 19.6012, lng: 73.7126, info: '17 participants • Maharashtra Highest Point Trek', eventId: 'kalsubai-trek', subEventId: null },
   { name: 'Shillong', lat: 25.5788, lng: 91.8831, info: '30 participants • Meghalaya Canyons & Living Root Bridges', eventId: 'meghalaya-trip', subEventId: null },
   { name: 'Kochi', lat: 9.9312, lng: 76.2673, info: '23 participants • Kerala Yatra Houseboat & Varkala Cliffs', eventId: 'kerala-yatra', subEventId: null },
-  { name: 'Jodhpur', lat: 26.2389, lng: 73.0243, info: '14 participants • Rajasthan Girls Getaway Fort Walks', eventId: 'girls-getaway', subEventId: null }
+  { name: 'Jodhpur', lat: 26.2389, lng: 73.0243, info: '14 participants • Rajasthan Girls Getaway Fort Walks', eventId: 'girls-getaway', subEventId: null },
+  { name: 'Gaya', lat: 24.7914, lng: 84.9994, info: '25 participants • Gaya Escape — Cultural & Spiritual Journey', eventId: 'gaya-escape', subEventId: null },
+  { name: 'Ranchi', lat: 23.3441, lng: 85.3096, info: '17 participants • Ranchi Escape — Mall of Ranchi Meetup', eventId: 'ranchi-escape', subEventId: null },
+  { name: 'Kathmandu', lat: 27.7172, lng: 85.3240, info: '44 participants • Nepal Trip — Temples, Thamel & Durbar Square', eventId: 'nepal-trip', subEventId: null },
+  { name: 'Pokhara', lat: 28.2096, lng: 83.9856, info: '44 participants • Nepal Trip — Phewa Lake & Lakeside Nights', eventId: 'nepal-trip', subEventId: null },
+  { name: 'Lumbini', lat: 27.4833, lng: 83.2759, info: '44 participants • Lumbini Meetup — Maya Devi Temple & Peace Pagoda', eventId: 'nepal-trip', subEventId: 'lumbini-meetup' }
 ];
 
 export default function IndiaMap({ onCityClick }) {

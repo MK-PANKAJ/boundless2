@@ -819,14 +819,143 @@ const eventsData = [
     subEvents: []
   },
   {
-    id: 'panjim-meetup',
-    title: 'Panjim Meetup',
-    tagline: 'Cultural and social experience in the heart of Goa\'s Latin Quarter',
-    description: 'Held on the second day of the Goa trip, the Panjim Meetup was a cultural and social experience thoughtfully curated in the heart of Goa’s Latin Quarter. The event began with a peaceful gathering at the St. Sebastian Chapel, offering a calm and reflective start. From there, participants took a relaxed stroll through the Fontainhas Quarters, famous for their colorful Portuguese-style houses and old-world charm, capturing the essence of what it means to travel together.',
-    image: 'https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?auto=format&fit=crop&q=80&w=600',
-    stats: { cities: 1, participants: 30 },
+    id: 'gaya-escape',
+    title: 'Gaya Escape (Meetup)',
+    tagline: 'A memorable journey through the cultural and spiritual beauty of Gaya Ji',
+    description: 'Boundless organized Gaya Escape on 22nd March, a refreshing mini trip/meetup that brought BS students together for a memorable journey through the cultural and spiritual beauty of Gaya Ji. Starting early in the morning from Patna, the meetup quickly transformed into a day filled with exploration, conversations, laughter, and meaningful experiences.',
+    image: '/images/events/gaya-escape.webp',
+    stats: { cities: 1, participants: 25 },
+    category: 'trip',
+    date: '22 March 2026',
+    glimpses: [],
+    itinerary: [],
+    subEvents: []
+  },
+  {
+    id: 'ahmedabad-escape-may',
+    title: 'Ahmedabad Escape (Meetup)',
+    tagline: 'Exploration, bonding, and exciting experiences at Science City',
+    description: 'Boundless, in collaboration with Sundarbans, organized Ahmedabad Escape (Meetup), a fun and refreshing gathering that brought BS students together for a memorable day filled with exploration, bonding, and exciting experiences in the vibrant city of Ahmedabad. From interactive science exhibits to enjoying the city\'s culture and food together, the meetup became a perfect blend of learning, fun, and connection.',
+    image: '/images/events/ahmedabad-escape-may.webp',
+    stats: { cities: 1, participants: 24 },
     category: 'meetup',
-    date: 'June 2026',
+    date: '17 May 2026',
+    glimpses: [],
+    itinerary: [],
+    subEvents: []
+  },
+  {
+    id: 'ranchi-escape',
+    title: 'Ranchi Escape (Meetup)',
+    tagline: 'Fun, bonding, games, and food at Mall of Ranchi',
+    description: 'Boundless in collaboration with Nallamala, organized Ranchi Escape Meetup, a fun and lively gathering that brought BS students together for a memorable day filled with bonding, games, food, and unforgettable vibes at Mall of Ranchi.',
+    image: '/images/events/ranchi-escape.webp',
+    stats: { cities: 1, participants: 17 },
+    category: 'meetup',
+    date: '17 May 2026',
+    glimpses: [],
+    itinerary: [],
+    subEvents: []
+  },
+  {
+    id: 'nepal-trip',
+    title: 'Nepal Trip',
+    tagline: 'Adventure, spirituality, and scenic beauty across Kathmandu, Pokhara, and Lumbini',
+    description: 'Boundless organized the Nepal Trip, an unforgettable international journey that brought BS students together for an experience filled with adventure, spirituality, scenic beauty, and unforgettable memories across the beautiful landscapes of Nepal. From peaceful temples and mountain views to vibrant markets and lakeside nights, the trip became a perfect blend of exploration, bonding, and once-in-a-lifetime experiences.',
+    image: '/images/events/nepal-trip.webp',
+    stats: { cities: 3, participants: 44 },
+    category: 'trip',
+    date: '22 May - 26 May 2026',
+    glimpses: [],
+    itinerary: [
+      {
+        day: 'Day 0',
+        title: 'Journey Begins from Gorakhpur',
+        description: 'The journey officially began as participants gathered at the stay in Gorakhpur on 22nd May. By evening, the group departed for Kathmandu, beginning an overnight journey filled with music, fun conversations, snacks, and endless excitement.'
+      },
+      {
+        day: 'Day 1',
+        title: 'Temples, Culture & Kathmandu Vibes',
+        description: 'Explored Kathmandu\'s iconic spiritual locations including Pashupatinath Temple, Swayambhunath Mahachaitya, Guhyeshwari Shaktipeeth Temple, Bagalamukhi Temple, and Durbar Square. The evening was spent exploring the lively streets of Thamel Market.'
+      },
+      {
+        day: 'Day 2',
+        title: 'Manokamna to Pokhara',
+        description: 'Traveled to Manokamna Temple, enjoying a thrilling ropeway ride with breathtaking mountain views. After darshan, the journey continued to Pokhara to explore the beautiful lakeside area by evening.'
+      },
+      {
+        day: 'Day 3',
+        title: 'Lakes, Waterfalls & Pokhara Adventures',
+        description: 'Enjoyed boating at Phewa Lake and visited Tal Barahi Temple. Later explored Davis Falls and Gupteshwor Mahadev Cave. The evening was spent relaxing with music and laughter around Pokhara\'s lakeside.'
+      },
+      {
+        day: 'Day 4',
+        title: 'Lumbini & Farewell',
+        description: 'Traveled to Lumbini to explore the Maya Devi Temple, Lumbini Monastic Zone, and the Peace Pagoda. Concluded the trip with the return bus journey toward Gorakhpur.'
+      }
+    ],
+    subEvents: [
+      {
+        id: 'lumbini-meetup',
+        title: 'Lumbini Meetup',
+        date: '26 May 2026',
+        location: 'Lumbini',
+        attendees: 44,
+        image: '/images/events/lumbini-meetup.webp',
+        associations: 'Boundless x Nallamala',
+        summary: 'A peaceful gathering held in the spiritual city of Lumbini. Participants explored the beautiful monastery areas and the Lumbini Monastic Zone, admiring the architecture and cultural beauty before enjoying a relaxing lunch at a nearby restaurant.',
+        glimpses: []
+      }
+    ]
+  },
+  {
+    id: 'the-pink-verdict',
+    title: 'The Pink Verdict',
+    tagline: 'Guilty or Not Guilty? A girls-only online game night of debates and creativity',
+    description: 'Boundless organized The Pink Verdict on 30th May, an exciting girls-only online event filled with debates, opinions, laughter, and creativity. Designed as an interactive "Guilty or Not Guilty" game, the event brought together participants for lively debates, ending with a chill session of singing, dancing, poetry, and spontaneous performances.',
+    image: '/images/events/pink-verdict.webp',
+    stats: { cities: 'Pan-India', participants: '50+' },
+    category: 'online',
+    date: '30 May 2026',
+    glimpses: [],
+    itinerary: [],
+    subEvents: []
+  },
+  {
+    id: 'kerala-trip-2',
+    title: 'Kerala 2.0 (Upcoming)',
+    tagline: 'Upcoming return trip to God\'s Own Country',
+    description: 'Scheduled future trip. Details to be updated.',
+    image: '/images/events/kerala2-cover.webp',
+    stats: { cities: 0, participants: 0 },
+    category: 'trip',
+    date: '5 - 8 June 2026',
+    glimpses: [],
+    itinerary: [],
+    subEvents: []
+  },
+  {
+    id: 'pondicherry-trip',
+    title: 'Pondicherry Trip (Upcoming)',
+    tagline: 'Upcoming coastal expedition',
+    description: 'Scheduled future trip. Details to be updated.',
+    image: '/images/events/pondicherry-cover.webp',
+    stats: { cities: 0, participants: 0 },
+    category: 'trip',
+    date: '14 - 17 June 2026',
+    glimpses: [],
+    itinerary: [],
+    subEvents: []
+  },
+  {
+    id: 'post-paradox-trip',
+    title: 'Post Paradox Trip (Upcoming)',
+    tagline: 'Upcoming post-event student trip',
+    description: 'Scheduled future trip. Details to be updated.',
+    image: '/images/events/post-paradox-cover.webp',
+    stats: { cities: 0, participants: 0 },
+    category: 'trip',
+    date: '15 - 18 June 2026',
     glimpses: [],
     itinerary: [],
     subEvents: []
