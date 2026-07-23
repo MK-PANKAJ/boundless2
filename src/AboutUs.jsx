@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight, ArrowLeft } from 'lucide-react';
+import boundImg from "./assets/bound.png";
 
 export default function AboutUs() {
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function AboutUs() {
           </div>
           <div className="relative">
             <div className="cream-glass-card p-4 relative z-10 rotate-2 hover:rotate-0 transition-transform duration-500">
-              <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=983&auto=format&fit=crop" alt="Group of friends traveling" className="w-full h-auto rounded-xl object-cover" />
+              <img  src={boundImg} alt="Group of friends traveling" className="w-full h-auto rounded-xl object-cover" />
               <div className="tape"></div>
             </div>
           </div>

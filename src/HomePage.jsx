@@ -17,6 +17,12 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Map from './components/Map';
 import Timeline from './components/Timeline';
 import { getAssetUrl } from './utils/assets';
+import tricolorImg from "./assets/Tricolor.png";
+import tripImg from "./assets/trips.png";
+import cityImg from "./assets/city.png";
+import eventImg from "./assets/events.png";
+import front1Img from "./assets/front1.png";
+import front2Img from "./assets/front2.png";
 
 // Inline ImageWithFallback to fix the import error and ensure single-file
 const ImageWithFallback = ({ src, alt, className, ...props }) => {
@@ -43,7 +49,7 @@ const STATS = [
 
 const CARDS = [
   {
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80',
+    image: tricolorImg,
     title: 'Tricolor Trails 2.0',
     desc: '12 Cities - Independence Week',
     color: 'text-orange-500',
@@ -51,21 +57,21 @@ const CARDS = [
     eventId: 'tricolor-trails-2'
   },
   {
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80',
+    image: tripImg,
     title: 'Trips & Expeditions',
     desc: 'Mountains . Lakes - More',
     color: 'text-green-500',
     categoryId: 'trips'
   },
   {
-    image: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80',
+    image: cityImg,
     title: 'City Meetups',
     desc: 'Connections . Fun - Friends',
     color: 'text-blue-500',
     categoryId: 'meetups'
   },
   {
-    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80',
+    image: eventImg,
     title: 'Events & Celebrations',
     desc: 'Moments that matter',
     color: 'text-purple-500',
@@ -319,10 +325,10 @@ export default function HomePage() {
             {/* Floating Polaroids */}
             <div className="absolute top-12 lg:top-20 right-0 sm:-right-8 lg:-right-16 rotate-6 hover:rotate-0 transition-transform cursor-pointer hover:z-30 z-20">
               <div className="bg-[#fcfbf9] p-2 pb-8 rounded-sm shadow-2xl border border-gray-200/60 max-w-[180px] sm:max-w-[220px]">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1523580494112-071dcb849ea4?auto=format&fit=crop&q=80"
-                  alt="Group photo mountains"
-                  className="w-full aspect-[4/3] object-cover mb-2 border border-gray-100"
+                 <ImageWithFallback
+                src={front2Img}
+                alt="Boundless Trip"
+                className="w-full aspect-[4/3] object-cover mb-2 border border-gray-100"
                 />
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 bg-[#e3d5c8] rotate-3 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
               </div>
@@ -332,9 +338,9 @@ export default function HomePage() {
               {/* Polaroid Photo */}
               <div className="bg-[#fcfbf9] p-2 pb-2 rounded-sm shadow-2xl border border-gray-200/60 max-w-[160px] sm:max-w-[200px]">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80"
-                  alt="Group photo beach"
-                  className="w-full aspect-[4/3] object-cover border border-gray-100 filter sepia-[0.1]"
+                  src={front1Img}
+                  alt="Boundless Trip"
+                  className="w-full aspect-[4/3] object-cover mb-2 border border-gray-100"
                 />
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 bg-[#e3d5c8] -rotate-3 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
               </div>
