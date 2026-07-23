@@ -1,13 +1,21 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, ArrowRight } from 'lucide-react';
+// import sahilImg from "../assets/sahil.jpg";
+import vidhiImg from "./assets/vidhi.jpg";
 
 // 2025-26 Council Leadership — update names as needed
 const COUNCIL_LEADS = [
-  { role: 'President', name: 'Coming Soon', house: 'Nallamala House', emoji: '🏔️' },
-  { role: 'Vice President', name: 'Coming Soon', house: 'Sundarbans House', emoji: '🌿' },
-  { role: 'General Secretary', name: 'Coming Soon', house: 'Pamirs House', emoji: '🗺️' },
-  { role: 'Treasurer', name: 'Coming Soon', house: 'Deccan House', emoji: '💛' },
+  {
+    role: "Secretary",
+    name: "Sahil Kamble",
+    image: vidhiImg,
+  },
+  {
+    role: "Deputy Secretary",
+    name: "Vidhi Belani",
+    image: vidhiImg,
+  },
 ];
 
 export default function Council() {
@@ -134,25 +142,33 @@ export default function Council() {
         </div>
 
         {/* ─── Leadership Grid (Matches AboutUs card layout) ─── */}
-        <div className="space-y-8">
+        <div className="space-y-10">
           <div className="flex items-center gap-4 mb-6">
             <div className="h-px flex-1 bg-[#e5d5b5]" />
             <h2 className="text-[#4a1225] font-black text-xl md:text-2xl tracking-tight uppercase whitespace-nowrap">Leadership Team</h2>
             <div className="h-px flex-1 bg-[#e5d5b5]" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-7 lg:gap-8">
             {COUNCIL_LEADS.map((member, idx) => (
               <div
                 key={idx}
-                className="cream-glass-card p-6 text-center hover:border-[#d97706]/30 transition-all duration-300 group"
+                className="group flex min-h-[320px] w-full max-w-[300px] flex-col items-center justify-center rounded-[28px] border border-[#e7d3a8]/70 bg-gradient-to-br from-white/80 via-[#fff8e8]/75 to-[#f6e7c2]/45 px-8 py-9 text-center shadow-[0_18px_45px_-22px_rgba(74,18,37,0.35)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-[#d97706]/35 hover:shadow-[0_28px_60px_-24px_rgba(74,18,37,0.42)] sm:basis-[calc(50%-1rem)] lg:basis-[calc(25%-1.5rem)]"
               >
-                <div className="w-16 h-16 rounded-2xl bg-[#4a1225]/5 border border-[#e5d5b5] flex items-center justify-center text-3xl mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  {member.emoji}
+                <div className="mb-7 flex h-[124px] w-[124px] items-center justify-center rounded-full bg-[#d97706]/10 shadow-[0_18px_42px_-18px_rgba(217,119,6,0.75)]">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="h-[118px] w-[118px] rounded-full border-[3px] border-[#ead6ad] object-cover shadow-[0_12px_26px_-14px_rgba(74,18,37,0.65)] transition-transform duration-300 group-hover:scale-105"
+                  />
                 </div>
-                <p className="text-[10px] font-bold text-[#d97706] tracking-[0.15em] uppercase mb-1">{member.role}</p>
-                <h3 className="text-lg font-black text-[#4a1225] mb-1.5">{member.name}</h3>
-                <p className="text-[11px] text-[#4a1225]/60 font-semibold bg-[#4a1225]/5 rounded-full px-3 py-1 inline-block">{member.house}</p>
+                <p className="mb-3 text-[11px] font-black uppercase tracking-[0.22em] text-[#c56b06]">{member.role}</p>
+                <h3 className="text-2xl font-black leading-tight text-[#4a1225]">{member.name}</h3>
+                {(member.subtitle || member.house) && (
+                  <p className="mt-5 inline-flex rounded-full bg-[#4a1225]/5 px-4 py-1.5 text-[11px] font-semibold text-[#4a1225]/65">
+                    {member.subtitle || member.house}
+                  </p>
+                )}
               </div>
             ))}
           </div>
