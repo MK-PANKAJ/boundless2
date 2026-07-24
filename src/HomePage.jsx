@@ -23,6 +23,7 @@ import cityImg from "./assets/city.png";
 import eventImg from "./assets/events.png";
 import front1Img from "./assets/front1.png";
 import front2Img from "./assets/front2.png";
+import logoImg from "./assets/logo.png";
 
 // Inline ImageWithFallback to fix the import error and ensure single-file
 const ImageWithFallback = ({ src, alt, className, ...props }) => {
@@ -135,7 +136,7 @@ export default function HomePage() {
               <div className="bg-[#F4EBD9] rounded-full p-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] shrink-0">
                 {/* User Custom Logo Image */}
                 <img
-                  src={getAssetUrl('/logo.png')}
+                  src={logoImg}
                   alt="Boundless Travel Society Logo"
                   className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover shrink-0 bg-[#0f172a] shadow-inner border-2 border-amber-500"
                   onError={(e) => {
