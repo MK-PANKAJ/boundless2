@@ -203,3 +203,9 @@ export const getEventsByMonth = () => {
 
   return grouped;
 };
+
+export function setDynamicMonths(newData) {
+  timelineMonths.length = 0;
+  timelineMonths.push(...newData);
+}
+

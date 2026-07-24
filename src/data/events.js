@@ -968,4 +968,9 @@ const eventsData = [
   }
 ];
 
+export function setDynamicEvents(newData) {
+  eventsData.length = 0;
+  eventsData.push(...newData);
+}
+
 export default eventsData;
