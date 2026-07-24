@@ -199,8 +199,10 @@ export default function EditEvent() {
       // 4. Compile stats
       const statsObj = {};
       statsList.forEach(item => {
-        if (item.key.trim() && item.value.trim()) {
-          statsObj[item.key.trim()] = item.value.trim();
+        const key = String(item.key || "").trim();
+        const value = String(item.value !== undefined && item.value !== null ? item.value : "").trim();
+        if (key && value) {
+          statsObj[key] = value;
         }
       });
 
@@ -325,26 +327,26 @@ export default function EditEvent() {
           {/* Cover Image Upload */}
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-amber-500 border-b border-slate-800 pb-1 uppercase tracking-wider text-xs">2. Banner / Cover Image</h2>
-            <div className="flex flex-col sm:flex-row gap-4 items-start">
+            <div className="flex flex-col md:flex-row gap-4 items-center bg-slate-900/50 p-4 rounded-xl border border-slate-850">
               {coverImage.preview || formData.image ? (
                 <img 
                   src={coverImage.preview || formData.image} 
                   alt="Cover Preview" 
-                  className="w-full sm:w-64 h-36 object-cover rounded-lg border border-slate-800 bg-slate-950" 
+                  className="w-full md:w-80 h-44 object-cover rounded-lg border border-slate-800 bg-slate-950 shrink-0" 
                 />
               ) : (
-                <div className="w-full sm:w-64 h-36 rounded-lg border border-slate-800 bg-slate-950 flex flex-col items-center justify-center text-slate-500 text-sm gap-2">
+                <div className="w-full md:w-80 h-44 rounded-lg border border-slate-800 bg-slate-950 flex flex-col items-center justify-center text-slate-500 text-sm gap-2 shrink-0">
                   <ImageIcon size={32} />
                   <span>No banner selected</span>
                 </div>
               )}
-              <div className="flex-1 space-y-2">
+              <div className="flex-1 w-full space-y-2">
                 <p className="text-slate-400 text-xs">Replace the banner image by selecting a new file below.</p>
                 <input 
                   type="file" 
                   accept="image/*"
                   onChange={handleCoverChange}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs file:bg-amber-500 file:border-none file:text-[#0f172a] file:px-3 file:py-1 file:rounded file:font-bold file:mr-3 file:cursor-pointer text-slate-400"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-xs file:bg-amber-500 file:border-none file:text-[#0f172a] file:px-3 file:py-1 file:rounded file:font-bold file:mr-3 file:cursor-pointer text-slate-400"
                 />
               </div>
             </div>
@@ -545,9 +547,9 @@ export default function EditEvent() {
                       <label className="text-xs font-semibold text-slate-400">Sub-Event Image</label>
                       <div className="flex flex-col sm:flex-row gap-3 items-start">
                         {sub.previewImage || sub.image ? (
-                          <img src={sub.previewImage || sub.image} alt="" className="w-32 h-20 object-cover rounded border border-slate-800 bg-slate-900" />
+                          <img src={sub.previewImage || sub.image} alt="" className="w-32 h-20 object-cover rounded border border-slate-800 bg-slate-900 shrink-0" />
                         ) : (
-                          <div className="w-32 h-20 rounded border border-slate-800 bg-slate-900 flex items-center justify-center text-slate-600 text-xs">
+                          <div className="w-32 h-20 rounded border border-slate-800 bg-slate-900 flex items-center justify-center text-slate-600 text-xs shrink-0">
                             No image
                           </div>
                         )}
