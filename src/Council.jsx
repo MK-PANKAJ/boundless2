@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, ArrowRight } from 'lucide-react';
-import sahilImg from "../assets/sahil.jpg";
+import sahilImg from "./assets/sahil.jpg";
 import vidhiImg from "./assets/vidhi.jpg";
 
 // 2025-26 Council Leadership — update names as needed
