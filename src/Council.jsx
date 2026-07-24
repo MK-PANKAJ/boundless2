@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, ArrowRight } from 'lucide-react';
-// import sahilImg from "../assets/sahil.jpg";
+import sahilImg from "../assets/sahil.jpg";
 import vidhiImg from "./assets/vidhi.jpg";
 
 // 2025-26 Council Leadership — update names as needed
@@ -9,7 +9,7 @@ const COUNCIL_LEADS = [
   {
     role: "Secretary",
     name: "Sahil Kamble",
-    image: vidhiImg,
+    image: sahilImg,
   },
   {
     role: "Deputy Secretary",
@@ -44,7 +44,7 @@ export default function Council() {
         <div className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop')" }}></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#fcf7e7] via-transparent to-transparent opacity-90"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#4a1225]/80 to-[#4a1225]/20"></div>
-        
+
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
           <h1 className="font-heading text-5xl md:text-7xl font-black text-[#fffcf2] mb-6 tracking-tight drop-shadow-xl uppercase">
             2025–26 Council
@@ -56,8 +56,8 @@ export default function Council() {
 
         {/* Floating Back Button */}
         <div className="absolute top-8 left-8 z-20">
-          <button 
-            onClick={() => navigate('/')} 
+          <button
+            onClick={() => navigate('/')}
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white font-medium transition-colors border border-white/10"
           >
             <ArrowLeft size={16} />
@@ -184,8 +184,8 @@ export default function Council() {
         <div className="relative z-10 max-w-2xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-heading font-black mb-6">Ready to explore?</h2>
           <p className="text-lg text-white/70 mb-8">Every trip tells a story. Every person adds to it. Join our community and let's keep exploring the world, together.</p>
-          <button 
-            onClick={() => navigate('/')} 
+          <button
+            onClick={() => navigate('/')}
             className="inline-flex items-center gap-2 px-8 py-4 text-sm bg-[#d97706] text-white hover:bg-[#b45309] rounded-full font-bold transition-all"
           >
             <span>Explore Our Journey</span>
