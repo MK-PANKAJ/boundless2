@@ -15,6 +15,8 @@ import EditEvent from './admin/EditEvent';
 import ManageMonths from './admin/ManageMonths';
 import AddMonth from './admin/AddMonth';
 import EditMonth from './admin/EditMonth';
+import Login from './admin/Login';
+import AdminProtectedRoute from './admin/AdminProtectedRoute';
 
 // Firebase & Setter Imports
 import { db } from './lib/firebase';
@@ -76,12 +78,13 @@ export default function App() {
         <Route path="/council" element={<Council />} />
 
         {/* Admin Routes */}
-        <Route path="/admin" element={<ManageEvents />} />
-        <Route path="/admin/events/add" element={<AddEvent />} />
-        <Route path="/admin/events/edit/:id" element={<EditEvent />} />
-        <Route path="/admin/timeline-months" element={<ManageMonths />} />
-        <Route path="/admin/timeline-months/add" element={<AddMonth />} />
-        <Route path="/admin/timeline-months/edit/:id" element={<EditMonth />} />
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin" element={<AdminProtectedRoute><ManageEvents /></AdminProtectedRoute>} />
+        <Route path="/admin/events/add" element={<AdminProtectedRoute><AddEvent /></AdminProtectedRoute>} />
+        <Route path="/admin/events/edit/:id" element={<AdminProtectedRoute><EditEvent /></AdminProtectedRoute>} />
+        <Route path="/admin/timeline-months" element={<AdminProtectedRoute><ManageMonths /></AdminProtectedRoute>} />
+        <Route path="/admin/timeline-months/add" element={<AdminProtectedRoute><AddMonth /></AdminProtectedRoute>} />
+        <Route path="/admin/timeline-months/edit/:id" element={<AdminProtectedRoute><EditMonth /></AdminProtectedRoute>} />
       </Routes>
     </Router>
   );

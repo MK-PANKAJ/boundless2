@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../lib/firebase';
 import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
-import { Plus, Pencil, Trash, Database, Calendar, Loader2, ArrowLeft } from 'lucide-react';
+import { Plus, Pencil, Trash, Database, Calendar, Loader2, ArrowLeft, LogOut } from 'lucide-react';
 
 export default function ManageEvents() {
   const [events, setEvents] = useState([]);
@@ -77,6 +77,16 @@ export default function ManageEvents() {
             >
               <Plus size={16} />
               <span>Add Event</span>
+            </button>
+            <button 
+              onClick={() => {
+                sessionStorage.removeItem("admin_token");
+                navigate("/admin/login");
+              }} 
+              className="flex items-center gap-2 bg-rose-950/40 hover:bg-rose-900/60 text-rose-200 px-4 py-2 rounded-lg transition-colors text-sm font-semibold border border-rose-900/30"
+            >
+              <LogOut size={16} />
+              <span>Sign Out</span>
             </button>
           </div>
         </div>
