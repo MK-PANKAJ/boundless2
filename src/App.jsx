@@ -10,7 +10,7 @@ import Council from './Council';
 
 export default function App() {
   return (
-    <Router basename="/boundless2/">
+    <Router basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/event/:eventId" element={<EventDetails />} />
