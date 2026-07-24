@@ -7,6 +7,7 @@ import CategoryFeed from './CategoryFeed';
 import TimelineMonthFeed from './TimelineMonthFeed';
 import AboutUs from './AboutUs';
 import Council from './Council';
+import NotFound from './NotFound';
 
 // Admin Components
 import ManageEvents from './admin/ManageEvents';
@@ -59,9 +60,81 @@ export default function App() {
 
   if (!dbLoaded) {
     return (
-      <div className="min-h-screen bg-[#0f172a] text-slate-100 flex flex-col items-center justify-center gap-3">
-        <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-sm font-semibold tracking-wider text-slate-400">Loading Boundless Database...</p>
+      <div className="min-h-screen bg-[#EDE4D3] flex flex-col items-center justify-center gap-6">
+        <style>{`
+          @keyframes spin-plane {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+          .plane-orbit-group {
+            transform-origin: 100px 100px;
+            animation: spin-plane 4.5s linear infinite;
+          }
+          @keyframes pulse-globe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+          }
+          .globe-element {
+            transform-origin: 100px 100px;
+            animation: pulse-globe 8s ease-in-out infinite;
+          }
+        `}</style>
+        
+        <div className="relative">
+          <svg width="200" height="200" viewBox="0 0 200 200" className="w-48 h-48 drop-shadow-sm">
+            {/* Dashed Orbit */}
+            <circle cx="100" cy="100" r="75" fill="none" stroke="#C5ECEB" strokeWidth="2.5" strokeDasharray="8 6" />
+
+            {/* Globe Element containing Earth and Pins */}
+            <g className="globe-element">
+              {/* Scale and translate the 122.88x122.88 SVG world globe to center it inside our 200x200 canvas */}
+              <g transform="translate(48, 48) scale(0.84635)">
+                {/* Globe Background / Ocean */}
+                <path fill="#D5EFEF" d="M61.44,0c33.93,0,61.44,27.51,61.44,61.44c0,33.93-27.51,61.44-61.44,61.44C27.51,122.88,0,95.37,0,61.44 C0,27.51,27.51,0,61.44,0L61.44,0L61.44,0z"/>
+                
+                {/* Continents */}
+                <path fill="#7EC4AA" d="M11.76,93.18c-3.62-5.49-6.33-11.64-7.92-18.23l10.82,5.22l0.06,3.23c0,1.19-2.02,3.71-2.67,4.67L11.76,93.18 L11.76,93.18L11.76,93.18z M78.31,6.5c20.62,6.85,36.09,25,39.07,47.1l-1.95-0.21c-0.35,1.5-0.67,1.53-0.67,3.33c0,1.59,2,2.65,2,6 c0,0.9-2.11,2.69-2.2,3.01l-3.13-3.67v4.67l-0.47-0.02l-0.84-8.62l-1.75,0.55l-2.08-6.41l-6.85,7.16l-0.08,5.24l-2.24,1.5 l-2.38-13.44l-1.42,1.04l-3.22-4.35l-4.81,0.14l-1.84-2.11l-1.89,0.52l-3.71-4.25l-0.72,0.49l2.3,5.88h2.67v-1.33l1.33,0 c0.96,2.66,2,1.08,2,2.67c0,5.55-6.85,9.63-11.34,10.67c0.24,1,0.15,2,1.33,2c2.51,0,1.26-0.44,4-0.67 c-0.13,5.67-6.5,12.44-9.22,16.65l1.22,8.69c0.32,1.89-3.92,3.88-5.36,6.01l0.69,3.33l-1.95,0.79c-0.34,3.42-3.66,7.21-7.39,7.21 h-4c0-4.68-3.34-11.37-3.34-14.68c0-2.81,1.33-3.19,1.33-6.67c0-3.22-3.33-7.83-3.33-8.67v-5.34H45.4c-0.4-1.49-0.15-2-2-2h-0.67 c-2.91,0-2.42,1.33-5.34,1.33h-2.67c-2.41,0-6.67-7.72-6.67-8.67v-8c0-3.45,3.16-7.21,5.34-8.67v-3.33l3-3.05l1.67-0.28 c3.58,0,3.15-2,5.34-2l6,0v4.67l6.6,2.82l0.62-2.85c2.99,0.7,3.77,2.03,7.45,2.03h1.33c2.53,0,2.67-3.36,2.67-6l-5.34,0.53 l-2.33-5.06l-2.31,0.61c0.42,1.81,0.64,1.06,0.64,2.59c0,0.9-0.74,1-1.34,1.33l-2.31-5.86l-4.97-3.55l-0.66,0.65l4.23,4.45 c-0.56,1.6-0.63,6.21-2.96,2.98l2.18-1.05l-5.44-5.7l-3.26,1.27l-3.22,3.08c-0.34,2.48-1.01,3.73-3.61,3.73 c-1.73,0-0.69-0.45-3.34-0.67v-6.67h6l-1.95-4.44l-0.72,0.44v-1.34l9.75-4.49c-0.18-1.4-0.41-0.65-0.41-2.18 c0-0.09,0.65-1.32,0.67-1.34l2.52,1.57l-0.6-2.87l-3.89,0.8l-0.72-3.49c3.08-1.62,9.87-7.34,12.03-7.34l2,0 c2.11,0,7.75,2.08,8.67,3.33l-5.35-0.54l3.97,3.27l0.38-1.4l2.96-0.81l0.04-1.85h1.34v2L78.31,6.5L78.31,6.5L78.31,6.5z"/>
+
+                {/* Location Pins (placed on the 122.88 world coordinates) */}
+                {/* Pin 1 (North America) */}
+                <g transform="translate(26, 42)">
+                  <path d="M0,0 C-2,-2 -4,-2 -4,-4 C-4,-6 -2,-8 0,-8 C2,-8 4,-6 4,-4 C4,-2 2,-2 0,0 Z" fill="#EE4D38" />
+                  <circle cx="0" cy="-4" r="1.2" fill="#FFFFFF" />
+                </g>
+                {/* Pin 2 (South America) */}
+                <g transform="translate(12, 83)">
+                  <path d="M0,0 C-2,-2 -4,-2 -4,-4 C-4,-6 -2,-8 0,-8 C2,-8 4,-6 4,-4 C4,-2 2,-2 0,0 Z" fill="#EE4D38" />
+                  <circle cx="0" cy="-4" r="1.2" fill="#FFFFFF" />
+                </g>
+                {/* Pin 3 (Eurasia) */}
+                <g transform="translate(78, 42)">
+                  <path d="M0,0 C-2,-2 -4,-2 -4,-4 C-4,-6 -2,-8 0,-8 C2,-8 4,-6 4,-4 C4,-2 2,-2 0,0 Z" fill="#EE4D38" />
+                  <circle cx="0" cy="-4" r="1.2" fill="#FFFFFF" />
+                </g>
+              </g>
+            </g>
+
+            {/* Plane Group (Animated rotation around center 100,100) */}
+            <g className="plane-orbit-group">
+              {/* Airplane (Centered at 100, 25) */}
+              <g transform="translate(100, 25) rotate(90)">
+                <path 
+                  d="M0,-10 L3,-5 L12,-5 L12,-2 L3,-2 L4,3 L8,3 L8,6 L3,5 L0,6 L-3,5 L-8,6 L-8,3 L-4,3 L-3,-2 L-12,-2 L-12,-5 L-3,-5 Z" 
+                  fill="#EE4D38" 
+                />
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div className="text-center space-y-1">
+          <p className="font-serif font-black text-[#4a1225] text-xl tracking-tight uppercase">Boundless Travel Society</p>
+          <p className="text-[10px] font-bold text-[#78716c] uppercase tracking-[0.25em] animate-pulse">Loading Database...</p>
+        </div>
       </div>
     );
   }
@@ -85,6 +158,9 @@ export default function App() {
         <Route path="/admin/timeline-months" element={<AdminProtectedRoute><ManageMonths /></AdminProtectedRoute>} />
         <Route path="/admin/timeline-months/add" element={<AdminProtectedRoute><AddMonth /></AdminProtectedRoute>} />
         <Route path="/admin/timeline-months/edit/:id" element={<AdminProtectedRoute><EditMonth /></AdminProtectedRoute>} />
+        
+        {/* Wildcard Fallback / Lost Page */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
