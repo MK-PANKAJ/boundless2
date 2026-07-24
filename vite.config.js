@@ -5,5 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: process.env.VERCEL ? '/' : '/boundless2/',
   plugins: [react()],
-  envPrefix: ['VITE_', 'NEXT_PUBLIC_', 'ADMIN_'],
+  envPrefix: ['VITE_', 'NEXT_PUBLIC_', 'ADMIN_', 'CLOUDINARY_'],
 })
