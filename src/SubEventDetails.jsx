@@ -51,8 +51,8 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
   }
 
   // If this is a trip's sub-event accessed directly as a URL route (not rendered by EventDetails),
-  // redirect to the parent trip page — trip sub-events don't have separate pages.
-  if (event.category === 'trip' && !isMainEventView && !providedEventId) {
+  // redirect to the parent trip page — trip sub-events don't have separate pages unless the trip has meetups.
+  if (event.category === 'trip' && !isMainEventView && !providedEventId && (!event.subEvents || event.subEvents.length === 0)) {
     return <Navigate to={`/event/${eventId}`} replace state={{ from: feedPath }} />;
   }
 
@@ -82,7 +82,7 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
              : ev.id === 'navrang-2' ? '2025-09'
              : ev.id === 'tricolor-trails-3' ? '2026-01'
              : ev.id === 'interactive-online' ? '2025-09'
-             : '2025-08',
+             : parseDateToMonthId(ev.date) || '2025-08',
       date: ev.id === 'shimoga-trip' ? '5 Sep 2025'
           : ev.id === 'mewar-trip' ? '12 Sep 2025'
           : ev.id === 'meghalaya-trip' ? '28 Nov 2025'
@@ -94,10 +94,10 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
           : ev.id === 'uttarakhand-trip' ? '16 Apr 2026'
           : ev.id === 'panjim-meetup' ? 'June 2026'
           : ev.id === 'navrang-2' ? '23 Sep 2025'
-          : '1 Aug 2025'
+          : ev.date || '1 Aug 2025'
     });
     // 2. Add Sub Events
-    if (ev.subEvents?.length > 0 && ev.category !== 'trip') {
+    if (ev.subEvents?.length > 0) {
       ev.subEvents.forEach((sub) => {
         if (sub.id) {
           let mId = parseDateToMonthId(sub.date);
@@ -226,6 +226,18 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
         {/* Content Wrapper */}
         <div className="px-6 md:px-16 py-10 relative -mt-4 bg-white z-10 rounded-t-[40px]">
           
+          {/* Title and Tagline Header */}
+          <div className="mb-10">
+            <h1 className="font-serif text-3xl md:text-5xl font-black text-[#4a1225] tracking-tight mb-2">
+              {currentItem.title}
+            </h1>
+            {currentItem.tagline && (
+              <p className="text-[#d97706] font-bold text-xs uppercase tracking-[0.15em] mb-1">
+                {currentItem.tagline}
+              </p>
+            )}
+          </div>
+
           {/* 3-Column Stats Row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 border-b border-gray-100 pb-12">
             
@@ -351,6 +363,74 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* Associated Meetups / Sub-Events (For trips that have sub-events) */}
+          {isMainEventView && event.category === 'trip' && event.subEvents && event.subEvents.length > 0 && (
+            <div className="max-w-4xl mt-16 border-t border-gray-100 pt-12">
+              <h2 className="text-2xl font-bold font-serif text-[#4a1225] mb-8">
+                Meetups & Community Chapters
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {event.subEvents.map((sub, idx) => {
+                  const subId = sub.id || `day-${idx+1}`;
+                  return (
+                    <div 
+                      key={subId}
+                      onClick={() => navigate(`/event/${eventId}/${subId}`, { state: { from: `/event/${eventId}`, feedPath: feedPath } })}
+                      className="bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(74,18,37,0.03)] border border-[#4a1225]/5 flex flex-col cursor-pointer group hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(74,18,37,0.08)] transition-all duration-300"
+                    >
+                      {/* Image Section */}
+                      <div className="w-full h-44 relative overflow-hidden bg-[#F4EBD9]">
+                        {sub.image ? (
+                          <img 
+                            src={getAssetUrl(sub.image)} 
+                            alt={sub.title} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-[#FDF9F1] text-[#4a1225]/30">
+                            <ImageIcon size={32} />
+                          </div>
+                        )}
+                        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm border border-[#4a1225]/10 px-2 py-0.5 rounded-full text-[8px] font-black tracking-widest text-[#4a1225] uppercase shadow-sm">
+                          MEETUP
+                        </div>
+                      </div>
+
+                      {/* Info Section */}
+                      <div className="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                          <p className="text-[10px] font-bold text-[#d97706] tracking-[0.15em] uppercase mb-1">
+                            {sub.date}
+                          </p>
+                          <h3 className="font-serif text-lg font-bold text-[#4a1225] mb-1.5 leading-snug group-hover:text-[#d97706] transition-colors">
+                            {sub.title}
+                          </h3>
+                          <p className="text-gray-500 text-[11px] font-semibold tracking-wider flex items-center gap-1 mb-3">
+                            <MapPin size={10} className="text-[#d97706]" />
+                            {sub.location}
+                          </p>
+                          <p className="text-gray-600 text-xs leading-relaxed mb-4 line-clamp-2">
+                            {sub.summary}
+                          </p>
+                        </div>
+
+                        <div className="border-t border-[#e5d5b5]/30 pt-3 flex justify-between items-center text-[11px] font-bold">
+                          <span className="text-[#4a1225]/60 uppercase tracking-widest flex items-center gap-1">
+                            <Users size={10} />
+                            {sub.attendees ? `${sub.attendees} Turnout` : 'N/A'}
+                          </span>
+                          <span className="text-[#d97706] group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
+                            VIEW REPORT <ArrowRight size={10} strokeWidth={2.5} />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

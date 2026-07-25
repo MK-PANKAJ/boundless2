@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../lib/firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { uploadImageToFirebase } from '../utils/upload';
+import { uploadImageToFirebase, compressAndReadFile } from '../utils/upload';
 import { ArrowLeft, Save, Plus, Trash, Loader2, Image as ImageIcon } from 'lucide-react';
 
 export default function AddEvent() {
@@ -16,7 +16,8 @@ export default function AddEvent() {
     tagline: '',
     description: '',
     category: 'trip',
-    image: ''
+    image: '',
+    date: ''
   });
 
   // Base64 file state for main cover image
@@ -31,15 +32,19 @@ export default function AddEvent() {
   // Sub-events state
   const [subEvents, setSubEvents] = useState([]); // Array of subEvent objects
 
+  // Day-wise itinerary state
+  const [itinerary, setItinerary] = useState([]); // Array of day plans
+
   // File picker handler for cover image
-  const handleCoverChange = (e) => {
+  const handleCoverChange = async (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setCoverImage({ preview: reader.result, base64: reader.result });
-      };
-      reader.readAsDataURL(file);
+      try {
+        const compressedBase64 = await compressAndReadFile(file);
+        setCoverImage({ preview: compressedBase64, base64: compressedBase64 });
+      } catch (err) {
+        alert("Failed to process cover image.");
+      }
     }
   };
 
@@ -53,15 +58,17 @@ export default function AddEvent() {
   };
 
   // Glimpses operations
-  const handleAddGlimpse = (e) => {
+  const handleAddGlimpse = async (e) => {
     const files = Array.from(e.target.files || []);
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setGlimpseFiles(prev => [...prev, { preview: reader.result, base64: reader.result }]);
-      };
-      reader.readAsDataURL(file);
-    });
+    for (const file of files) {
+      try {
+        const compressedBase64 = await compressAndReadFile(file);
+        setGlimpseFiles(prev => [...prev, { preview: compressedBase64, base64: compressedBase64 }]);
+      } catch (err) {
+        console.error("Failed to process glimpse image:", file.name, err);
+      }
+    }
+    e.target.value = ""; // Clear file input
   };
   const removeGlimpseFile = (idx) => setGlimpseFiles(prev => prev.filter((_, i) => i !== idx));
 
@@ -83,17 +90,18 @@ export default function AddEvent() {
     newSubEvents[idx][field] = val;
     setSubEvents(newSubEvents);
   };
-  const handleSubEventImageChange = (idx, e) => {
+  const handleSubEventImageChange = async (idx, e) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
+      try {
+        const compressedBase64 = await compressAndReadFile(file);
         const newSubEvents = [...subEvents];
-        newSubEvents[idx].previewImage = reader.result;
-        newSubEvents[idx].base64Image = reader.result;
+        newSubEvents[idx].previewImage = compressedBase64;
+        newSubEvents[idx].base64Image = compressedBase64;
         setSubEvents(newSubEvents);
-      };
-      reader.readAsDataURL(file);
+      } catch (err) {
+        alert("Failed to process sub-event image.");
+      }
     }
   };
 
@@ -118,22 +126,36 @@ export default function AddEvent() {
       // 2. Upload cover image
       let uploadedCoverUrl = "";
       if (coverImage.base64) {
-        uploadedCoverUrl = await uploadImageToFirebase(coverImage.base64, "events/covers");
+        try {
+          uploadedCoverUrl = await uploadImageToFirebase(coverImage.base64, "events/covers");
+        } catch (err) {
+          throw new Error("Failed to upload Cover Image: " + err.message);
+        }
       }
 
       // 3. Upload glimpses
       const uploadedGlimpseUrls = [];
-      for (const fileObj of glimpseFiles) {
-        const url = await uploadImageToFirebase(fileObj.base64, "events/glimpses");
-        uploadedGlimpseUrls.push(url);
+      for (let i = 0; i < glimpseFiles.length; i++) {
+        const fileObj = glimpseFiles[i];
+        try {
+          const url = await uploadImageToFirebase(fileObj.base64, "events/glimpses");
+          uploadedGlimpseUrls.push(url);
+        } catch (err) {
+          throw new Error(`Failed to upload Glimpse Image #${i + 1}: ` + err.message);
+        }
       }
 
       // 4. Upload sub-event images
       const finalizedSubEvents = [];
-      for (const sub of subEvents) {
+      for (let i = 0; i < subEvents.length; i++) {
+        const sub = subEvents[i];
         let subImgUrl = "";
         if (sub.base64Image) {
-          subImgUrl = await uploadImageToFirebase(sub.base64Image, "events/meetups");
+          try {
+            subImgUrl = await uploadImageToFirebase(sub.base64Image, "events/meetups");
+          } catch (err) {
+            throw new Error(`Failed to upload Sub-Event "${sub.title || i + 1}" Image: ` + err.message);
+          }
         }
         
         finalizedSubEvents.push({
@@ -147,6 +169,13 @@ export default function AddEvent() {
           glimpses: subImgUrl ? [subImgUrl] : []
         });
       }
+
+      // Convert itinerary
+      const finalizedItinerary = itinerary.map(item => ({
+        day: item.day || '',
+        title: item.title || '',
+        description: item.description || ''
+      }));
 
       // 5. Compile stats
       const statsObj = {};
@@ -168,6 +197,8 @@ export default function AddEvent() {
         stats: statsObj,
         glimpses: uploadedGlimpseUrls,
         subEvents: finalizedSubEvents,
+        itinerary: finalizedItinerary,
+        date: formData.date || '',
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -256,6 +287,19 @@ export default function AddEvent() {
                   <option value="meetup">Single Local Meetup</option>
                   <option value="online">Online Gathering</option>
                 </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-300">Event Date / Duration</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. 12th - 15th September 2025"
+                  value={formData.date} 
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-amber-500 transition-colors"
+                />
               </div>
             </div>
 
@@ -487,6 +531,89 @@ export default function AddEvent() {
                           className="flex-1 bg-slate-900 border border-slate-800 rounded px-2.5 py-1 text-[11px] text-slate-400 file:bg-slate-800 file:border-none file:text-slate-300 file:px-2.5 file:py-0.5 file:rounded file:cursor-pointer"
                         />
                       </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Day-by-Day Itinerary */}
+          <div className="space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-800 pb-1">
+              <h2 className="text-lg font-bold text-amber-500 uppercase tracking-wider text-xs">6. Day-by-Day Itinerary</h2>
+              <button 
+                type="button" 
+                onClick={() => setItinerary(prev => [...prev, { day: `Day ${prev.length + 1}`, title: '', description: '' }])}
+                className="flex items-center gap-1 text-amber-500 hover:text-amber-400 text-xs font-bold bg-slate-800 px-3 py-1 rounded border border-slate-700"
+              >
+                <Plus size={14} />
+                <span>Add Day</span>
+              </button>
+            </div>
+
+            {itinerary.length === 0 ? (
+              <p className="text-slate-500 text-xs text-center py-6 bg-slate-950 rounded-lg border border-slate-800">No itinerary days added yet. Click "Add Day" above to start planning.</p>
+            ) : (
+              <div className="space-y-4">
+                {itinerary.map((dayItem, idx) => (
+                  <div key={idx} className="bg-slate-950 border border-slate-800 rounded-xl p-4 sm:p-5 relative space-y-4">
+                    <button 
+                      type="button" 
+                      onClick={() => setItinerary(prev => prev.filter((_, i) => i !== idx))}
+                      className="absolute top-4 right-4 text-rose-400 hover:text-rose-300 flex items-center gap-1 text-xs"
+                    >
+                      <Trash size={14} />
+                      <span>Remove</span>
+                    </button>
+
+                    <h4 className="font-bold text-white text-sm">Day Plan #{idx + 1}</h4>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-400">Day Label*</label>
+                        <input 
+                          type="text" 
+                          required
+                          value={dayItem.day} 
+                          onChange={(e) => {
+                            const newItinerary = [...itinerary];
+                            newItinerary[idx].day = e.target.value;
+                            setItinerary(newItinerary);
+                          }}
+                          className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none"
+                        />
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-400">Day Title*</label>
+                        <input 
+                          type="text" 
+                          required
+                          value={dayItem.title} 
+                          onChange={(e) => {
+                            const newItinerary = [...itinerary];
+                            newItinerary[idx].title = e.target.value;
+                            setItinerary(newItinerary);
+                          }}
+                          className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-slate-400">Description*</label>
+                      <textarea 
+                        rows={3}
+                        required
+                        value={dayItem.description} 
+                        onChange={(e) => {
+                          const newItinerary = [...itinerary];
+                          newItinerary[idx].description = e.target.value;
+                          setItinerary(newItinerary);
+                        }}
+                        className="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none"
+                      />
                     </div>
                   </div>
                 ))}

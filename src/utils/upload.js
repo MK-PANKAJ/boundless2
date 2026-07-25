@@ -1,4 +1,80 @@
 /**
+ * Automatically resizes and compresses a base64 image using HTML5 Canvas.
+ * @param {string} base64Data - Base64 data url.
+ * @param {number} maxDimension - Maximum width or height of the image.
+ * @param {number} quality - Compression quality (0.0 to 1.0).
+ * @returns {Promise<string>} Compressed base64 data url (JPEG format).
+ */
+export function compressImageIfNeeded(base64Data, maxDimension = 1600, quality = 0.8) {
+  return new Promise((resolve) => {
+    // If it's not a base64 image data URL, skip compression
+    if (!base64Data || !base64Data.startsWith("data:image/")) {
+      return resolve(base64Data);
+    }
+
+    const img = new Image();
+    img.onload = () => {
+      let width = img.width;
+      let height = img.height;
+
+      // Scale down proportionally if larger than maxDimension
+      if (width > maxDimension || height > maxDimension) {
+        if (width > height) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        } else {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        return resolve(base64Data);
+      }
+
+      // Draw image onto canvas
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Export canvas to base64 JPEG format with specified quality
+      const compressedDataUrl = canvas.toDataURL("image/jpeg", quality);
+      resolve(compressedDataUrl);
+    };
+
+    img.onerror = () => {
+      resolve(base64Data);
+    };
+
+    img.src = base64Data;
+  });
+}
+
+/**
+ * Reads a File object and compresses it into an optimized Base64 JPEG data URL.
+ * @param {File} file - The file selected from input.
+ * @returns {Promise<string>} Compressed Base64 data URL.
+ */
+export function compressAndReadFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const compressed = await compressImageIfNeeded(reader.result, 1600, 0.8);
+        resolve(compressed);
+      } catch (err) {
+        resolve(reader.result);
+      }
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+}
+
+/**
  * Helper to compute SHA-1 in the browser using the Web Crypto API.
  */
 async function sha1(string) {
@@ -27,6 +103,9 @@ export async function uploadImageToFirebase(base64Data, folder = "events") {
   }
 
   try {
+    // Double check compression prior to upload
+    const compressedBase64 = await compressImageIfNeeded(base64Data, 1600, 0.8);
+
     const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME || "";
     const apiKey = import.meta.env.CLOUDINARY_API_KEY || "";
     const apiSecret = import.meta.env.CLOUDINARY_API_SECRET || "";
@@ -42,7 +121,7 @@ export async function uploadImageToFirebase(base64Data, folder = "events") {
     const signature = await sha1(signatureString);
 
     const formData = new FormData();
-    formData.append("file", base64Data);
+    formData.append("file", compressedBase64);
     formData.append("folder", folder);
     formData.append("timestamp", timestamp);
     formData.append("api_key", apiKey);

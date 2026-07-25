@@ -61,7 +61,26 @@ export default function CategoryFeed() {
         isMainEvent: true
       }));
 
-    feedItems = [...multiCityEvents, ...standaloneMeetups];
+    // Extract meetups held under trips (sub-events of category 'trip' events)
+    const tripMeetups = [];
+    eventsData
+      .filter(e => e.category === 'trip')
+      .forEach(e => {
+        if (e.subEvents && e.subEvents.length > 0) {
+          e.subEvents.forEach(sub => {
+            tripMeetups.push({
+              ...sub,
+              parentEventId: e.id,
+              isMainEvent: false,
+              mainEventTitle: e.title,
+              category: 'meetup',
+              attendees: sub.attendees ? `${sub.attendees} Turnout` : ''
+            });
+          });
+        }
+      });
+
+    feedItems = [...multiCityEvents, ...standaloneMeetups, ...tripMeetups];
   } else if (categoryId === 'events') {
     title = 'Events & Celebrations';
     tagline = 'Moments that matter, celebrated pan-India.';
