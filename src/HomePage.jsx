@@ -281,7 +281,7 @@ export default function HomePage() {
               </div>
 
               <h1 className="text-6xl sm:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[1.1] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-                Boundless <span className="font-sans font-normal tracking-normal text-amber-400">2025</span>
+                Boundless <span className="font-sans font-normal tracking-normal text-amber-400">2025-26</span>
               </h1>
               <p className="text-2xl sm:text-3xl font-serif italic text-amber-100 max-w-lg leading-snug drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
                 A year of journeys, friendships & endless memories. ✨
