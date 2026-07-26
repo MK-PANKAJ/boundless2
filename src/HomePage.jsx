@@ -22,7 +22,7 @@ import tripImg from "./assets/trips.png";
 import cityImg from "./assets/city.png";
 import eventImg from "./assets/events.png";
 import front1Img from "./assets/front1.png";
-import front2Img from "./assets/front2.png";
+import front2Img from "./assets/photo1.jpeg";
 import logoImg from "./assets/logo.png";
 
 // Inline ImageWithFallback to fix the import error and ensure single-file
@@ -304,7 +304,7 @@ export default function HomePage() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
               <a
-                href="https://www.instagram.com/boundless_iitmbs/"
+                href="https://youtu.be/zB5RZJ4MSJw"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white/60 backdrop-blur-md hover:bg-white text-gray-900 px-6 py-3.5 rounded-full font-medium transition-all flex items-center gap-3 border border-gray-300/50 shadow-sm hover:shadow-md"
@@ -326,10 +326,10 @@ export default function HomePage() {
             {/* Floating Polaroids */}
             <div className="absolute top-12 lg:top-20 right-0 sm:-right-8 lg:-right-16 rotate-6 hover:rotate-0 transition-transform cursor-pointer hover:z-30 z-20">
               <div className="bg-[#fcfbf9] p-2 pb-8 rounded-sm shadow-2xl border border-gray-200/60 max-w-[180px] sm:max-w-[220px]">
-                 <ImageWithFallback
-                src={front2Img}
-                alt="Boundless Trip"
-                className="w-full aspect-[4/3] object-cover mb-2 border border-gray-100"
+                <ImageWithFallback
+                  src={front2Img}
+                  alt="Boundless Trip"
+                  className="w-full aspect-[4/3] object-cover mb-2 border border-gray-100"
                 />
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 bg-[#e3d5c8] rotate-3 shadow-sm border border-[#d3c5b8]/50 rounded-[1px] mix-blend-multiply opacity-90"></div>
               </div>
