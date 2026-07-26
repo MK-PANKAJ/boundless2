@@ -97,7 +97,6 @@ export default function HomePage() {
   const location = useLocation();
 
   const navLinks = [
-    { label: 'Back to Team', path: '/team-members', external: true },
     { label: 'Home', path: '/' },
     { label: 'Events', path: '/category/events' },
     { label: 'Cities', path: '/category/meetups' },
@@ -211,63 +210,11 @@ export default function HomePage() {
               <Compass className="w-4 h-4 text-[#ea580c]" />
             </button>
 
-            {/* Mobile menu button */}
-            <button
-              className="nav-mobile p-2 text-slate-800 hover:bg-black/5 rounded-full transition-colors"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X /> : <Menu />}
-            </button>
+
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
-        {isMenuOpen && (
-          <div className="md:hidden absolute top-24 left-4 right-4 bg-[#F4EBD9] rounded-2xl shadow-xl border border-[#e5d5b5]/80 p-4 flex flex-col gap-4 animate-in slide-in-from-top-4 z-50">
-            {/* Paper texture for dropdown */}
-            <div className="absolute inset-0 opacity-40 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none rounded-2xl"></div>
 
-            <div className="relative z-10 flex flex-col gap-2">
-              {navLinks.map((item, i) => {
-                const isHash = item.path.includes('#');
-                const isActive = item.external ? false : (location.pathname === item.path);
-                const classes = `font-bold p-3 rounded-lg transition-colors ${isActive ? 'text-[#c2410c] bg-orange-900/5' : 'text-slate-700 hover:bg-black/5'
-                  }`;
-
-                return isHash || item.external ? (
-                  <a
-                    key={item.label}
-                    href={item.path}
-                    target={item.external ? '_top' : undefined}
-                    className={classes}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.label}
-                    to={item.path}
-                    className={classes}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-              <button
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  navigate('/council');
-                }}
-                className="w-full bg-[#0a0f1c] text-white px-5 py-3.5 rounded-xl mt-2 font-bold flex items-center justify-center gap-2 shadow-md"
-              >
-                Meet the Council
-                <Compass className="w-4 h-4 text-[#ea580c]" />
-              </button>
-            </div>
-          </div>
-        )}
       </nav>
 
       <main className="relative z-10 pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
