@@ -928,6 +928,40 @@ const eventsData = [
     ]
   },
   {
+    id: 'himachal-trip',
+    title: 'Himachal Diaries',
+    tagline: 'Snowy peaks, Solang adventures, and quiet Kasol trails',
+    description: 'An incredible winter trip in collaboration with Synapse. 40 students explored Manali\'s snow-capped mountains, experienced thrilling adventures in Solang Valley, hiked quiet trails in Kasol, and bonded around the Kullu river between 29 Jan – 1 Feb 2026.',
+    image: '/images/events/tt3-himachal.webp',
+    stats: { cities: 4, participants: 40 },
+    category: 'trip',
+    date: '29 Jan – 1 Feb 2026',
+    glimpses: ['/images/events/tt3-himachal.webp'],
+    itinerary: [
+      {
+        day: 'Day 1',
+        title: 'Manali Arrival & Kasol Exploration',
+        description: 'Met and driven up the scenic valley to Kasol. Explored local café culture, hiked quiet forest paths, and bonded around bonfire sessions by the Parvati River.'
+      },
+      {
+        day: 'Day 2',
+        title: 'Solang Valley Adventures',
+        description: 'Traveled to Solang Valley for thrilling snow activities: paragliding, zorbing, and walking through snowy trails before returning to Manali.'
+      },
+      {
+        day: 'Day 3',
+        title: 'Manali Sightseeing & Old Manali Cafés',
+        description: 'Visited the historic Hadimba Temple, Mall Road, and local Tibetan monasteries, sharing a warm community dinner in the evening.'
+      },
+      {
+        day: 'Day 4',
+        title: 'Kullu River Rafting & Farewell',
+        description: 'Experienced river rafting in Kullu and explored local handicraft centers before driving back to the station/airport for departures.'
+      }
+    ],
+    subEvents: []
+  },
+  {
     id: 'kerala-trip-2',
     title: 'Kerala 2.0',
     tagline: 'Return to God\'s Own Country — backwaters, beaches, and beyond',

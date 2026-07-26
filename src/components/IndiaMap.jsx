@@ -31,7 +31,7 @@ const mapCities = [
   { name: 'Parasnath', lat: 23.9782, lng: 86.1158, info: '13 participants • Madhuban Mountain Trek', eventId: 'tricolor-trails-3', subEventId: 'parasnath' },
   { name: 'Rajgir', lat: 25.0300, lng: 85.4150, info: '25 participants • Vishwa Shanti Stupa & Nalanda Ruins', eventId: 'tricolor-trails-3', subEventId: 'rajgir' },
   { name: 'Mahabaleshwar', lat: 17.9258, lng: 73.6586, info: '16 participants • Lingmala Forest Trek', eventId: 'tricolor-trails-3', subEventId: 'mahabaleshwar' },
-  { name: 'Manali', lat: 32.2396, lng: 77.1887, info: '40 participants • Himachal Solang Valley Kasol Kullu', eventId: 'tricolor-trails-3', subEventId: 'himachal' },
+  { name: 'Manali', lat: 32.2396, lng: 77.1887, info: '40 participants • Himachal Solang Valley Kasol Kullu', eventId: 'himachal-trip', subEventId: null },
   { name: 'Pushkar', lat: 26.4897, lng: 74.5511, info: '30 participants • Pushkar Mela Camel Fair Ghats', eventId: 'pushkar-trip', subEventId: null },
   { name: 'Shimoga', lat: 13.9299, lng: 75.5681, info: '30 participants • Sakrebyle Elephant Camp & Kodachadri Trek', eventId: 'shimoga-trip', subEventId: null },
   { name: 'Kalsubai Peak', lat: 19.6012, lng: 73.7126, info: '17 participants • Maharashtra Highest Point Trek', eventId: 'kalsubai-trek', subEventId: null },

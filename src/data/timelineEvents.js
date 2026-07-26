@@ -118,6 +118,9 @@ export const getTimelineEvents = () => {
       } else if (mainEvent.id === 'kerala-yatra') {
         monthId = '2026-01';
         dateRange = '8-11 Jan 2026';
+      } else if (mainEvent.id === 'himachal-trip') {
+        monthId = '2026-01';
+        dateRange = '29 Jan – 1 Feb 2026';
       } else if (mainEvent.id === 'girls-getaway') {
         monthId = '2026-03';
         dateRange = '18-21 Mar 2026';
