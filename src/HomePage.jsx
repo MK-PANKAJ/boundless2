@@ -97,6 +97,7 @@ export default function HomePage() {
   const location = useLocation();
 
   const navLinks = [
+    { label: 'Back to Team', path: '/team-members', external: true },
     { label: 'Home', path: '/' },
     { label: 'Events', path: '/category/events' },
     { label: 'Cities', path: '/category/meetups' },
@@ -174,19 +175,20 @@ export default function HomePage() {
             <div className="nav-desktop items-center space-x-3 lg:space-x-5 xl:space-x-8">
               {navLinks.map((item, i) => {
                 const isHash = item.path.includes('#');
-                const commonClasses = `text-[15px] font-bold transition-all relative group ${i === 0
+                const isActive = item.external ? false : (location.pathname === item.path);
+                const commonClasses = `text-[15px] font-bold transition-all relative group ${isActive
                   ? 'text-[#c2410c]'
                   : 'text-slate-700 hover:text-[#c2410c]'
                   }`;
                 const underline = (
                   <>
-                    {i === 0 && <span className="absolute -bottom-1.5 left-0 w-full h-0.5 bg-[#c2410c] rounded-full"></span>}
-                    {i !== 0 && <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[#c2410c] rounded-full transition-all group-hover:w-full"></span>}
+                    {isActive && <span className="absolute -bottom-1.5 left-0 w-full h-0.5 bg-[#c2410c] rounded-full"></span>}
+                    {!isActive && <span className="absolute -bottom-1.5 left-0 w-0 h-0.5 bg-[#c2410c] rounded-full transition-all group-hover:w-full"></span>}
                   </>
                 );
 
-                return isHash ? (
-                  <a key={item.label} href={item.path.replace('/', '')} className={commonClasses}>
+                return isHash || item.external ? (
+                  <a key={item.label} href={item.path} target={item.external ? '_top' : undefined} className={commonClasses}>
                     {item.label}
                     {underline}
                   </a>
@@ -228,13 +230,15 @@ export default function HomePage() {
             <div className="relative z-10 flex flex-col gap-2">
               {navLinks.map((item, i) => {
                 const isHash = item.path.includes('#');
-                const classes = `font-bold p-3 rounded-lg transition-colors ${i === 0 ? 'text-[#c2410c] bg-orange-900/5' : 'text-slate-700 hover:bg-black/5'
+                const isActive = item.external ? false : (location.pathname === item.path);
+                const classes = `font-bold p-3 rounded-lg transition-colors ${isActive ? 'text-[#c2410c] bg-orange-900/5' : 'text-slate-700 hover:bg-black/5'
                   }`;
 
-                return isHash ? (
+                return isHash || item.external ? (
                   <a
                     key={item.label}
-                    href={item.path.replace('/', '')}
+                    href={item.path}
+                    target={item.external ? '_top' : undefined}
                     className={classes}
                     onClick={() => setIsMenuOpen(false)}
                   >

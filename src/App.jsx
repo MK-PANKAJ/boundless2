@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import EventDetails from './EventDetails';
 import SubEventDetails from './SubEventDetails';
@@ -140,7 +140,7 @@ export default function App() {
   }
 
   return (
-    <Router basename={import.meta.env.BASE_URL}>
+    <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/event/:eventId" element={<EventDetails />} />
