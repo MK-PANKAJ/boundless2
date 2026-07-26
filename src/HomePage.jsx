@@ -121,7 +121,7 @@ export default function HomePage() {
       {/* Ripped paper edge overlay at the top (optional, for effect) */}
       <div className="absolute top-0 left-0 w-full h-16 bg-white/20 backdrop-blur-sm z-40" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 80%, 95% 100%, 90% 85%, 85% 100%, 80% 80%, 75% 100%, 70% 85%, 65% 100%, 60% 80%, 55% 100%, 50% 85%, 45% 100%, 40% 80%, 35% 100%, 30% 85%, 25% 100%, 20% 80%, 15% 100%, 10% 85%, 5% 100%, 0 80%)' }}></div>
 
-      <nav className="fixed w-full z-50 top-4 px-4 sm:px-6 lg:px-8 transition-all duration-300">
+      <nav className="fixed w-full z-50 top-2 sm:top-4 px-2 sm:px-6 lg:px-8 transition-all duration-300">
         <div className="max-w-7xl mx-auto relative rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-[#e5d5b5]/50 overflow-hidden group">
           {/* Paper Background with Texture */}
           <div className="absolute inset-0 bg-[#F4EBD9]"></div>
@@ -129,16 +129,16 @@ export default function HomePage() {
           {/* Inner shadow for vintage paper feel */}
           <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(100,60,20,0.1)] pointer-events-none rounded-full"></div>
 
-          <div className="flex items-center justify-between h-16 sm:h-20 px-4 sm:px-6 relative z-10">
+          <div className="flex items-center justify-between h-14 sm:h-20 px-3 sm:px-6 relative z-10">
             {/* Left side: Logo and Title */}
-            <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
               {/* Detailed Logo Badge Container */}
-              <div className="bg-[#F4EBD9] rounded-full p-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] shrink-0">
+              <div className="bg-[#F4EBD9] rounded-full p-1 sm:p-[6px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] shrink-0">
                 {/* User Custom Logo Image */}
                 <img
                   src={logoImg}
                   alt="Boundless Travel Society Logo"
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover shrink-0 bg-[#0f172a] shadow-inner border-2 border-amber-500"
+                  className="w-9 h-9 sm:w-14 sm:h-14 rounded-full object-cover shrink-0 bg-[#0f172a] shadow-inner border-2 border-amber-500"
                   onError={(e) => {
                     // Fallback if logo.png is not found yet
                     e.target.style.display = 'none';
@@ -147,15 +147,17 @@ export default function HomePage() {
                     }
                   }}
                 />
-                {/* Fallback placeholder (hidden by default, shows if logo.png fails to load) */}
-                <div className="hidden w-12 h-12 sm:w-14 sm:h-14 bg-[#0f172a] rounded-full items-center justify-center border-2 border-amber-500 shadow-inner shrink-0 text-white text-[10px] text-center leading-tight p-1 font-bold">
+                {/* Fallback placeholder */}
+                <div className="hidden w-9 h-9 sm:w-14 sm:h-14 bg-[#0f172a] rounded-full items-center justify-center border-2 border-amber-500 shadow-inner shrink-0 text-white text-[8px] sm:text-[10px] text-center leading-tight p-0.5 font-bold">
                   Add<br />logo.png
                 </div>
               </div>
 
               {/* Title & Paper Plane Graphic */}
-              <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-lg sm:text-xl md:text-2xl text-slate-900 tracking-tight shrink-0">Boundless Travel Society</span>
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="font-serif font-bold text-sm sm:text-xl md:text-2xl text-slate-900 tracking-tight truncate">
+                  Boundless Travel Society
+                </span>
 
                 {/* Paper airplane with dotted trail */}
                 <div className="hidden xl:block relative w-24 h-12 -ml-1 overflow-visible">
@@ -200,28 +202,73 @@ export default function HomePage() {
               })}
             </div>
 
-            <button
-              onClick={() => {
-                navigate('/council');
-              }}
-              className="hidden sm:flex items-center gap-1 lg:gap-2 bg-[#0a0f1c] text-white px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 rounded-full hover:bg-black transition-all transform hover:scale-105 active:scale-95 shadow-md border border-slate-800 shrink-0"
-            >
-              <span className="text-xs sm:text-sm font-bold tracking-wide">Meet the Council</span>
-              <Compass className="w-4 h-4 text-[#ea580c]" />
-            </button>
+            {/* Right Action & Mobile Toggle */}
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => {
+                  navigate('/council');
+                }}
+                className="hidden sm:flex items-center gap-1 lg:gap-2 bg-[#0a0f1c] text-white px-3 sm:px-4 lg:px-6 py-1.5 sm:py-2.5 rounded-full hover:bg-black transition-all transform hover:scale-105 active:scale-95 shadow-md border border-slate-800 shrink-0"
+              >
+                <span className="text-xs sm:text-sm font-bold tracking-wide">Meet the Council</span>
+                <Compass className="w-4 h-4 text-[#ea580c]" />
+              </button>
 
+              {/* Mobile Hamburger Button */}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="nav-mobile flex items-center justify-center p-2 rounded-full bg-[#0a0f1c] text-amber-400 hover:bg-black transition-colors border border-amber-500/30 shrink-0"
+                aria-label="Toggle Navigation Menu"
+              >
+                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
 
           </div>
         </div>
 
+        {/* Mobile Menu Dropdown */}
+        {isMenuOpen && (
+          <div className="nav-mobile mt-2 mx-auto max-w-7xl bg-[#F4EBD9] border border-[#e5d5b5] rounded-3xl p-4 shadow-2xl transition-all duration-300 relative z-50 flex-col gap-2">
+            <div className="flex flex-col space-y-2 w-full">
+              {navLinks.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`px-4 py-2.5 rounded-xl font-bold text-sm transition-all ${
+                      isActive
+                        ? 'bg-[#c2410c] text-white shadow-md'
+                        : 'text-slate-800 hover:bg-amber-200/50'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  navigate('/council');
+                }}
+                className="flex items-center justify-between px-4 py-2.5 rounded-xl font-bold text-sm bg-[#0a0f1c] text-white hover:bg-black transition-all w-full mt-1"
+              >
+                <span>Meet the Council</span>
+                <Compass className="w-4 h-4 text-[#ea580c]" />
+              </button>
+            </div>
+          </div>
+        )}
 
       </nav>
 
-      <main className="relative z-10 pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+      <main className="relative z-10 pt-28 sm:pt-32 pb-20 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 
           {/* Left Column - Hero Text */}
-          <div className="space-y-6 pt-4 lg:pt-10">
+          <div className="space-y-6 pt-2 lg:pt-10">
             <div className="space-y-2 relative">
               {/* Decorative Plane Path SVG */}
               <div className="absolute -top-12 -right-10 w-48 h-32 opacity-60 pointer-events-none hidden md:block">
@@ -231,7 +278,7 @@ export default function HomePage() {
                 </svg>
               </div>
 
-              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[1.1] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+              <h1 className="text-4xl sm:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[1.1] drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
                 Boundless <span className="font-sans font-normal tracking-normal text-amber-400">2025-26</span>
               </h1>
               <p className="text-2xl sm:text-3xl font-serif italic text-amber-100 max-w-lg leading-snug drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
@@ -346,18 +393,18 @@ export default function HomePage() {
         </div>
 
         {/* Bottom Half: Stats & Event Cards side-by-side */}
-        <div className="mt-8 lg:-mt-6 flex flex-col lg:flex-row gap-4 lg:gap-6 items-end relative z-20 w-full px-2 lg:px-4">
+        <div className="mt-8 lg:-mt-6 flex flex-col lg:flex-row gap-4 lg:gap-6 items-end relative z-20 w-full px-1 sm:px-4">
 
           {/* Stats Section */}
-          <div style={{ flex: '1.4' }} className="w-full lg:w-auto bg-[#F4EBD9] border-[3px] border-white/40 rounded-[2.5rem] p-4 lg:p-5 shadow-[0_12px_40px_rgb(0,0,0,0.15)] shrink-0 relative hover:-translate-y-1 transition-transform duration-300">
+          <div style={{ flex: '1.4' }} className="w-full lg:w-auto bg-[#F4EBD9] border-[3px] border-white/40 rounded-[1.5rem] sm:rounded-[2.5rem] p-3 sm:p-5 shadow-[0_12px_40px_rgb(0,0,0,0.15)] shrink-0 relative hover:-translate-y-1 transition-transform duration-300">
             <div className="flex justify-between items-start divide-x divide-[#e2d5bd]">
               {STATS.map((stat, idx) => (
-                <div key={idx} className="flex flex-col items-center justify-start flex-1 px-1 text-center group cursor-pointer">
-                  <div className="mb-2 group-hover:scale-110 transition-transform duration-300">
+                <div key={idx} className="flex flex-col items-center justify-start flex-1 px-0.5 sm:px-1 text-center group cursor-pointer">
+                  <div className="mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">
                     {stat.icon}
                   </div>
-                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 leading-none mb-1.5">{stat.value}</h3>
-                  <p className="text-[10px] lg:text-[11px] xl:text-[12px] text-gray-700 font-semibold leading-[1.2] whitespace-pre-line">
+                  <h3 className="text-sm sm:text-2xl font-bold text-gray-900 leading-none mb-1">{stat.value}</h3>
+                  <p className="text-[8px] sm:text-[11px] xl:text-[12px] text-gray-700 font-semibold leading-[1.1] sm:leading-[1.2] whitespace-pre-line">
                     {stat.label}
                   </p>
                 </div>
@@ -366,7 +413,7 @@ export default function HomePage() {
           </div>
 
           {/* Polaroids Grid Section */}
-          <div style={{ flex: '1' }} className="w-full lg:w-auto flex gap-2 lg:gap-3 justify-between items-end">
+          <div style={{ flex: '1' }} className="w-full lg:w-auto grid grid-cols-2 sm:flex gap-2 lg:gap-3 justify-between items-stretch sm:items-end">
             {CARDS.map((card, idx) => {
               const rotations = ['-rotate-2', 'rotate-2', '-rotate-1', 'rotate-3'];
               // Safely map colors for Tailwind JIT
@@ -385,7 +432,7 @@ export default function HomePage() {
                     card.categoryId ? `/category/${card.categoryId}` : `/event/${card.eventId}`,
                     { state: { from: location.pathname } }
                   )}
-                  className={`shrink-0 flex-1 min-w-0 bg-[#FDF9F1] rounded-[14px] p-1.5 lg:p-2 shadow-lg hover:-translate-y-3 hover:shadow-2xl transition-all duration-300 border-[3px] border-[#E8DCC4] relative ${rotations[idx]} hover:rotate-0 hover:z-30 cursor-pointer flex flex-col`}
+                  className={`shrink-0 flex-1 min-w-0 bg-[#FDF9F1] rounded-[14px] p-2 lg:p-2 shadow-lg hover:-translate-y-3 hover:shadow-2xl transition-all duration-300 border-[3px] border-[#E8DCC4] relative ${rotations[idx]} sm:hover:rotate-0 hover:z-30 cursor-pointer flex flex-col`}
                 >
                   {/* Tape element */}
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 lg:w-10 h-4 bg-[#DDBB8E] -rotate-3 shadow-sm rounded-sm z-10"></div>

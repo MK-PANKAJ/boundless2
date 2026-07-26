@@ -34,91 +34,102 @@ export default function Timeline({ activeMonthId, onMonthSelect, compact = false
           
           {/* Title Area - Aligned to the left as in Scrapbook */}
           {!compact && (
-            <div className="flex items-center gap-4 mb-4 xl:mb-0 xl:mr-12 shrink-0 z-20 xl:mt-8 px-6">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#fcd34d] to-[#d97706] p-1 shadow-[0_4px_15px_rgba(217,119,6,0.3)]">
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 xl:mb-0 xl:mr-12 shrink-0 z-20 xl:mt-8 px-4 sm:px-6">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#fcd34d] to-[#d97706] p-1 shadow-[0_4px_15px_rgba(217,119,6,0.3)] shrink-0">
                 <div className="w-full h-full rounded-full border-2 border-white/50 flex items-center justify-center">
-                  <Compass size={32} className="text-white" />
+                  <Compass size={24} className="sm:hidden text-white" />
+                  <Compass size={32} className="hidden sm:block text-white" />
                 </div>
               </div>
               <div>
-                <h2 className="font-serif font-black text-4xl text-[#1c1917]">Our Journey</h2>
-                <p className="font-serif italic text-2xl text-[#d97706] -mt-1">A timeline of memories</p>
+                <h2 className="font-serif font-black text-2xl sm:text-4xl text-[#1c1917]">Our Journey</h2>
+                <p className="font-serif italic text-lg sm:text-2xl text-[#d97706] -mt-1">A timeline of memories</p>
               </div>
             </div>
           )}
 
-          {/* Timeline Content */}
-          <div className={`relative z-10 flex-1 w-full px-2 md:px-6 ${compact ? 'py-3' : 'pb-4 pt-8 xl:pt-6'}`}>
+          {/* Timeline Content - Horizontally scrollable on mobile */}
+          <div className={`relative z-10 flex-1 w-full px-2 sm:px-4 md:px-6 ${compact ? 'py-3' : 'pb-4 pt-4 xl:pt-6'}`}>
             
-            <div className="relative w-full">
-              {/* Weaving dotted line running horizontally */}
-              <div 
-                className="absolute z-0 opacity-40 pointer-events-none"
-                style={{ 
-                  left: '3.5rem',
-                  width: 'calc(100% - 7rem)',
-                  top: compact ? '0.75rem' : '1.375rem',
-                  height: compact ? '1rem' : '3rem'
-                }}
-              >
-                <svg width="100%" height="100%" preserveAspectRatio="none" viewBox={`0 0 ${(timelineMonths.length - 1) * 100} 100`} className="overflow-visible">
-                  <path d={(() => {
-                    let path = "M -50,50 Q -25,100 0,100";
-                    for (let i = 1; i < timelineMonths.length; i++) {
-                      const startX = (i - 1) * 100;
-                      const endX = i * 100;
-                      const midX = (startX + endX) / 2;
-                      const startY = (i - 1) % 2 === 0 ? 100 : 0;
-                      const endY = i % 2 === 0 ? 100 : 0;
-                      path += ` C ${midX},${startY} ${midX},${endY} ${endX},${endY}`;
-                    }
-                    const lastY = (timelineMonths.length - 1) % 2 === 0 ? 100 : 0;
-                    const lastX = (timelineMonths.length - 1) * 100;
-                    path += ` Q ${lastX + 25},${lastY} ${lastX + 50},50`;
-                    return path;
-                  })()} fill="none" stroke="#1c1917" strokeWidth="2" strokeDasharray="6,6" />
-                </svg>
-              </div>
+            {/* Scrollable Container Wrapper - scrolls only on mobile */}
+            <div className="relative w-full overflow-x-auto md:overflow-x-visible hide-scrollbar scroll-smooth pb-4 pt-2">
+              {/* 12 months × 112px (w-28) = 1344px minimum; add padding → 1500px on mobile */}
+              <div className="w-[1500px] md:w-full relative px-4">
+                {/* Weaving dotted line running horizontally */}
+                <div 
+                  className="absolute z-0 opacity-40 pointer-events-none"
+                  style={{ 
+                    left: 'calc(3.5rem + 1rem)',
+                    width: 'calc(100% - 9rem)',
+                    top: compact ? '0.75rem' : '1.375rem',
+                    height: compact ? '1rem' : '4rem'
+                  }}
+                >
+                  <svg width="100%" height="100%" preserveAspectRatio="none" viewBox={`0 0 ${(timelineMonths.length - 1) * 100} 100`} className="overflow-visible">
+                    <path d={(() => {
+                      let path = "M -50,50 Q -25,100 0,100";
+                      for (let i = 1; i < timelineMonths.length; i++) {
+                        const startX = (i - 1) * 100;
+                        const endX = i * 100;
+                        const midX = (startX + endX) / 2;
+                        const startY = (i - 1) % 2 === 0 ? 100 : 0;
+                        const endY = i % 2 === 0 ? 100 : 0;
+                        path += ` C ${midX},${startY} ${midX},${endY} ${endX},${endY}`;
+                      }
+                      const lastY = (timelineMonths.length - 1) % 2 === 0 ? 100 : 0;
+                      const lastX = (timelineMonths.length - 1) * 100;
+                      path += ` Q ${lastX + 25},${lastY} ${lastX + 50},50`;
+                      return path;
+                    })()} fill="none" stroke="#1c1917" strokeWidth="2" strokeDasharray="6,6" />
+                  </svg>
+                </div>
 
-              <div className="flex justify-between items-start w-full relative z-10">
-                {timelineMonths.map((m, i) => {
-                  const isDown = i % 2 === 0;
-                  const isActive = activeMonthId === m.id;
-                  const colorClass = colors[i % colors.length];
-                  const monthEvents = eventsByMonth[m.id] || [];
-                  const displayTitle = monthEvents.length > 0 ? (monthEvents[0].title || monthEvents[0].tagline) : m.summary;
-                  
-                  return (
-                    <div 
-                      key={m.id} 
-                      onClick={() => {
-                        onMonthSelect(m.id);
-                        if (monthEvents.length > 0) {
-                          navigate(`/timeline/${m.id}`, { state: { from: location.pathname } });
-                        }
-                      }}
-                      className={`w-28 shrink-0 flex flex-col items-center group cursor-pointer transition-transform duration-300 hover:-translate-y-1 ${isDown ? (compact ? 'mt-4' : 'mt-12') : 'mt-0'}`}
-                    >
-                    {/* Location Pin Style Node */}
-                    <div className="relative mb-2 flex flex-col items-center">
-                      <MapPin size={compact ? 24 : 44} className={`${isActive ? colorClass : colorClass} transition-colors duration-300 drop-shadow-md bg-white rounded-full`} fill={isActive ? '#fef3c7' : '#ffffff'} />
-                    </div>
+                <div className="flex justify-between items-start w-full relative z-10">
+                  {timelineMonths.map((m, i) => {
+                    const isDown = i % 2 === 0;
+                    const isActive = activeMonthId === m.id;
+                    const colorClass = colors[i % colors.length];
+                    const monthEvents = eventsByMonth[m.id] || [];
+                    const displayTitle = monthEvents.length > 0 ? (monthEvents[0].title || monthEvents[0].tagline) : m.summary;
                     
-                    {/* Month Label */}
-                    <div className={`font-serif font-bold transition-colors duration-300 ${isActive ? 'text-[#1c1917]' : 'text-[#1c1917]' } mb-1 whitespace-nowrap ${compact ? 'text-[10px]' : 'text-sm md:text-base lg:text-lg'}`}>
-                      {m.title}
-                    </div>
-                    
-                    {/* Text Label - Hidden in compact mode */}
-                    {!compact && (
-                      <div className={`text-[10px] md:text-xs font-semibold text-center px-1 leading-tight transition-colors duration-300 ${isActive ? 'text-[#4a1225]' : 'text-[#78716c]'}`}>
-                        {displayTitle}
+                    return (
+                      <div 
+                        key={m.id} 
+                        onClick={() => {
+                          onMonthSelect(m.id);
+                          if (monthEvents.length > 0) {
+                            navigate(`/timeline/${m.id}`, { state: { from: location.pathname } });
+                          }
+                        }}
+                        className={`w-28 shrink-0 flex flex-col items-center group cursor-pointer transition-transform duration-300 hover:-translate-y-1 ${isDown ? (compact ? 'mt-4' : 'mt-8 sm:mt-12') : 'mt-0'}`}
+                      >
+                        {/* Location Pin Style Node */}
+                        <div className="relative mb-1.5 flex flex-col items-center">
+                          <MapPin size={compact ? 24 : 36} className={`${isActive ? colorClass : colorClass} transition-colors duration-300 drop-shadow-md bg-white rounded-full p-0.5 sm:p-0`} fill={isActive ? '#fef3c7' : '#ffffff'} />
+                        </div>
+                        
+                        {/* Month Label */}
+                        <div className={`font-serif font-bold transition-colors duration-300 ${isActive ? 'text-[#1c1917]' : 'text-[#1c1917]' } mb-1 whitespace-nowrap text-xs sm:text-base lg:text-lg`}>
+                          {m.title}
+                        </div>
+                        
+                        {/* Text Label - Hidden in compact mode */}
+                        {!compact && (
+                          <div className={`text-[10px] sm:text-xs font-semibold text-center px-1 leading-tight transition-colors duration-300 line-clamp-2 ${isActive ? 'text-[#4a1225]' : 'text-[#78716c]'}`}>
+                            {displayTitle}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
+                    );
+                  })}
+                </div>
               </div>
+            </div>
+            
+            {/* Horizontal Scroll Hint for Mobile Only */}
+            <div className="timeline-mobile-hint">
+              <span>Swipe to explore timeline</span>
+              <span>→</span>
             </div>
           </div>
         </div>
@@ -131,6 +142,22 @@ export default function Timeline({ activeMonthId, onMonthSelect, compact = false
         .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        .timeline-mobile-hint {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          font-size: 12px;
+          color: #78716c;
+          font-weight: 500;
+          padding-top: 4px;
+          color: #92400e;
+        }
+        @media (min-width: 768px) {
+          .timeline-mobile-hint {
+            display: none !important;
+          }
         }
       `}</style>
     </div>
