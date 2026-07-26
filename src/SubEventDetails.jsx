@@ -74,6 +74,7 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
              : ev.id === 'meghalaya-2' ? '2025-12'
              : ev.id === 'kerala-yatra' ? '2026-01'
              : ev.id === 'himachal-trip' ? '2026-01'
+             : ev.id === 'ananthagiri-hills-diaries' ? '2026-02'
              : ev.id === 'girls-getaway' ? '2026-03'
              : ev.id === 'kalsubai-trek' ? '2025-12'
              : ev.id === 'pushkar-trip' ? '2025-11'
@@ -90,6 +91,7 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
           : ev.id === 'meghalaya-2' ? '25 Dec 2025'
           : ev.id === 'kerala-yatra' ? '8 Jan 2026'
           : ev.id === 'himachal-trip' ? '29 Jan 2026'
+          : ev.id === 'ananthagiri-hills-diaries' ? '7 Feb 2026'
           : ev.id === 'girls-getaway' ? '18 Mar 2026'
           : ev.id === 'kalsubai-trek' ? '5 Dec 2025'
           : ev.id === 'pushkar-trip' ? '2 Nov 2025'
@@ -103,7 +105,7 @@ export default function SubEventDetails({ providedEventId, providedSubEventId, p
       ev.subEvents.forEach((sub) => {
         if (sub.id) {
           let mId = parseDateToMonthId(sub.date);
-          if (sub.id === 'nagpur') mId = '2025-10';
+          if (sub.id === 'nagpur') mId = '2025-08';
           if (sub.id === 'chennai-raas') mId = '2025-10';
 
           flatTimeline.push({

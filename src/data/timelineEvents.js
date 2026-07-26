@@ -52,7 +52,7 @@ export const getTimelineEvents = () => {
       mainEvent.subEvents.forEach(sub => {
         let mId = parseDateToMonthId(sub.date);
         // Hand-correct specific edge cases
-        if (sub.id === 'nagpur') mId = '2025-10'; // Nagpur meetup is 8 Oct 2025
+        if (sub.id === 'nagpur') mId = '2025-08'; // Nagpur meetup is 8 Aug 2025
         if (sub.id === 'chennai-raas') mId = '2025-10'; // Chennai Raas is 1 Oct 2025
 
         if (mId) {
@@ -121,6 +121,9 @@ export const getTimelineEvents = () => {
       } else if (mainEvent.id === 'himachal-trip') {
         monthId = '2026-01';
         dateRange = '29 Jan – 1 Feb 2026';
+      } else if (mainEvent.id === 'ananthagiri-hills-diaries') {
+        monthId = '2026-02';
+        dateRange = '7-8 Feb 2026';
       } else if (mainEvent.id === 'girls-getaway') {
         monthId = '2026-03';
         dateRange = '18-21 Mar 2026';

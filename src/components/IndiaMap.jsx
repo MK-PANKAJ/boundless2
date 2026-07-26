@@ -23,7 +23,7 @@ const mapCities = [
   { name: 'Ahmedabad', lat: 23.0225, lng: 72.5714, info: '7 participants • Ahmedabad Raas — Green Place Garba Night', eventId: 'navrang-2', subEventId: 'ahmedabad-escape' },
   { name: 'Coimbatore', lat: 11.0168, lng: 76.9558, info: '10 participants • Ooty Hill Station Expedition', eventId: 'tricolor-trails-3', subEventId: 'coimbatore' },
   { name: 'Nainital', lat: 29.3803, lng: 79.4636, info: '20 participants • Uttarakhand Trip — Naini Lake, Kainchi Dham & Naina Peak', eventId: 'uttarakhand-trip', subEventId: null },
-  { name: 'Vikarabad', lat: 17.3364, lng: 77.9048, info: '14 participants • Ananthagiri Hills Forest Trek', eventId: 'tricolor-trails-3', subEventId: 'ananthagiri-diaries' },
+  { name: 'Vikarabad', lat: 17.3364, lng: 77.9048, info: '20 participants • Ananthagiri Hills Trip — Forest Trek & Student Bonding', eventId: 'ananthagiri-hills-diaries', subEventId: null },
   { name: 'Kanpur', lat: 26.4499, lng: 80.3319, info: '18 participants • Allen Forest Zoo', eventId: 'tricolor-trails-3', subEventId: 'kanpur' },
   { name: 'Siliguri', lat: 26.7271, lng: 88.3953, info: '8 participants • EWAM Monastery & Coronation Bridge', eventId: 'tricolor-trails-3', subEventId: 'siliguri' },
   { name: 'Rishikesh', lat: 30.0869, lng: 78.2676, info: '19 participants • Janki Setu & Holy Ganges', eventId: 'tricolor-trails-3', subEventId: 'rishikesh' },

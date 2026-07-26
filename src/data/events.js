@@ -29,12 +29,12 @@ const eventsData = [
       {
         id: 'nagpur',
         title: 'Nagpur Meetup',
-        date: '8 Oct 2025',
+        date: '8 Aug 2025',
         location: 'Zilpi Lake & Siddhivinayak Mandir',
         attendees: 25,
-        image: '/images/events/tricolor-nagpur.webp',
-        summary: 'A refreshing one-day outing at the scenic Zilpi Lake. Students started the day with a lively bus ride full of music and introductions, followed by darshan at the peaceful Siddhivinayak Mandir. At the lakeside, they enjoyed bonding games and sang the National Anthem surrounded by calm waves.',
-        glimpses: ['/images/events/tricolor-nagpur.webp']
+        image: 'https://res.cloudinary.com/dxh7qhxlx/image/upload/v1784925571/events/meetups/wtmdrpwgsyz0r7iliiyh.jpg',
+        summary: 'The Nagpur meetup opened with a lively bus ride full of dance, laughter, and new introductions, before the group reached Zilpi Lake for darshan at Sidhivinayak Mandir. Lakeside, everyone soaked in the calm water and games, with a proud moment of singing the National Anthem together as part of Tricolor Trails 🇮🇳. The day closed out at a nearby restaurant with a hearty meal, more games, and laughter — ending on a note of food, joy, and new friendships 🎉',
+        glimpses: ['https://res.cloudinary.com/dxh7qhxlx/image/upload/v1784925571/events/meetups/wtmdrpwgsyz0r7iliiyh.jpg']
       },
       {
         id: 'bhubaneswar',
@@ -929,14 +929,14 @@ const eventsData = [
   },
   {
     id: 'himachal-trip',
-    title: 'Himachal Diaries',
+    title: 'Himachal Trip',
     tagline: 'Snowy peaks, Solang adventures, and quiet Kasol trails',
-    description: 'An incredible winter trip in collaboration with Synapse. 40 students explored Manali\'s snow-capped mountains, experienced thrilling adventures in Solang Valley, hiked quiet trails in Kasol, and bonded around the Kullu river between 29 Jan – 1 Feb 2026.',
-    image: '/images/events/tt3-himachal.webp',
-    stats: { cities: 4, participants: 40 },
+    description: "Himachal turned into one of those trips that felt more like a movie than reality — Manali's calm setting the tone, before Solang Valley cranked things up with adventure. Kasol brought it back down to peaceful trails, and Kullu's rivers kept the energy flowing right through to the end 🏔️. Cold winds, warm laughter, and a group that made every stop feel like home — this was Boundless x Synapse, a collab that turned into a genuine vibe 💫",
+    image: "https://res.cloudinary.com/dxh7qhxlx/image/upload/v1785057805/events/covers/onyrv9z6rcbcgvn9y6wv.jpg",
+    stats: { cities: "4", participants: "40" },
     category: 'trip',
     date: '29 Jan – 1 Feb 2026',
-    glimpses: ['/images/events/tt3-himachal.webp'],
+    glimpses: [],
     itinerary: [
       {
         day: 'Day 1',
@@ -959,6 +959,19 @@ const eventsData = [
         description: 'Experienced river rafting in Kullu and explored local handicraft centers before driving back to the station/airport for departures.'
       }
     ],
+    subEvents: []
+  },
+  {
+    id: 'ananthagiri-hills-diaries',
+    title: 'Ananthagiri Hills Trip',
+    tagline: 'Forest trails, peaceful valley views, and student bonding',
+    description: 'Tired legs, happy hearts — that\'s the honest summary of Ananthagiri Hills. The group wandered lush green forest trails and soaked in the peaceful views of Vikarabad, with laughter and teamwork carrying the whole day 🌿. Everyone headed home worn out but grateful, memories of adventure and bonding fully intact.',
+    image: 'https://res.cloudinary.com/dxh7qhxlx/image/upload/v1785064315/events/covers/zwijslufeaueat9ksrml.jpg',
+    stats: { cities: 'Ananthagiri Hills, Vikarabad', participants: '20' },
+    category: 'trip',
+    date: '7-8 Feb 2026 (Saturday-Sunday)',
+    glimpses: [],
+    itinerary: [],
     subEvents: []
   },
   {

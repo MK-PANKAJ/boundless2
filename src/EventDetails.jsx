@@ -55,7 +55,7 @@ export default function EventDetails() {
     feedItems = feedItems.filter(item => {
       let mId = parseDateToMonthId(item.date);
       // Hand-correct specific edge cases to match timelineEvents.js
-      if (item.id === 'nagpur') mId = '2025-10';
+      if (item.id === 'nagpur') mId = '2025-08';
       if (item.id === 'chennai-raas') mId = '2025-10';
       return mId === selectedMonthId;
     });
