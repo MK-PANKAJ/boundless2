@@ -770,6 +770,30 @@ const eventsData = [
         image: '/images/events/pink-verdict.webp',
         summary: 'Boundless organized The Pink Verdict on 30th May, an exciting girls-only online event filled with debates, opinions, laughter, and creativity. Designed as an interactive "Guilty or Not Guilty" game, the event brought together participants for lively debates, ending with a chill session of singing, dancing, poetry, and spontaneous performances.',
       },
+      {
+        id: 'fearless-talks-trails-guest-session',
+        title: 'Fearless Talks & Trails  (Guest Session)',
+        date: '5 July 2026',
+        location: 'Online Google Meet',
+        attendees: 50,
+        image: 'https://res.cloudinary.com/dxh7qhxlx/image/upload/v1785067004/events/meetups/tnu8nkg0yxczt4ahq2dn.jpg',
+        summary: 'Fearless Talks & Trails with Dr. Mandira Adhikari was an inspiring girls-only guest session that celebrated the spirit of fearless travel and exploration. Dr. Mandira shared her personal travel experiences, valuable life lessons, and encouraged participants to embrace new adventures with confidence. The interactive discussions and engaging activities made the session both insightful and memorable, leaving everyone motivated to explore the world with curiosity and courage. 🌍💜',
+        glimpses: [
+          'https://res.cloudinary.com/dxh7qhxlx/image/upload/v1785067004/events/meetups/tnu8nkg0yxczt4ahq2dn.jpg'
+        ]
+      },
+      {
+        id: 'movie-night',
+        title: 'Movie Night ',
+        date: '7 March 2026',
+        location: 'Online Google Meet',
+        attendees: 50,
+        image: 'https://res.cloudinary.com/dxh7qhxlx/image/upload/v1785067005/events/meetups/dxzwyqhggpqhkeewppfu.jpg',
+        summary: 'An evening of cinema, conversations, and community. Our online Movie Nights bring members together to enjoy entertaining films, unwind from busy schedules, and make every watch party a memorable experience.',
+        glimpses: [
+          'https://res.cloudinary.com/dxh7qhxlx/image/upload/v1785067005/events/meetups/dxzwyqhggpqhkeewppfu.jpg'
+        ]
+      }
     ]
   },
   {

@@ -1,4 +1,4 @@
-import eventsData from './events';
+import eventsData from './events.js';
 
 // Map of months to display in our timeline
 export const timelineMonths = [
@@ -12,7 +12,8 @@ export const timelineMonths = [
   { id: '2026-03', label: 'Mar 2026', title: 'March 2026', summary: 'Women\'s Day Championship and Rajasthan Girls Getaway empowerment retreat.' },
   { id: '2026-04', label: 'Apr 2026', title: 'April 2026', summary: 'Refreshing spring escapes to Nainital lake viewpoints and campfire circles.' },
   { id: '2026-05', label: 'May 2026', title: 'May 2026', summary: 'Gaya Escape spiritual journey, Ahmedabad & Ranchi meetups, The Nepal Trip across Kathmandu, Pokhara & Lumbini, and The Pink Verdict girls-only event.' },
-  { id: '2026-06', label: 'Jun 2026', title: 'June 2026', summary: 'Sun-kissed Goan beach excursions and Portuguese quarter heritage photowalks.' }
+  { id: '2026-06', label: 'Jun 2026', title: 'June 2026', summary: 'Sun-kissed Goan beach excursions and Portuguese quarter heritage photowalks.' },
+  { id: '2026-07', label: 'Jul 2026', title: 'July 2026', summary: 'Fearless Talks & Trails guest session and student reflections.' }
 ];
 
 // Helper to determine the Month ID from a date string (e.g., "6 Aug 2025" -> "2025-08")
